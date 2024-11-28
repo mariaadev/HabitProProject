@@ -27,6 +27,7 @@
     <color name="md_theme_scrim">#000000</color>
     <color name="md_theme_inverseSurface">#382E30</color>
     <color name="md_theme_inverseOnSurface">#FEEDEF</color>
+    <color name="rosita">#FFE6E6</color>
     <color name="md_theme_inversePrimary">#FFB1C7</color>
     <color name="md_theme_primaryFixed">#FFD9E2</color>
     <color name="md_theme_onPrimaryFixed">#3A071C</color>
