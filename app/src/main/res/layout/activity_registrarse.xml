@@ -58,6 +58,9 @@
                     app:endIconMode="clear_text"
                     app:boxBackgroundMode="filled"
                     android:layout_marginBottom="16dp"
+                    android:paddingTop="16dp"
+
+
 
                     >
 
@@ -65,6 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:paddingTop="16dp"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -77,6 +81,7 @@
                     app:endIconMode="clear_text"
                     app:boxBackgroundMode="filled"
                     android:layout_marginBottom="16dp"
+                    app:boxCollapsedPaddingTop="8dp"
 
                     >
 
@@ -96,6 +101,7 @@
                     app:endIconMode="password_toggle"
                     app:boxBackgroundMode="filled"
                     android:layout_marginBottom="16dp"
+                    app:boxCollapsedPaddingTop="8dp"
 
                     >
 
@@ -115,6 +121,7 @@
                     app:endIconMode="password_toggle"
                     app:boxBackgroundMode="filled"
                     android:layout_marginBottom="16dp"
+                    app:boxCollapsedPaddingTop="8dp"
 
                     >
 
@@ -134,6 +141,7 @@
                     app:endIconMode="clear_text"
                     app:boxBackgroundMode="filled"
                     android:layout_marginBottom="16dp"
+                    app:boxCollapsedPaddingTop="8dp"
 
                     >
 
