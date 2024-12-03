@@ -10,40 +10,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            app:cornerRadius="100dp"
-            android:backgroundTint="#3B080E"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:backgroundTint="#3B080E"
+            android:includeFontPadding="false"
+            android:padding="0dp"
+            android:text="17"
             android:textSize="22sp"
-            android:text="17" />
+            app:cornerRadius="100dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textHoy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="HOY" />
+                android:text="HOY"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/textNombreDia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Jueves" />
+                android:text="Jueves"
+                android:layout_weight="1"
+               android:gravity="bottom"
+                android:textAlignment="gravity"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@color/md_theme_background"
             app:srcCompat="@drawable/button_add" />
