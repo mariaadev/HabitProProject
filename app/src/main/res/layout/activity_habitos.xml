@@ -7,4 +7,61 @@
     android:layout_height="match_parent"
     tools:context=".HabitosActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            app:cornerRadius="100dp"
+            android:backgroundTint="#3B080E"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:textSize="22sp"
+            android:text="17" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textHoy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="HOY" />
+
+            <TextView
+                android:id="@+id/textNombreDia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Jueves" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/md_theme_background"
+            app:srcCompat="@drawable/button_add" />
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/md_theme_primaryFixed"
+        app:itemBackground="@color/md_theme_background"
+        app:itemPaddingBottom="15dp"
+        app:itemPaddingTop="15dp"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
