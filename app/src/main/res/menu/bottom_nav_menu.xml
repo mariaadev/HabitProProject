@@ -8,14 +8,14 @@
     <item
         android:id="@+id/habits"
         android:title="Hábitos"
-        android:icon="@drawable/ic_shopping_bag" />
+        android:icon="@drawable/ic_habits" />
     <item
         android:id="@+id/profile"
         android:title="Estadísticas"
-        android:icon="@drawable/ic_profile_pic" />
+        android:icon="@drawable/ic_stats_habitpro" />
     <item
         android:id="@+id/stats"
         android:title="Perfil"
-        android:icon="@drawable/ic_profile_pic" />
+        android:icon="@drawable/ic_profile" />
 
 </menu>
