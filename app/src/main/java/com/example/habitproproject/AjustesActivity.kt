@@ -28,6 +28,9 @@ class AjustesActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerIdiomas.adapter = adapter
 
+        val posicionEspañol = adapter.getPosition("Español")
+        spinnerIdiomas.setSelection(posicionEspañol)
+
         spinnerIdiomas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val idiomaSeleccionado = parent.getItemAtPosition(position).toString()
