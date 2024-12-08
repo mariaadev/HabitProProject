@@ -1,12 +1,16 @@
 package com.example.habitproproject
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.UnderlineSpan
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -29,6 +33,42 @@ class IniciarSesionActivity : AppCompatActivity() {
 
         emailEditText.addTextChangedListener(loginTextWatcher)
         passwordEditText.addTextChangedListener(loginTextWatcher)
+
+        val forgotPasswordTextView: TextView = findViewById(R.id.tvForgotPassword)
+
+        /*Subrayar texto de recuperar contraseña*/
+        val text = "¿Has olvidado la contraseña?"
+        val spannableStringPassword = SpannableString(text)
+        spannableStringPassword.setSpan(UnderlineSpan(), 0, text.length, 0)
+
+        forgotPasswordTextView.text = spannableStringPassword
+
+        val signUpTextView: TextView = findViewById(R.id.tvSignUp)
+
+        /*Subrayar texto de registrarse*/
+        val fullText = "¿No tienes una cuenta? Regístrate"
+        val spannableStringRegister = SpannableString(fullText)
+
+        /*Subrayar solo Regístrate*/
+        val startIndex = fullText.indexOf("Regístrate")
+        val endIndex = startIndex + "Regístrate".length
+
+        spannableStringRegister.setSpan(UnderlineSpan(), startIndex, endIndex, 0)
+        /*Mostrar texto subrayado en el layout*/
+        signUpTextView.text = spannableStringRegister
+
+        /*Link a la actividad de registrarse*/
+        signUpTextView.setOnClickListener {
+            val intent = Intent(this, RegistrarseActivity::class.java)
+            startActivity(intent)
+        }
+
+        loginButton.setOnClickListener {
+            if (loginButton.isEnabled) {
+                val intent = Intent(this, HabitosActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

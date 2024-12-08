@@ -30,14 +30,13 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
             android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
             android:fontFamily="@font/margarine"
             android:gravity="center_horizontal"
             android:text="Habit Pro"
             android:textColor="#844C57"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textSize="40sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputEmail"
@@ -123,6 +122,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
             android:text="¿Has olvidado la contraseña?"
+            android:textAllCaps="false"
             android:textColor="#844C57"
             android:textSize="14sp" />
 
@@ -131,9 +131,12 @@
             android:id="@+id/tvSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
             android:layout_gravity="center_horizontal"
             android:text="¿No tienes una cuenta? Regístrate"
             android:textColor="#844C57"
+            android:layout_marginBottom="30dp"
             android:textSize="14sp" />
     </LinearLayout>
 
