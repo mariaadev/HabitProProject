@@ -5,7 +5,110 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/login_background"
     tools:context=".IniciarSesionActivity">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background"
+        android:padding="16dp"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_margin="16dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Habit Pro"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/margarine"
+            android:textColor="#844C57"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico o usuario"
+            android:backgroundTint="#844C57"
+            android:textColorHint="#844C57"
+            android:drawableEnd="@drawable/ic_clear"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:backgroundTint="#844C57"
+                android:textColorHint="#844C57"
+                android:padding="12dp"
+                android:drawableEnd="@drawable/ic_visibility"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/cbRememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recuérdame"
+            android:textColor="#844C57"
+            android:layout_marginBottom="16dp"/>
+
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Iniciar sesión"
+            android:backgroundTint="#D3A6AB"
+            android:textColor="#FFFFFF"
+            android:enabled="false"
+            android:layout_marginBottom="16dp"/>
+
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Has olvidado la contraseña?"
+            android:textColor="#844C57"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+
+        <TextView
+            android:id="@+id/tvSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿No tienes una cuenta? Regístrate"
+            android:textColor="#844C57"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@
 <resources>
     <color name="menu_foreground">#B78D9A</color>
     <color name="menu_background">#FFE6E6</color>
+    <color name="login_background">#8C4A5F</color>
     <color name="md_theme_primary">#8C4A5F</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#FFD9E2</color>
