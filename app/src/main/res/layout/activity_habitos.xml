@@ -8,17 +8,34 @@
     tools:context=".HabitosActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"></LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/buttonMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="20dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBaseline_toTopOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@+id/header"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/md_theme_background"
+            app:srcCompat="@drawable/ic_menu_habits" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonMenuContainer">
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -35,34 +52,53 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textHoy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/margarine"
                 android:text="HOY"
+                android:textColor="#8C4A5F"
                 android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/textNombreDia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jueves"
                 android:layout_weight="1"
-               android:gravity="bottom"
+                android:fontFamily="@font/nunito_bold"
+                android:gravity="bottom"
+                android:text="Jueves"
                 android:textAlignment="gravity"
-                android:textSize="20sp" />
+                android:textColor="#3B080E"
+                android:textSize="24sp" />
         </LinearLayout>
+
 
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:background="@color/md_theme_background"
             app:srcCompat="@drawable/button_add" />
 
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
