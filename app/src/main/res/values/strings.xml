@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HabitProProject</string>
+    <string-array name="idiomas">
+        <item>Español</item>
+        <item>Català</item>
+        <item>English</item>
+        <item>Français</item>
+    </string-array>
 </resources>
