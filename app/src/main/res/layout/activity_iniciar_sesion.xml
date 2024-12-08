@@ -10,43 +10,48 @@
 
     <LinearLayout
         android:id="@+id/container"
-        android:layout_width="0dp"
-        android:layout_height="600dp"
-        android:orientation="vertical"
-        android:background="@drawable/rounded_background"
-        android:padding="16dp"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9"
+        android:layout_width="350dp"
+        android:layout_height="650dp"
+        android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:layout_gravity="center">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_background"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.9">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Habit Pro"
-            android:gravity="center_horizontal"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/margarine"
+            android:gravity="center_horizontal"
+            android:text="Habit Pro"
             android:textColor="#844C57"
-            android:textStyle="bold"
             android:textSize="40sp"
-            android:layout_marginBottom="16dp"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputEmail"
-            android:layout_width="338dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
             android:layout_marginBottom="16dp"
             android:hint="Correo electrónico o usuario"
             android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="filled"
-            app:endIconMode="clear_text"
             app:boxCollapsedPaddingTop="10dp"
+            app:endIconMode="clear_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,24 +61,25 @@
                 android:id="@+id/etCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:gravity="bottom"
                 android:drawableEnd="@drawable/ic_clear"
+                android:gravity="bottom"
                 android:inputType="text"
                 android:textColorHint="#844C57" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputPasswordLayout"
-            android:layout_width="338dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:hint="Contraseña"
-            app:endIconMode="password_toggle"
-            app:boxCollapsedPaddingTop="10dp"
             android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="filled"
-
+            app:boxCollapsedPaddingTop="10dp"
+            app:endIconMode="password_toggle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,43 +96,45 @@
 
         <CheckBox
             android:id="@+id/cbRememberMe"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="10dp"
             android:text="Recuérdame"
-            android:textColor="#844C57"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="#844C57" />
 
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesión"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#D3A6AB"
-            android:textColor="#FFFFFF"
             android:enabled="false"
-            android:layout_marginBottom="16dp"/>
+            android:text="Iniciar sesión"
+            android:textColor="#FFFFFF" />
 
 
         <TextView
             android:id="@+id/tvForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
             android:text="¿Has olvidado la contraseña?"
             android:textColor="#844C57"
-            android:textSize="14sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"/>
+            android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/tvSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="¿No tienes una cuenta? Regístrate"
             android:textColor="#844C57"
-            android:textSize="14sp"
-            android:layout_gravity="center_horizontal"/>
+            android:textSize="14sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
