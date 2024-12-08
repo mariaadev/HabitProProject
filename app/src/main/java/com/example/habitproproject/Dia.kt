@@ -1,4 +1,7 @@
 package com.example.habitproproject
 
-class Dia {
-}
+
+data class Dia(
+    val nombreAbreviado: String,
+    val numeroDia: Int
+)
