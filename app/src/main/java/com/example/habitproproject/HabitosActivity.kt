@@ -1,22 +1,35 @@
 package com.example.habitproproject
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
     private lateinit var listaHabitos: List<Habitos>
-
+    private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_habitos)
+
+        /*Establecer barra de navegación */
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        establecerBottomNavigationView()
+
+        /*Navegación a la Activivty de ajustes*/
+        val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
+        menuAjustesButton.setOnClickListener {
+            abrirAjustesActivity()
+        }
 
         /*RecyclerView Dias*/
         val recyclerDias = findViewById<RecyclerView>(R.id.recyclerDias)
@@ -55,4 +68,38 @@ class HabitosActivity : AppCompatActivity() {
             insets
         }
     }
+
+    private fun establecerBottomNavigationView() {
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.home -> {
+                    val intent = Intent(this, HabitosActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.habits -> {
+                    val intent = Intent(this, HabitosActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.stats -> {
+                    /*De momento, placeholder hasta crear las demás actividades*/
+                    val intent = Intent(this, HabitosActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.profile -> {
+                    val intent = Intent(this, HabitosActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+    private fun abrirAjustesActivity() {
+        val intent = Intent(this, AjustesActivity::class.java)
+        startActivity(intent)
+    }
+
 }
