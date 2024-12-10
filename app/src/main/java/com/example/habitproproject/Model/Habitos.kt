@@ -1,4 +1,4 @@
-package com.example.habitproproject
+package com.example.habitproproject.Model
 
 data class Habitos(
     val nombre: String,

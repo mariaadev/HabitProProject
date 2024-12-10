@@ -1,10 +1,9 @@
-package com.example.habitproproject
+package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.UnderlineSpan
@@ -15,8 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.example.habitproproject.R
 
 class IniciarSesionActivity : AppCompatActivity() {
     private lateinit var passwordEditText: com.google.android.material.textfield.TextInputEditText

@@ -1,4 +1,4 @@
-package com.example.habitproproject
+package com.example.habitproproject.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.Model.Habitos
+import com.example.habitproproject.R
 
 class HabitosAdapter(
     private val listaHabitos: List<Habitos>

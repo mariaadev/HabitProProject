@@ -1,4 +1,4 @@
-package com.example.habitproproject
+package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.Model.Dia
+import com.example.habitproproject.Adapter.DiasAdapter
+import com.example.habitproproject.Model.Habitos
+import com.example.habitproproject.Adapter.HabitosAdapter
+import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

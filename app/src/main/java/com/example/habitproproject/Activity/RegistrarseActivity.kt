@@ -1,4 +1,4 @@
-package com.example.habitproproject
+package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.graphics.Paint
@@ -7,8 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.habitproproject.R
 
 class RegistrarseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,10 +1,12 @@
-package com.example.habitproproject
+package com.example.habitproproject.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.Model.Dia
+import com.example.habitproproject.R
 
 class DiasAdapter(private val listaDias: List<Dia>) : RecyclerView.Adapter<DiasAdapter.DiaViewHolder>() {
 
