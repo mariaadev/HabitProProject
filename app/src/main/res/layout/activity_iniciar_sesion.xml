@@ -44,7 +44,7 @@
                     android:layout_marginBottom="40dp"
                     android:fontFamily="@font/margarine"
                     android:gravity="center_horizontal"
-                    android:text="Habit Pro"
+                    android:text="@string/app_name"
                     android:textColor="#844C57"
                     android:textSize="40sp" />
 

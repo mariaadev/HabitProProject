@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HabitProProject</string>
+    <string name="app_name">Habit Pro</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>
