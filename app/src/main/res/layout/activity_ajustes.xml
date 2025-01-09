@@ -36,9 +36,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_medium"
                         android:text="Ajustes"
                         android:textSize="18sp"
-                        android:fontFamily="@font/nunito_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.066"
@@ -53,12 +53,12 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="14dp"
                         android:background="#FFE6E6"
+                        android:contentDescription="Abrir menú de ajustes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="1.0"
-                        app:srcCompat="@drawable/ic_menu_habits"
-                        android:contentDescription="Abrir menú de ajustes"/>
+                        app:srcCompat="@drawable/ic_menu_habits" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
