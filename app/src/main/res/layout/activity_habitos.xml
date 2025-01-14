@@ -17,23 +17,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/buttonMenuContainer"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal"
-                app:layout_constraintBaseline_toTopOf="@id/header">
-
-                <ImageButton
-                    android:id="@+id/menuAjustes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:background="#FFE6E6"
-                    app:srcCompat="@drawable/ic_menu_habits" />
-            </LinearLayout>
+                android:layout_height="?attr/actionBarSize"
+                android:background="#FFE6E6"
+                android:elevation="4dp"
+                >
+            </androidx.appcompat.widget.Toolbar>
 
             <LinearLayout
                 android:id="@+id/header"

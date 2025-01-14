@@ -3,6 +3,7 @@ package com.example.habitproproject.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,16 +26,21 @@ class HabitosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_habitos)
+        val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        toolbar.setTitle("");
 
         /*Establecer barra de navegación */
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
         /*Navegación a la Activivty de ajustes*/
-        val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
+        /*val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
         menuAjustesButton.setOnClickListener {
             abrirAjustesActivity()
-        }
+        }*/
 
         /*RecyclerView Dias*/
         val recyclerDias = findViewById<RecyclerView>(R.id.recyclerDias)
