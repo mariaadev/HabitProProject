@@ -46,7 +46,6 @@ class HabitosActivity : AppCompatActivity() {
         // Configurar DrawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navigationView)
-
         // Configurar el icono de navegación
         toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
         toolbar.setNavigationOnClickListener {
@@ -56,13 +55,15 @@ class HabitosActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_settings -> {
-                    Toast.makeText(this, "Ajustes seleccionado", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, AjustesActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.menu_theme -> {
                     Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
                 }
                 R.id.menu_log_out -> {
-                    Toast.makeText(this, "Cerrar sesión seleccionado", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, IniciarSesionActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.menu_help -> {
                     Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
