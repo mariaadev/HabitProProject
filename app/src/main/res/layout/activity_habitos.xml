@@ -156,6 +156,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
-        android:background="#F5F5F5" />
+        app:itemTextAppearance="@style/NavigationViewItemTextAppearance"
+       />
 
 </androidx.drawerlayout.widget.DrawerLayout>
