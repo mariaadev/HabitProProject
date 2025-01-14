@@ -55,14 +55,17 @@ class HabitosActivity : AppCompatActivity() {
         // Manejar clics en los elementos del NavigationView
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_home -> {
-                    Toast.makeText(this, "Inicio seleccionado", Toast.LENGTH_SHORT).show()
-                }
                 R.id.menu_settings -> {
-                    Toast.makeText(this, "Configuración seleccionada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Ajustes seleccionado", Toast.LENGTH_SHORT).show()
+                }
+                R.id.menu_theme -> {
+                    Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
+                }
+                R.id.menu_log_out -> {
+                    Toast.makeText(this, "Cerrar sesión seleccionado", Toast.LENGTH_SHORT).show()
                 }
                 R.id.menu_help -> {
-                    Toast.makeText(this, "Ayuda seleccionada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
