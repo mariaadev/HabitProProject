@@ -13,17 +13,8 @@
         android:theme="@style/Theme.HabitProProject"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.DetalleHabitoActivity"
+            android:name=".Activity.IniciarSesionActivity"
             android:exported="false" />
-        <activity
-            android:name=".SplashScreen.SplashActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Activity.AjustesActivity"
             android:exported="false" />
@@ -34,8 +25,14 @@
             android:name=".Activity.RegistrarseActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.IniciarSesionActivity"
-            android:exported="true" />
+            android:name=".SplashScreen.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

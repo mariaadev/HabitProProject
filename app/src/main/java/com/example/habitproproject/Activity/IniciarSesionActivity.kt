@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.habitproproject.R
@@ -20,6 +21,7 @@ class IniciarSesionActivity : AppCompatActivity() {
     private lateinit var passwordEditText: com.google.android.material.textfield.TextInputEditText
     private lateinit var emailEditText: EditText
     private lateinit var loginButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
