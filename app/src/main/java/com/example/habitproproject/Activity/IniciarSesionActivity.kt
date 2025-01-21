@@ -12,12 +12,10 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.habitproproject.R
-import com.example.habitproproject.SplashScreen.SplashActivity
 
 class IniciarSesionActivity : AppCompatActivity() {
     private lateinit var passwordEditText: com.google.android.material.textfield.TextInputEditText
@@ -25,15 +23,9 @@ class IniciarSesionActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val screenSplash = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_iniciar_sesion)
-
-        screenSplash.setKeepOnScreenCondition{ true }
-        //val intent = Intent(this, SplashActivity::class.java) // a detailAct
-        //startActivity(intent)
-        //finish()
 
         passwordEditText = findViewById(R.id.etPassword)
         loginButton = findViewById(R.id.btnLogin)

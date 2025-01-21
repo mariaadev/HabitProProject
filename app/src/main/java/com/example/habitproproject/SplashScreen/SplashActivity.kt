@@ -20,14 +20,12 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val logo: ImageView = findViewById(R.id.splash_logo)
-        val app_name: TextView = findViewById(R.id.title)
 
         // Animación de entrada (slide-in o fade-in)
         val slideInAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.logo_slide_in)  // O usa logo_slide_in
 
         // Aparecerán primero el logo y el texto con la animación
         logo.startAnimation(slideInAnimation)
-        app_name.startAnimation(slideInAnimation)
 
         // Después de que termine la animación de entrada, iniciamos la animación de "tiembla"
         logo.postDelayed({
