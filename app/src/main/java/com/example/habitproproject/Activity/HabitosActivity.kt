@@ -3,10 +3,15 @@ package com.example.habitproproject.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.Model.Dia
@@ -15,26 +20,68 @@ import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 
 class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
     private lateinit var listaHabitos: List<Habitos>
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_habitos)
+
+        /*Configuración toolbar*/
+        val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        toolbar.setTitle("");
+
+        // Configurar DrawerLayout
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.navigationView)
+        // Configurar el icono de navegación
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
+        toolbar.setNavigationOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        // Manejar clics en los elementos del NavigationView
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_settings -> {
+                    val intent = Intent(this, AjustesActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_theme -> {
+                    Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
+                }
+                R.id.menu_log_out -> {
+                    val intent = Intent(this, IniciarSesionActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_help -> {
+                    Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
 
         /*Establecer barra de navegación */
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
         /*Navegación a la Activivty de ajustes*/
-        val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
+        /*val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
         menuAjustesButton.setOnClickListener {
             abrirAjustesActivity()
-        }
+        }*/
 
         /*RecyclerView Dias*/
         val recyclerDias = findViewById<RecyclerView>(R.id.recyclerDias)
@@ -110,6 +157,14 @@ class HabitosActivity : AppCompatActivity() {
     private fun abrirAjustesActivity() {
         val intent = Intent(this, AjustesActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Ajustes" />
+    <item
+        android:id="@+id/menu_theme"
+        android:icon="@drawable/ic_profile"
+        android:title="Tema" />
+    <item
+        android:id="@+id/menu_log_out"
+        android:icon="@drawable/ic_logout"
+        android:title="Cerrar sesión" />
+    <item
+        android:id="@+id/menu_help"
+        android:icon="@drawable/ic_help"
+        android:title="Ayuda" />
+</menu>
