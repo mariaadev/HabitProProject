@@ -1,11 +1,13 @@
 package com.example.habitproproject.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.Activity.DetalleHabitoActivity
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 
@@ -22,6 +24,22 @@ class HabitosAdapter(
     override fun onBindViewHolder(holder: HabitosViewHolder, position: Int) {
         val habito = listaHabitos[position]
         holder.bind(habito)
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, DetalleHabitoActivity::class.java).apply {
+                putExtra("nombre", habito.nombre)
+                putExtra("duracion", habito.descripcion)
+                putExtra("progreso", habito.progreso)
+                putExtra("completado", habito.completado)
+                putExtra("fechaInicio", habito.fechaInicio)
+                putExtra("fechaFin", habito.fechaFin)
+                putExtra("imagenId", habito.imagenId)
+                putExtra("tiempoEnMinutos", habito.tiempoEnMinutos)
+
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = listaHabitos.size
