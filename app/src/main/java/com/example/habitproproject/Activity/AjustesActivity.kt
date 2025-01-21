@@ -16,6 +16,17 @@ class AjustesActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_ajustes)
 
+        /*Configuración toolbar*/
+        val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        toolbar.setTitle("Ajustes");
+
+        toolbar.setNavigationOnClickListener {
+            finish();
+        }
+
         val spinnerIdiomas: Spinner = findViewById(R.id.spinnerIdiomas)
 
         val adapter = ArrayAdapter.createFromResource(
