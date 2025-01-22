@@ -1,6 +1,7 @@
 package com.example.habitproproject.Activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -30,9 +31,9 @@ class DetalleHabitoActivity : AppCompatActivity() {
         val descripcion = intent.getStringExtra("duracion") ?: "Sin descripción"
         val progreso = intent.getIntExtra("progreso", 0)
         val completado = intent.getBooleanExtra("completado", false)
-        val fechaInicio = intent.getStringExtra("fechaInicio") ?: "Fecha no disponible"
-        val fechaFin = intent.getStringExtra("fechaFin") ?: "Fecha no disponible"
-        val imagenId = intent.getIntExtra("imagenId", 0)
+        val fechaInicio = intent.getStringExtra("fechaInicio") ?: "Sin fecha de inicio"
+        val fechaFin = intent.getStringExtra("fechaFin") ?: "Sin fecha de fin"
+        val imagenId = intent.getIntExtra("imagenId", R.drawable.ic_study)
         val tiempoEnMinutos = intent.getIntExtra("tiempoEnMinutos", 0)
 
         findViewById<TextView>(R.id.textNombre).text = nombre
