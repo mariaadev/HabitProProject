@@ -154,6 +154,7 @@ class HabitosActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun abrirAjustesActivity() {
         val intent = Intent(this, AjustesActivity::class.java)
         startActivity(intent)
