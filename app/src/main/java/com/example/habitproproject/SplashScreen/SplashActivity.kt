@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habitproproject.Activity.IniciarSesionActivity
+import com.example.habitproproject.Activity.TushabitosActivity
+import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.R
 
 class SplashActivity : AppCompatActivity() {
@@ -34,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
         }, 1000)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, IniciarSesionActivity::class.java)
+            val intent = Intent(this, TushabitosActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)
