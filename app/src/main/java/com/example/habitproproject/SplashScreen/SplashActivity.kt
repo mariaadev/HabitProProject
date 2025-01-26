@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
         }, 1000)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, TushabitosActivity::class.java)
+            val intent = Intent(this, IniciarSesionActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

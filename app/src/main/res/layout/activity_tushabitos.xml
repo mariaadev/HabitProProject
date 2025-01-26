@@ -38,7 +38,10 @@
                             android:layout_height="?attr/actionBarSize"
                             android:background="#FFE6E6"
                             android:elevation="4dp"
-                            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </androidx.appcompat.widget.Toolbar>
+
 
                         <LinearLayout
                             android:id="@+id/header"
