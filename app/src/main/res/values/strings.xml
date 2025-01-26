@@ -6,6 +6,14 @@
     <string name="hoy">HOY</string>
     <string name="tus_habitos">Tus Habitos</string>
     <string name="a_adir_nuevo_habito">Añadir nuevo Habito</string>
+    <string name="idioma">Idioma</string>
+    <string name="brillo">Brillo</string>
+    <string name="tama_o_texto">Tamaño texto</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="permisos">Permisos</string>
+    <string name="acceder_a_im_genes">Acceder a imágenes</string>
+    <string name="conectarse_a_internet">Conectarse a internet</string>
+    <string name="conectarse_con_calendario">Conectarse con calendario</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>

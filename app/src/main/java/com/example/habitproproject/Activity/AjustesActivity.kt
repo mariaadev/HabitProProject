@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habitproproject.R
+import org.w3c.dom.Text
 import java.util.Locale
 
 class AjustesActivity : AppCompatActivity() {
@@ -33,7 +34,7 @@ class AjustesActivity : AppCompatActivity() {
         }
 
         val preferences = getSharedPreferences("AppSettings", MODE_PRIVATE)
-        val savedLanguage = preferences.getString("AppLanguage", "ca") // Català per defecte
+        val savedLanguage = preferences.getString("AppLanguage", "es")
         setAppLocale(savedLanguage)
 
         val spinnerIdiomas: Spinner = findViewById(R.id.spinnerIdiomas)
@@ -48,9 +49,9 @@ class AjustesActivity : AppCompatActivity() {
         spinnerIdiomas.adapter = adapter
 
         if (savedLanguage == "es") {
-            spinnerIdiomas.setSelection(0) // Catalán seleccionado
+            spinnerIdiomas.setSelection(0) // Español seleccionado
         } else if (savedLanguage == "ca") {
-            spinnerIdiomas.setSelection(1) // Inglés seleccionado
+            spinnerIdiomas.setSelection(1) // Catalan seleccionado
         }else if (savedLanguage == "en") {
             spinnerIdiomas.setSelection(2) // Inglés seleccionado
         } else {
@@ -78,7 +79,7 @@ class AjustesActivity : AppCompatActivity() {
                 editor.putString("AppLanguage", languageCode)
                 editor.apply()
 
-                //updateUI()
+                updateUI()
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -86,8 +87,23 @@ class AjustesActivity : AppCompatActivity() {
         })
 
     }
-    private fun updateUI() {
 
+    private fun updateUI() {
+        val idioma: TextView = findViewById(R.id.idiomaTxt)
+        val brillo: TextView = findViewById(R.id.brilloTxt)
+        val tamañoLetra: TextView = findViewById(R.id.tamañoTxt)
+        val permisos: TextView = findViewById(R.id.permisoTxt)
+        val imagenes: TextView = findViewById(R.id.imagesTxt)
+        val internet: TextView = findViewById(R.id.connectInternet)
+        val calendarios: TextView = findViewById(R.id.calendarTxt)
+
+        idioma.text = getString(R.string.idioma)
+        brillo.text = getString(R.string.brillo)
+        tamañoLetra.text = getString(R.string.tama_o_texto)
+        permisos.text = getString(R.string.permisos)
+        imagenes.text = getString(R.string.acceder_a_im_genes)
+        internet.text = getString(R.string.conectarse_a_internet)
+        calendarios.text = getString(R.string.conectarse_con_calendario)
     }
 
     private fun setAppLocale(savedLanguage: String?) {

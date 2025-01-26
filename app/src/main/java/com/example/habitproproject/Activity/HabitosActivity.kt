@@ -1,11 +1,15 @@
 package com.example.habitproproject.Activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -21,6 +25,7 @@ import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import java.util.Locale
 
 
 class HabitosActivity : AppCompatActivity() {
@@ -31,10 +36,24 @@ class HabitosActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
+    // ActivityResultLauncher para manejar el resultado de AjustesActivity
+    private lateinit var ajustesLauncher: ActivityResultLauncher<Intent>
+
+
+    override fun onStart() {
+        super.onStart()
+        updateUI()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_habitos)
+
+        ajustesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                recreate() // Recargar la actividad para reflejar los cambios de idioma
+            }
+        }
 
         /*Configuración toolbar*/
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
@@ -56,14 +75,15 @@ class HabitosActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.menu_settings -> {
                     val intent = Intent(this, AjustesActivity::class.java)
-                    startActivity(intent)
+                    ajustesLauncher.launch(intent)
                 }
                 R.id.menu_theme -> {
                     Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
                 }
                 R.id.menu_log_out -> {
                     val intent = Intent(this, IniciarSesionActivity::class.java)
-                    startActivity(intent)
+                    ajustesLauncher.launch(intent)
+                    updateUI()
                 }
                 R.id.menu_help -> {
                     Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
@@ -124,7 +144,19 @@ class HabitosActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
     }
+
+    private fun updateUI() {
+        val textHoy: TextView = findViewById(R.id.textHoy)
+        val textNombreDia: TextView = findViewById(R.id.textNombreDia)
+
+        textHoy.text = getString(R.string.hoy)
+        textNombreDia.text = getString(R.string.jueves)
+
+    }
+
+
 
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
@@ -135,13 +167,13 @@ class HabitosActivity : AppCompatActivity() {
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
+                    val intent = Intent(this, TushabitosActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.stats -> {
                     /*De momento, placeholder hasta crear las demás actividades*/
-                    val intent = Intent(this, HabitosActivity::class.java)
+                    val intent = Intent(this, EstadisticasActivity::class.java)
                     startActivity(intent)
                     true
                 }
