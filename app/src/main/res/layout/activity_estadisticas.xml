@@ -44,7 +44,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.103"
                         app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                        app:srcCompat="@drawable/grafica_11" />
+                        app:srcCompat="@drawable/grafica11" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imageView3"
@@ -146,7 +146,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView"
                         app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                        app:srcCompat="@drawable/gato" />
+                        app:srcCompat="@drawable/ic_gate" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
