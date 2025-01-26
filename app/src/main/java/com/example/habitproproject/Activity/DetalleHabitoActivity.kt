@@ -1,9 +1,11 @@
 package com.example.habitproproject.Activity
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class DetalleHabitoActivity : AppCompatActivity() {
-    private lateinit var drawerLayoutDetalleHab: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var bottomNavigationViewHab: BottomNavigationView
 
@@ -41,24 +42,23 @@ class DetalleHabitoActivity : AppCompatActivity() {
         /*Configuración toolbar*/
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        supportActionBar?.setDisplayShowTitleEnabled(true)
-        toolbar.setTitle("")
-        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
         toolbar.setTitle(nombre);
-
-
-
-        // Configurar DrawerLayout
-        drawerLayoutDetalleHab = findViewById(R.id.drawerLayout)
-        navigationView = findViewById(R.id.navigationView)
-        // Configurar el icono de navegación
-        toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
         toolbar.setNavigationOnClickListener {
-            drawerLayoutDetalleHab.openDrawer(GravityCompat.START)
+            onBackPressedDispatcher.onBackPressed()
         }
 
 
-
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+        val progressText: TextView = findViewById(R.id.progressText)
+        val progressIcon1: ImageView = findViewById(R.id.imagenHabitoProgressBar)
+        val progressIcon2: ImageView = findViewById(R.id.imagenMedallaHabito)
+        // Configura el progreso
+        progressBar.progress = progreso
+        progressText.text = "$progreso%"
+        progressIcon1.setImageResource(imagenId)
+        progressIcon2.setImageResource(R.drawable.medalla)
 
         findViewById<TextView>(R.id.textNombre).text = nombre
         findViewById<TextView>(R.id.textDescripcion).text = descripcion
@@ -99,11 +99,6 @@ class DetalleHabitoActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (drawerLayoutDetalleHab.isDrawerOpen(GravityCompat.START)) {
-            drawerLayoutDetalleHab.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
+
+
 }
