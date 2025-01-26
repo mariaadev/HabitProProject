@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+
 android {
     namespace = "com.example.habitproproject"
     compileSdk = 35
@@ -46,4 +47,5 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }
