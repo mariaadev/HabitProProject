@@ -57,7 +57,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView"
                         app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                        app:srcCompat="@drawable/grafica_2" />
+                        app:srcCompat="@drawable/grafica2" />
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
