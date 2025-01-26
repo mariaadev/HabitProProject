@@ -1,9 +1,11 @@
 package com.example.habitproproject.Activity
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,20 +13,47 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.Adapter.CalendarAdapter
+import com.example.habitproproject.Model.Dia
+import com.example.habitproproject.Model.DiaCalendario
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class DetalleHabitoActivity : AppCompatActivity() {
-    private lateinit var drawerLayoutDetalleHab: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var bottomNavigationViewHab: BottomNavigationView
+    private val daysInMonth = 31
+    private val calendarDays = mutableListOf<DiaCalendario>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalle_habito)
 
+
+        // Inicializar los días del mes
+        for (i in 1..daysInMonth) {
+            calendarDays.add(DiaCalendario(i, false))  // Todos los días comienzan sin marcar
+        }
+
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this, 7)  // 7 columnas por semana (Lunes a Domingo)
+
+        val adapter = CalendarAdapter(calendarDays) { day ->
+            // Este callback se llama cuando un día es clickeado
+            // Aquí puedes guardar el estado del día (marcado/desmarcado)
+            Log.d("MainActivity", "Día $day clickeado")
+        }
+
+        recyclerView.adapter = adapter
+        recyclerView.isNestedScrollingEnabled = false
         bottomNavigationViewHab = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
@@ -37,37 +66,49 @@ class DetalleHabitoActivity : AppCompatActivity() {
         val imagenId = intent.getIntExtra("imagenId", R.drawable.ic_study)
         val tiempoEnMinutos = intent.getIntExtra("tiempoEnMinutos", 0)
 
+        //Parsear las fechas de inicio y fin usando SimpleDateFormat
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val startDate: Date = format.parse(fechaInicio) ?: Date()
+        val endDate: Date = format.parse(fechaFin) ?: Date()
+
+        val currentDate = Date()
+
+        /*Calcular la duración total del hábito en días*/
+        val totalTime = (endDate.time - startDate.time) / (1000 * 60 * 60 * 24)
+
+        /*Calcular los días cumplidos según el progreso*/
+        val diasCompletados = (totalTime * (progreso / 100.0)).toInt()
+        val daysText = "$diasCompletados días"
+
+        findViewById<TextView>(R.id.textViewDays).text = "($daysText)"
 
         /*Configuración toolbar*/
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        supportActionBar?.setDisplayShowTitleEnabled(true)
-        toolbar.setTitle("")
-        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
         toolbar.setTitle(nombre);
-
-
-
-        // Configurar DrawerLayout
-        drawerLayoutDetalleHab = findViewById(R.id.drawerLayout)
-        navigationView = findViewById(R.id.navigationView)
-        // Configurar el icono de navegación
-        toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
         toolbar.setNavigationOnClickListener {
-            drawerLayoutDetalleHab.openDrawer(GravityCompat.START)
+            onBackPressedDispatcher.onBackPressed()
         }
 
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+        val progressText: TextView = findViewById(R.id.progressText)
+        val progressIcon1: ImageView = findViewById(R.id.imagenHabitoProgressBar)
+        val progressIcon2: ImageView = findViewById(R.id.imagenMedallaHabito)
+        // Configura el progreso
+        progressBar.progress = progreso
+        progressText.text = "$progreso%"
+        progressIcon1.setImageResource(imagenId)
+        progressIcon2.setImageResource(R.drawable.medalla)
 
-
-
-        findViewById<TextView>(R.id.textNombre).text = nombre
-        findViewById<TextView>(R.id.textDescripcion).text = descripcion
+        findViewById<ImageView>(R.id.imageViewDetalleHabito).setImageResource(imagenId)
+        findViewById<TextView>(R.id.textDescripcion).text = "Tiempo total: $descripcion"
         findViewById<TextView>(R.id.textProgreso).text = "Progreso: $progreso%"
         findViewById<TextView>(R.id.textCompletado).text =
             if (completado) "Estado: Completado" else "Estado: En progreso"
-        findViewById<TextView>(R.id.textFechas).text = "Desde: $fechaInicio Hasta: $fechaFin"
+        findViewById<TextView>(R.id.textFechas).text = "Desde: $fechaInicio\nHasta: $fechaFin"
         findViewById<TextView>(R.id.textTiempo).text = "Tiempo estimado: $tiempoEnMinutos min"
-        findViewById<ImageView>(R.id.imagenHabito).setImageResource(imagenId)
     }
 
     private fun establecerBottomNavigationView() {
@@ -99,11 +140,6 @@ class DetalleHabitoActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (drawerLayoutDetalleHab.isDrawerOpen(GravityCompat.START)) {
-            drawerLayoutDetalleHab.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
+
+
 }
