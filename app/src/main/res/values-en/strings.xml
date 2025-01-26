@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Habit Pro</string>
+    <string name="dias_consecutivos">Consecutive Days</string>
+    <string name="salir_a_correr">Go Running</string>
+    <string name="jueves">Thursday</string>
+    <string name="hoy">TODAY</string>
+    <string name="tus_habitos">Your Habits</string>
+    <string name="a_adir_nuevo_habito">Add New Habit</string>
+    <string-array name="idiomas">
+        <item>Spanish</item>
+        <item>Catalan</item>
+        <item>English</item>
+        <item>French</item>
+    </string-array>
+</resources>
+

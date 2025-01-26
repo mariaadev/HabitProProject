@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/margarine"
-                        android:text="HOY"
+                        android:text="@string/hoy"
                         android:textColor="#8C4A5F"
                         android:textSize="25sp" />
 
@@ -78,7 +78,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nunito_bold"
                         android:gravity="bottom"
-                        android:text="Jueves"
+                        android:text="@string/jueves"
                         android:textAlignment="gravity"
                         android:textColor="#3B080E"
                         android:textSize="24sp" />

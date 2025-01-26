@@ -57,7 +57,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/margarine"
-                                android:text="Tus Habitos"
+                                android:text="@string/tus_habitos"
                                 android:textColor="#3B080E"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
@@ -88,7 +88,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
                             android:layout_marginEnd="30dp"
-                            android:text="Añadir nuevo Habito"
+                            android:text="@string/a_adir_nuevo_habito"
                             android:textSize="20sp"
                             app:icon="@drawable/button_add"
                             app:iconGravity="textStart"

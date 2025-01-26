@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Habit Pro</string>
+    <string name="dias_consecutivos">Dias Consecutivos</string>
+    <string name="salir_a_correr">Salir a correr</string>
+    <string name="jueves">Jueves</string>
+    <string name="hoy">HOY</string>
+    <string name="tus_habitos">Tus Habitos</string>
+    <string name="a_adir_nuevo_habito">Añadir nuevo Habito</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>
         <item>English</item>
         <item>Français</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
