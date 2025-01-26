@@ -89,7 +89,7 @@
                         android:id="@+id/textViewDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tiempo total"
+                        android:text="@string/tiempo_total"
                         android:textSize="14sp"
                         android:textColor="#757575" />
                 </LinearLayout>
@@ -144,7 +144,7 @@
                     android:id="@+id/progressText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0%"
+                    android:text="@string/_0"
                     android:layout_marginTop="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -167,7 +167,7 @@
                             android:layout_marginTop="12dp"
                             android:layout_marginBottom="5dp"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Resumen"
+                            android:text="@string/resumen"
                             android:layout_gravity="center"
                             android:textSize="24dp" />
 
@@ -177,7 +177,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Descripción del Hábito"
+                            android:text="@string/descripci_n_del_h_bito"
                             android:textSize="18dp" />
 
                         <TextView
@@ -186,7 +186,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Progreso: 0%"
+                            android:text="@string/progreso_0"
                             android:textSize="18sp" />
 
                         <TextView
@@ -195,7 +195,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Estado: En progreso"
+                            android:text="@string/estado_en_progreso"
                             android:textSize="18sp" />
 
                         <TextView
@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Desde: Fecha Inicio Hasta: Fecha Fin"
+                            android:text="@string/desde_fecha_inicio_hasta_fecha_fin"
                             android:textSize="18sp" />
 
                         <TextView
@@ -214,7 +214,7 @@
                             android:layout_marginTop="12dp"
                             android:layout_marginBottom="12dp"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Tiempo estimado: 0 min"
+                            android:text="@string/tiempo_estimado_0_min"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -224,7 +224,7 @@
                     android:id="@+id/calendarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Calendario"
+                    android:text="@string/calendario"
                     android:textSize="24sp"
                     android:fontFamily="@font/nunito_bold"
                     android:layout_marginTop="30dp"

@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Recuérdame"
+                    android:text="@string/recu_rdame"
                     android:textColor="#844C57" />
 
 
@@ -121,7 +121,7 @@
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="#D3A6AB"
                     android:enabled="false"
-                    android:text="Iniciar sesión"
+                    android:text="@string/iniciar_sesi_n"
                     android:textColor="#FFFFFF" />
 
 
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="140dp"
-                    android:text="¿Has olvidado la contraseña?"
+                    android:text="@string/has_olvidado_la_contrase_a"
                     android:textAllCaps="false"
                     android:textColor="#844C57"
                     android:textSize="14sp" />
@@ -145,7 +145,7 @@
                     android:layout_marginBottom="30dp"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:text="¿No tienes una cuenta? Regístrate"
+                    android:text="@string/no_tienes_una_cuenta_reg_strate"
                     android:textColor="#844C57"
                     android:textSize="14sp" />
             </LinearLayout>

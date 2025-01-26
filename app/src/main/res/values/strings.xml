@@ -14,6 +14,23 @@
     <string name="acceder_a_im_genes">Acceder a imágenes</string>
     <string name="conectarse_a_internet">Conectarse a internet</string>
     <string name="conectarse_con_calendario">Conectarse con calendario</string>
+    <string name="tiempo_total">Tiempo total</string>
+    <string name="_0">0%</string>
+    <string name="resumen">Resumen</string>
+    <string name="recu_rdame">Recuérdame</string>
+    <string name="descripci_n_del_h_bito">Descripción del Hábito</string>
+    <string name="progreso_0">Progreso: 0%</string>
+    <string name="estado_en_progreso">Estado: En progreso</string>
+    <string name="desde_fecha_inicio_hasta_fecha_fin">Desde: Fecha Inicio Hasta: Fecha Fin</string>
+    <string name="tiempo_estimado_0_min">Tiempo estimado: 0 min</string>
+    <string name="calendario">Calendario</string>
+    <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="has_olvidado_la_contrase_a">¿Has olvidado la contraseña?</string>
+    <string name="no_tienes_una_cuenta_reg_strate">¿No tienes una cuenta? Regístrate</string>
+    <string name="nombre_de_usuario">Nombre de Usuario</string>
+    <string name="nombre_gmail_com">nombre@gmail.com</string>
+    <string name="_666118098">666118098</string>
+    <string name="editar_informaci_n">Editar información</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>

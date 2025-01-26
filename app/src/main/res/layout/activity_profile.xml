@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="Nombre de Usuario"
+            android:text="@string/nombre_de_usuario"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                         android:id="@+id/emailTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="nombre@gmail.com"
+                        android:text="@string/nombre_gmail_com"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -121,7 +121,7 @@
                         android:id="@+id/phoneTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="666118098"
+                        android:text="@string/_666118098"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:padding="12dp"
-            android:text="Editar información"
+            android:text="@string/editar_informaci_n"
             app:cornerRadius="16dp" />
     </LinearLayout>
 
