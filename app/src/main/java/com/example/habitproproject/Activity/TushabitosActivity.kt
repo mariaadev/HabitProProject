@@ -1,5 +1,6 @@
 package com.example.habitproproject.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TushabitosActivity : AppCompatActivity() {
 
@@ -21,11 +23,14 @@ class TushabitosActivity : AppCompatActivity() {
     private lateinit var listaHabitosTarde: List<Habitos>
     private lateinit var listaHabitosNoche: List<Habitos>
 
+    private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_tushabitos)
 
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        establecerBottomNavigationView()
 
         listaHabitosMañana = listOf(
             Habitos("Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
@@ -59,5 +64,34 @@ class TushabitosActivity : AppCompatActivity() {
         recyclerHabitosNoche.adapter = habitosAdapterNoche
 
 
+    }
+
+    private fun establecerBottomNavigationView() {
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.home -> {
+                    val intent = Intent(this, HabitosActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.habits -> {
+                    val intent = Intent(this, TushabitosActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.stats -> {
+                    /*De momento, placeholder hasta crear las demás actividades*/
+                    val intent = Intent(this, EstadisticasActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.profile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }

@@ -27,7 +27,6 @@ import java.util.Date
 import java.util.Locale
 
 class DetalleHabitoActivity : AppCompatActivity() {
-    private lateinit var navigationView: NavigationView
     private lateinit var bottomNavigationViewHab: BottomNavigationView
     private val daysInMonth = 31
     private val calendarDays = mutableListOf<DiaCalendario>()
