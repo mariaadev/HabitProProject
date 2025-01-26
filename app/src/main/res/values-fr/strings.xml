@@ -2,16 +2,25 @@
 <resources>
     <string name="app_name">Habit Pro</string>
     <string name="dias_consecutivos">Jours Consécutifs</string>
-    <string name="salir_a_correr">Aller Courir</string>
+    <string name="salir_a_correr">Aller courir</string>
     <string name="jueves">Jeudi</string>
     <string name="hoy">AUJOURD HUI</string>
     <string name="tus_habitos">Vos Habitudes</string>
-    <string name="a_adir_nuevo_habito">Ajouter Nouvelle Habitude</string>
+    <string name="a_adir_nuevo_habito">Ajouter une Nouvelle Habitude</string>
+    <string name="idioma">Langue</string>
+    <string name="brillo">Luminosité</string>
+    <string name="tama_o_texto">Taille du texte</string>
+    <string name="notificaciones">Notifications</string>
+    <string name="permisos">Autorisations</string>
+    <string name="acceder_a_im_genes">Accéder aux images</string>
+    <string name="conectarse_a_internet">Se connecter à Internet</string>
+    <string name="conectarse_con_calendario">Se connecter au Calendrier</string>
     <string-array name="idiomas">
         <item>Español</item>
-        <item>Catalan</item>
-        <item>Anglais</item>
+        <item>Català</item>
+        <item>English</item>
         <item>Français</item>
     </string-array>
 </resources>
+
 

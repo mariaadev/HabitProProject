@@ -56,11 +56,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/idiomaTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:text="Idioma"
+                        android:text="@string/idioma"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -104,11 +104,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/brilloTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
-                        android:text="Brillo"
+                        android:text="@string/brillo"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +126,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintStart_toEndOf="@+id/brilloTxt"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="1.0" />
 
@@ -157,11 +157,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/tamañoTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
-                        android:text="Tamaño texto"
+                        android:text="@string/tama_o_texto"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +179,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/textView6"
+                        app:layout_constraintStart_toEndOf="@+id/tamañoTxt"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="1.0" />
 
@@ -205,11 +205,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView7"
+                        android:id="@+id/notificacionesTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
-                        android:text="Notificaciones"
+                        android:text="@string/notificaciones"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -247,13 +247,13 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/permisoTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
-                        android:text="Permisos"
+                        android:text="@string/permisos"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -281,11 +281,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/imagesTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
-                        android:text="Acceder a imágenes"
+                        android:text="@string/acceder_a_im_genes"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -327,7 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
-                        android:text="Conectarse a internet"
+                        android:text="@string/conectarse_a_internet"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -365,11 +365,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/calendarTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24sp"
-                        android:text="Conectarse con calendario"
+                        android:text="@string/conectarse_con_calendario"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

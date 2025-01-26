@@ -5,8 +5,16 @@
     <string name="salir_a_correr">Sortir a córrer</string>
     <string name="jueves">Dijous</string>
     <string name="hoy">AVUI</string>
-    <string name="tus_habitos">Els Teus Hàbits</string>
-    <string name="a_adir_nuevo_habito">Afegir nou hàbit</string>
+    <string name="tus_habitos">Els teus Hàbits</string>
+    <string name="a_adir_nuevo_habito">Afegir nou Hàbit</string>
+    <string name="idioma">Idioma</string>
+    <string name="brillo">Brillantor</string>
+    <string name="tama_o_texto">Mida del text</string>
+    <string name="notificaciones">Notificacions</string>
+    <string name="permisos">Permisos</string>
+    <string name="acceder_a_im_genes">Accedir a imatges</string>
+    <string name="conectarse_a_internet">Connectar-se a internet</string>
+    <string name="conectarse_con_calendario">Connectar-se amb el calendari</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>
@@ -14,4 +22,5 @@
         <item>Français</item>
     </string-array>
 </resources>
+
 
