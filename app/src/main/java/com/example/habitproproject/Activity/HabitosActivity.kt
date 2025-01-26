@@ -135,18 +135,17 @@ class HabitosActivity : AppCompatActivity() {
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
+                    val intent = Intent(this, TushabitosActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.stats -> {
-                    /*De momento, placeholder hasta crear las demás actividades*/
-                    val intent = Intent(this, HabitosActivity::class.java)
+                    val intent = Intent(this, EstadisticasActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.profile -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
+                    val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
