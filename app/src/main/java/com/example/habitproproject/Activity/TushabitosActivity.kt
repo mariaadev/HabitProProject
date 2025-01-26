@@ -5,6 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.Model.Habitos
@@ -40,6 +42,21 @@ class TushabitosActivity : AppCompatActivity() {
         )
 
         habitosAdapterMañana = TusHabitosAdapter(listaHabitosMañana)
+        habitosAdapterTarde = TusHabitosAdapter(listaHabitosTarde)
+        habitosAdapterNoche = TusHabitosAdapter(listaHabitosNoche)
+
+
+        val recyclerHabitosMañana = findViewById<RecyclerView>(R.id.recyclerHabitosMañana)
+        recyclerHabitosMañana.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerHabitosMañana.adapter = habitosAdapterMañana
+
+        val recyclerHabitosTarde = findViewById<RecyclerView>(R.id.recyclerHabitosTarde)
+        recyclerHabitosTarde.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerHabitosTarde.adapter = habitosAdapterTarde
+
+        val recyclerHabitosNoche = findViewById<RecyclerView>(R.id.recyclerHabitosNoche)
+        recyclerHabitosNoche.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerHabitosNoche.adapter = habitosAdapterNoche
 
 
     }

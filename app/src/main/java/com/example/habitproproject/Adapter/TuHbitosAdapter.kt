@@ -55,6 +55,11 @@ class TusHabitosAdapter(
         fun bind(habito: Habitos) {
             textNombreHabit.text = habito.nombre
             imageHabit.setImageResource(habito.imagenId)
+
+            val layoutParams = imageHabit.layoutParams
+                layoutParams.width = 50  // ancho en píxeles
+                layoutParams.height = 50 // alto en píxeles
+                imageHabit.layoutParams = layoutParams
         }
 
     }
