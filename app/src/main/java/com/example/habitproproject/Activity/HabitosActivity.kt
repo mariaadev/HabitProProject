@@ -3,6 +3,7 @@ package com.example.habitproproject.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
@@ -30,6 +31,11 @@ class HabitosActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+
+    override fun onStart() {
+        super.onStart()
+        updateUI()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +111,6 @@ class HabitosActivity : AppCompatActivity() {
             Habitos("Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water),
             Habitos("Estudiar", "2 horas", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_study),
             Habitos("Programar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_coding),
-
             Habitos("Comer sano", "2 veces por semana", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_healthy),
             Habitos("Leer", "10 páginas", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_read),
             Habitos("Desconectar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_mobile),
@@ -124,6 +129,16 @@ class HabitosActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun updateUI() {
+        val titulo: TextView = findViewById(R.id.textHoy)
+        val dia: TextView = findViewById(R.id.textNombreDia)
+
+
+        titulo.text = getString(R.string.hoy)
+        dia.text = getString(R.string.jueves)
+
     }
 
     private fun establecerBottomNavigationView() {
