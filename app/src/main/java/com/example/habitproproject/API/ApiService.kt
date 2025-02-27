@@ -18,9 +18,9 @@ interface ApiService {
     fun createHabitos(@Body nuevoHabito: Habitos): Call<Habitos>
 
     @PUT("habitos/{id}")
-    fun actualizarHabito(@Path("id") id: Int, @Body habito: Habitos): Call<Habitos>
+    fun updateHabito(@Path("id") id: Int, @Body habito: Habitos): Call<Habitos>
 
     @DELETE("habitos/{id}")
-    fun eliminarHabito(@Path("id") id: Int): Call<Unit>
+    fun deleteHabito(@Path("id") id: Int): Call<Unit>
 }
 
