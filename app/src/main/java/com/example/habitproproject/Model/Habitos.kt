@@ -1,6 +1,7 @@
 package com.example.habitproproject.Model
 
 data class Habitos(
+    val id: Int? = null,
     val nombre: String,
     val descripcion: String,
     val progreso: Int,

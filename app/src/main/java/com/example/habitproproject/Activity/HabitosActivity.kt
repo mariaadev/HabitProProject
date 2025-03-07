@@ -107,14 +107,14 @@ class HabitosActivity : AppCompatActivity() {
 
         /*RecyclerView Hábitos*/
         listaHabitos = listOf(
-            Habitos("Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
-            Habitos("Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water),
-            Habitos("Estudiar", "2 horas", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_study),
-            Habitos("Programar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_coding),
-            Habitos("Comer sano", "2 veces por semana", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_healthy),
-            Habitos("Leer", "10 páginas", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_read),
-            Habitos("Desconectar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_mobile),
-            Habitos("Ir al gimnasio", "2 dias", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_gym),
+            Habitos(null,"Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
+            Habitos(null,"Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water),
+            Habitos(null,"Estudiar", "2 horas", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_study),
+            Habitos(null,"Programar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_coding),
+            Habitos(null,"Comer sano", "2 veces por semana", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_healthy),
+            Habitos(null,"Leer", "10 páginas", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_read),
+            Habitos(null,"Desconectar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_mobile),
+            Habitos(null,"Ir al gimnasio", "2 dias", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_gym),
 
             )
 
@@ -134,8 +134,6 @@ class HabitosActivity : AppCompatActivity() {
     private fun updateUI() {
         val titulo: TextView = findViewById(R.id.textHoy)
         val dia: TextView = findViewById(R.id.textNombreDia)
-
-
         titulo.text = getString(R.string.hoy)
         dia.text = getString(R.string.jueves)
 
