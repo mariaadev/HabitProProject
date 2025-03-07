@@ -32,6 +32,8 @@ class TushabitosActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
+        bottomNavigationView.selectedItemId = R.id.habits
+
         listaHabitosMañana = listOf(
             Habitos(null,"Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
             Habitos(null,"Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water)
@@ -68,26 +70,31 @@ class TushabitosActivity : AppCompatActivity() {
 
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            val currentActivity = this::class.java
             when (menuItem.itemId) {
                 R.id.home -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
-                    startActivity(intent)
+                    if (HabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, HabitosActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, TushabitosActivity::class.java)
-                    startActivity(intent)
                     true
                 }
                 R.id.stats -> {
                     /*De momento, placeholder hasta crear las demás actividades*/
-                    val intent = Intent(this, EstadisticasActivity::class.java)
-                    startActivity(intent)
+                    if (EstadisticasActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, EstadisticasActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.profile -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
+                    if (ProfileActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 else -> false

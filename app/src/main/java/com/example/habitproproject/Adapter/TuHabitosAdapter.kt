@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.Activity.DetalleHabitoActivity
-import com.example.habitproproject.Adapter.HabitosAdapter.HabitosViewHolder
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 
@@ -57,8 +56,8 @@ class TusHabitosAdapter(
             imageHabit.setImageResource(habito.imagenId)
 
             val layoutParams = imageHabit.layoutParams
-                layoutParams.width = 50  // ancho en píxeles
-                layoutParams.height = 50 // alto en píxeles
+                layoutParams.width = 50
+                layoutParams.height = 50
                 imageHabit.layoutParams = layoutParams
         }
 

@@ -83,11 +83,6 @@ class HabitosActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-        /*Navegación a la Activivty de ajustes*/
-        /*val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
-        menuAjustesButton.setOnClickListener {
-            abrirAjustesActivity()
-        }*/
 
         /*RecyclerView Dias*/
         val recyclerDias = findViewById<RecyclerView>(R.id.recyclerDias)
@@ -124,11 +119,6 @@ class HabitosActivity : AppCompatActivity() {
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerHabitos.adapter = habitosAdapter
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
 
     private fun updateUI() {
