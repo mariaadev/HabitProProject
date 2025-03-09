@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -13,10 +16,13 @@
         android:theme="@style/Theme.HabitProProject"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.CrearHabito"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.TushabitosActivity"
+            android:name=".Activity.TusHabitosActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.EstadisticasActivity"
@@ -46,7 +52,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

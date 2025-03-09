@@ -13,5 +13,5 @@ data class Habitos(
     val fechaInicio: String,
     val fechaFin: String,
     val completado: Boolean,
-    val imagenId: Int,
-): Parcelable
+    val imagenId: String
+) : Parcelable

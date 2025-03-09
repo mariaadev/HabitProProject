@@ -1,12 +1,14 @@
 package com.example.habitproproject.Adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.habitproproject.Activity.DetalleHabitoActivity
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
@@ -15,17 +17,17 @@ class HabitosAdapter(
     private var listaHabitos: List<Habitos>
 ) : RecyclerView.Adapter<HabitosAdapter.HabitosViewHolder>() {
 
-    fun actualizarLista(nuevaLista: List<Habitos>) {
+    fun actualizarListaHabitos(nuevaLista: List<Habitos>) {
         listaHabitos = nuevaLista
-        notifyDataSetChanged()  // Refresca el RecyclerView
+        notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitosViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_habito, parent, false)
         return HabitosViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: HabitosViewHolder, position: Int) {
         val habito = listaHabitos[position]
@@ -48,9 +50,20 @@ class HabitosAdapter(
         private val imageHabit: ImageView = itemView.findViewById(R.id.imageHabit)
 
         fun bind(habito: Habitos) {
+            Log.d("HabitosAdapter", "Habit: ${habito.nombre}, Progreso: ${habito.progreso}, Tiempo en minutos: ${habito.tiempoEnMinutos}, ImagenId: ${habito.imagenId}")
+
             textNombreHabit.text = habito.nombre
             textDescripcion.text = habito.descripcion
-            imageHabit.setImageResource(habito.imagenId)
+
+            if (habito.imagenId.isNotEmpty()) {
+                Glide.with(itemView.context)
+                    .load(habito.imagenId)
+                    .placeholder(R.drawable.subir_imagen)
+                    .error(R.drawable.ic_clear)
+                    .into(imageHabit)
+            } else {
+                imageHabit.setImageResource(R.drawable.subir_imagen)
+            }
         }
     }
 }

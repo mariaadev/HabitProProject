@@ -25,6 +25,8 @@ class ProfileActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
+        bottomNavigationView.selectedItemId = R.id.profile
+
         /*Configuración toolbar*/
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar2);
         setSupportActionBar(toolbar);
@@ -65,26 +67,31 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            val currentActivity = this::class.java
             when (menuItem.itemId) {
                 R.id.home -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
-                    startActivity(intent)
+                    if (HabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, HabitosActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, TushabitosActivity::class.java)
-                    startActivity(intent)
+                    if (TusHabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, TusHabitosActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.stats -> {
                     /*De momento, placeholder hasta crear las demás actividades*/
-                    val intent = Intent(this, EstadisticasActivity::class.java)
-                    startActivity(intent)
+                    if (EstadisticasActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, EstadisticasActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.profile -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
                     true
                 }
                 else -> false

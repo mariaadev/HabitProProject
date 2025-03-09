@@ -31,6 +31,14 @@
     <string name="nombre_gmail_com">nombre@gmail.com</string>
     <string name="_666118098">666118098</string>
     <string name="editar_informaci_n">Editar información</string>
+    <string name="crear_h_bito">Crear Hábito</string>
+    <string name="guardar">Guardar</string>
+    <string name="nombre_del_h_bito">Nombre del hábito</string>
+    <string name="ej_leer_hacer_ejercicio">Ej. Leer, Hacer ejercicio</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="describe_el_h_bito">Describe el hábito</string>
+    <string name="selecciona_una_imagen">Selecciona una imagen</string>
+    <string name="cu_ndo_lo_realizar_s">¿Cuándo lo realizarás?</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>

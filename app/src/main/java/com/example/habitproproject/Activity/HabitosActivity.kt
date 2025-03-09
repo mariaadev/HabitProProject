@@ -2,11 +2,20 @@ package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import retrofit2.Call
+import retrofit2.Callback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,11 +29,11 @@ import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import retrofit2.Response
-import retrofit2.Call
 
 
 class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
+    private  var listaHabitos: List<Habitos> = emptyList()
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private lateinit var drawerLayout: DrawerLayout
@@ -81,12 +90,7 @@ class HabitosActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-        /*Navegación a la Activivty de ajustes*/
-        /*val menuAjustesButton = findViewById<ImageButton>(R.id.menuAjustes)
-        menuAjustesButton.setOnClickListener {
-            abrirAjustesActivity()
-        }*/
-
+        bottomNavigationView.selectedItemId = R.id.home
         /*RecyclerView Dias*/
         val recyclerDias = findViewById<RecyclerView>(R.id.recyclerDias)
         recyclerDias.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -104,35 +108,21 @@ class HabitosActivity : AppCompatActivity() {
         recyclerDias.adapter = adapter
 
 
+
+        habitosAdapter = HabitosAdapter(listaHabitos)
+
         val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        habitosAdapter = HabitosAdapter(emptyList())
         recyclerHabitos.adapter = habitosAdapter
 
-        carregarHabitos()
+        val buttonAdd = findViewById<ImageView>(R.id.buttonAdd)
+        buttonAdd.setOnClickListener {
+            val intent = Intent(this, CrearHabito::class.java)
+            startActivity(intent)
+        }
+
+        obtenerHabitos()
     }
-
-    private fun carregarHabitos(){
-        val apiService = RetrofitClient.instance.create(ApiService::class.java)
-        val call = apiService.getHabitos();
-
-        call.enqueue(object : retrofit2.Callback<List<Habitos>>{
-            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
-                if (response.isSuccessful) {
-                    val habitosList: List<Habitos> = response.body() ?: emptyList()
-                    habitosAdapter.actualizarLista(habitosList)
-                } else {
-                    Toast.makeText(this@HabitosActivity, "Error al cargar los hábitos", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
-                Toast.makeText(this@HabitosActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-
 
     private fun updateUI() {
         val titulo: TextView = findViewById(R.id.textHoy)
@@ -142,12 +132,33 @@ class HabitosActivity : AppCompatActivity() {
 
     }
 
+    private fun obtenerHabitos() {
+        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+
+        apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
+            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
+                if (response.isSuccessful) {
+                    val habitosObtenidos = response.body()
+                    Log.d("HabitosActivity", "Respuesta de la API: $habitosObtenidos")
+                    listaHabitos = response.body() ?: emptyList()
+                    habitosAdapter = HabitosAdapter(listaHabitos)
+                    habitosAdapter.actualizarListaHabitos(listaHabitos)
+                    val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
+                    recyclerHabitos.adapter = habitosAdapter
+                } else {
+                    Toast.makeText(this@HabitosActivity, "Error al obtener los hábitos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
+                Toast.makeText(this@HabitosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
-                    startActivity(intent)
                     true
                 }
                 R.id.habits -> {

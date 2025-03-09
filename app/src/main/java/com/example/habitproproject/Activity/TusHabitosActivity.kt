@@ -34,6 +34,9 @@ class TushabitosActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
+        bottomNavigationView.selectedItemId = R.id.habits
+
+
         habitosAdapterMañana = TusHabitosAdapter(emptyList())
         habitosAdapterTarde = TusHabitosAdapter(emptyList())
         habitosAdapterNoche = TusHabitosAdapter(emptyList())
@@ -56,7 +59,7 @@ class TushabitosActivity : AppCompatActivity() {
     }
 
     private fun carregarHabitos(){
-        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
         val call = apiService.getHabitos()
 
         call.enqueue(object : retrofit2.Callback<List<Habitos>> {
@@ -93,26 +96,31 @@ class TushabitosActivity : AppCompatActivity() {
 
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            val currentActivity = this::class.java
             when (menuItem.itemId) {
                 R.id.home -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
-                    startActivity(intent)
+                    if (HabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, HabitosActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, TushabitosActivity::class.java)
-                    startActivity(intent)
                     true
                 }
                 R.id.stats -> {
                     /*De momento, placeholder hasta crear las demás actividades*/
-                    val intent = Intent(this, EstadisticasActivity::class.java)
-                    startActivity(intent)
+                    if (EstadisticasActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, EstadisticasActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 R.id.profile -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
+                    if (ProfileActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        finish()
+                    }
                     true
                 }
                 else -> false
