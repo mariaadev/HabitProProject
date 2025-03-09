@@ -2,19 +2,16 @@ package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.API.ApiService
+import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Adapter.DiasAdapter
 import com.example.habitproproject.Model.Habitos
@@ -22,11 +19,12 @@ import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import retrofit2.Response
+import retrofit2.Call
 
 
 class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
-    private lateinit var listaHabitos: List<Habitos>
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private lateinit var drawerLayout: DrawerLayout
@@ -105,31 +103,36 @@ class HabitosActivity : AppCompatActivity() {
         val adapter = DiasAdapter(listaDias)
         recyclerDias.adapter = adapter
 
-        /*RecyclerView Hábitos*/
-        listaHabitos = listOf(
-            Habitos(null,"Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
-            Habitos(null,"Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water),
-            Habitos(null,"Estudiar", "2 horas", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_study),
-            Habitos(null,"Programar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_coding),
-            Habitos(null,"Comer sano", "2 veces por semana", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_healthy),
-            Habitos(null,"Leer", "10 páginas", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_read),
-            Habitos(null,"Desconectar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_mobile),
-            Habitos(null,"Ir al gimnasio", "2 dias", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_gym),
-
-            )
-
-        habitosAdapter = HabitosAdapter(listaHabitos)
 
         val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        habitosAdapter = HabitosAdapter(emptyList())
         recyclerHabitos.adapter = habitosAdapter
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        carregarHabitos()
     }
+
+    private fun carregarHabitos(){
+        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+        val call = apiService.getHabitos();
+
+        call.enqueue(object : retrofit2.Callback<List<Habitos>>{
+            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
+                if (response.isSuccessful) {
+                    val habitosList: List<Habitos> = response.body() ?: emptyList()
+                    habitosAdapter.actualizarLista(habitosList)
+                } else {
+                    Toast.makeText(this@HabitosActivity, "Error al cargar los hábitos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
+                Toast.makeText(this@HabitosActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
 
     private fun updateUI() {
         val titulo: TextView = findViewById(R.id.textHoy)
@@ -182,3 +185,4 @@ class HabitosActivity : AppCompatActivity() {
     }
 
 }
+

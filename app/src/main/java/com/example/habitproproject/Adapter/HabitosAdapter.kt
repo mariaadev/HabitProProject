@@ -12,14 +12,20 @@ import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 
 class HabitosAdapter(
-    private val listaHabitos: List<Habitos>
+    private var listaHabitos: List<Habitos>
 ) : RecyclerView.Adapter<HabitosAdapter.HabitosViewHolder>() {
+
+    fun actualizarLista(nuevaLista: List<Habitos>) {
+        listaHabitos = nuevaLista
+        notifyDataSetChanged()  // Refresca el RecyclerView
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitosViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_habito, parent, false)
         return HabitosViewHolder(view)
     }
+
 
     override fun onBindViewHolder(holder: HabitosViewHolder, position: Int) {
         val habito = listaHabitos[position]
@@ -28,15 +34,7 @@ class HabitosAdapter(
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, DetalleHabitoActivity::class.java).apply {
-                putExtra("nombre", habito.nombre)
-                putExtra("duracion", habito.descripcion)
-                putExtra("progreso", habito.progreso)
-                putExtra("completado", habito.completado)
-                putExtra("fechaInicio", habito.fechaInicio)
-                putExtra("fechaFin", habito.fechaFin)
-                putExtra("imagenId", habito.imagenId)
-                putExtra("tiempoEnMinutos", habito.tiempoEnMinutos)
-
+                putExtra("habito", habito)
             }
             context.startActivity(intent)
         }

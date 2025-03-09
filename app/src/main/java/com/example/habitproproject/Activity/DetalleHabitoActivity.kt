@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.Adapter.CalendarAdapter
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Model.DiaCalendario
+import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -56,14 +57,16 @@ class DetalleHabitoActivity : AppCompatActivity() {
         bottomNavigationViewHab = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-        val nombre = intent.getStringExtra("nombre") ?: "Sin nombre"
-        val descripcion = intent.getStringExtra("duracion") ?: "Sin descripción"
-        val progreso = intent.getIntExtra("progreso", 0)
-        val completado = intent.getBooleanExtra("completado", false)
-        val fechaInicio = intent.getStringExtra("fechaInicio") ?: "Sin fecha de inicio"
-        val fechaFin = intent.getStringExtra("fechaFin") ?: "Sin fecha de fin"
-        val imagenId = intent.getIntExtra("imagenId", R.drawable.ic_study)
-        val tiempoEnMinutos = intent.getIntExtra("tiempoEnMinutos", 0)
+        val habito = intent.getParcelableExtra<Habitos>("habito")
+
+        val nombre = habito?.nombre ?: "Sin nombre"
+        val descripcion = habito?.descripcion ?: "Sin descripción"
+        val progreso = habito?.progreso ?: 0
+        val completado = habito?.completado ?: false
+        val fechaInicio = habito?.fechaInicio ?: "Sin fecha de inicio"
+        val fechaFin = habito?.fechaFin ?: "Sin fecha de fin"
+        val imagenId = habito?.imagenId ?: R.drawable.ic_study
+        val tiempoEnMinutos = habito?.tiempoEnMinutos ?: 0
 
         //Parsear las fechas de inicio y fin usando SimpleDateFormat
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

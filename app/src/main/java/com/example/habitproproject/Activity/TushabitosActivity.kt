@@ -2,28 +2,30 @@ package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.API.ApiService
+import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import retrofit2.Call
+import retrofit2.Response
 
 class TushabitosActivity : AppCompatActivity() {
 
     private lateinit var habitosAdapterMañana: TusHabitosAdapter
     private lateinit var habitosAdapterTarde: TusHabitosAdapter
     private lateinit var habitosAdapterNoche: TusHabitosAdapter
-    private lateinit var listaHabitosMañana: List<Habitos>
-    private lateinit var listaHabitosTarde: List<Habitos>
-    private lateinit var listaHabitosNoche: List<Habitos>
-
     private lateinit var bottomNavigationView: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,23 +34,9 @@ class TushabitosActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-        listaHabitosMañana = listOf(
-            Habitos(null,"Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
-            Habitos(null,"Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water)
-
-            )
-        listaHabitosTarde = listOf(
-            Habitos(null,"Estudiar", "2 horas", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_study),
-            Habitos(null,"Programar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_coding)
-        )
-
-        listaHabitosNoche = listOf(
-            Habitos(null,"Leer", "10 páginas", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_read)
-        )
-
-        habitosAdapterMañana = TusHabitosAdapter(listaHabitosMañana)
-        habitosAdapterTarde = TusHabitosAdapter(listaHabitosTarde)
-        habitosAdapterNoche = TusHabitosAdapter(listaHabitosNoche)
+        habitosAdapterMañana = TusHabitosAdapter(emptyList())
+        habitosAdapterTarde = TusHabitosAdapter(emptyList())
+        habitosAdapterNoche = TusHabitosAdapter(emptyList())
 
 
         val recyclerHabitosMañana = findViewById<RecyclerView>(R.id.recyclerHabitosMañana)
@@ -63,7 +51,44 @@ class TushabitosActivity : AppCompatActivity() {
         recyclerHabitosNoche.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerHabitosNoche.adapter = habitosAdapterNoche
 
+        carregarHabitos();
 
+    }
+
+    private fun carregarHabitos(){
+        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+        val call = apiService.getHabitos()
+
+        call.enqueue(object : retrofit2.Callback<List<Habitos>> {
+            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
+                if (response.isSuccessful) {
+                    val habitosList: List<Habitos> = response.body() ?: emptyList()
+
+                    val listaHabitosMañana = mutableListOf<Habitos>()
+                    val listaHabitosTarde = mutableListOf<Habitos>()
+                    val listaHabitosNoche = mutableListOf<Habitos>()
+
+                    for ((index, habito) in habitosList.withIndex()) {
+                        when (index % 3) {
+                            0 -> listaHabitosMañana.add(habito)
+                            1 -> listaHabitosTarde.add(habito)
+                            2 -> listaHabitosNoche.add(habito)
+                        }
+                    }
+
+                    // Actualitzar els adaptadors amb les llistes filtrades
+                    habitosAdapterMañana.actualizarLista(listaHabitosMañana)
+                    habitosAdapterTarde.actualizarLista(listaHabitosTarde)
+                    habitosAdapterNoche.actualizarLista(listaHabitosNoche)
+                } else {
+                    Toast.makeText(this@TushabitosActivity, "Error al cargar los hábitos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
+                Toast.makeText(this@TushabitosActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun establecerBottomNavigationView() {

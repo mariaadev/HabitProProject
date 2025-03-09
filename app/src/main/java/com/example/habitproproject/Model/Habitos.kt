@@ -1,5 +1,9 @@
 package com.example.habitproproject.Model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Habitos(
     val id: Int? = null,
     val nombre: String,
@@ -9,5 +13,5 @@ data class Habitos(
     val fechaInicio: String,
     val fechaFin: String,
     val completado: Boolean,
-    val imagenId: Int
-)
+    val imagenId: Int,
+): Parcelable
