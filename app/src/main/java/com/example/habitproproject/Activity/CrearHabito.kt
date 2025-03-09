@@ -3,6 +3,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -19,6 +21,9 @@ import com.example.habitproproject.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CrearHabito : AppCompatActivity() {
 
@@ -43,6 +48,12 @@ class CrearHabito : AppCompatActivity() {
         "http://13.216.192.241/images/imagen8.png"
     )
 
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+    /*ús de shared preferences per guardar moment del dia i objectiu de l'hàbit*/
+    private val sharedPreferences by lazy {
+        getSharedPreferences("HABITOS_PREF", Context.MODE_PRIVATE)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_habito)
@@ -57,6 +68,9 @@ class CrearHabito : AppCompatActivity() {
         btnGuardar = findViewById(R.id.btnGuardar)
 
         ivSeleccionarImagen.setOnClickListener { mostrarSelectorImagenes() }
+
+        etFechaInicio.setOnClickListener { mostrarDatePickerDialog(etFechaInicio) }
+        etFechaFin.setOnClickListener { mostrarDatePickerDialog(etFechaFin) }
 
         btnGuardar.setOnClickListener { guardarHabito() }
     }
@@ -78,6 +92,23 @@ class CrearHabito : AppCompatActivity() {
             .show()
     }
 
+    private fun mostrarDatePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                val date = Calendar.getInstance()
+                date.set(year, month, dayOfMonth)
+                editText.setText(dateFormat.format(date.time))
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
+    }
+
+
     private fun guardarHabito() {
         val nombre = etNombreHabito.text.toString()
         val descripcion = etDescripcion.text.toString()
@@ -91,6 +122,8 @@ class CrearHabito : AppCompatActivity() {
             R.id.rbNoche -> "Noche"
             else -> "Cualquiera"
         }
+
+
         val nuevoHabito = Habitos(
             nombre = nombre,
             descripcion = descripcion,
@@ -106,6 +139,11 @@ class CrearHabito : AppCompatActivity() {
         apiService.createHabitos(nuevoHabito).enqueue(object : Callback<Habitos> {
             override fun onResponse(call: Call<Habitos>, response: Response<Habitos>) {
                 if (response.isSuccessful) {
+                    val habit = response.body()
+                    habit?.id?.let { id ->
+                        /*emmagatzemar moment dia i objectiu en sharedpreferences*/
+                        guardarEnSharedPreferences(id, momentoDia, objetivo)
+                    }
                     Toast.makeText(this@CrearHabito, "Hábito creado exitosamente", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@CrearHabito, "Error al crear hábito", Toast.LENGTH_SHORT).show()
@@ -116,6 +154,13 @@ class CrearHabito : AppCompatActivity() {
                 Toast.makeText(this@CrearHabito, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun guardarEnSharedPreferences(idHabito: Int, momentoDia: String, objetivo: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("$idHabito.MOMENTO_DIA", momentoDia)
+        editor.putString("$idHabito.OBJETIVO", objetivo)
+        editor.apply()
     }
 }
 
