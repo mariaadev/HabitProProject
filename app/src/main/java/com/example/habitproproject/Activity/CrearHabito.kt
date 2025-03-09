@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
@@ -137,7 +138,7 @@ class CrearHabito : AppCompatActivity() {
             imagenId = ""
         )
 
-        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
         apiService.createHabitos(nuevoHabito).enqueue(object : Callback<Habitos> {
             override fun onResponse(call: Call<Habitos>, response: Response<Habitos>) {
                 if (response.isSuccessful) {
@@ -147,6 +148,10 @@ class CrearHabito : AppCompatActivity() {
                         guardarEnSharedPreferences(id, momentoDia, objetivo)
                     }
                     Toast.makeText(this@CrearHabito, "Hábito creado exitosamente", Toast.LENGTH_SHORT).show()
+                    /*navegar al llistat d'hàbits*/
+                    val intent = Intent(this@CrearHabito, HabitosActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 } else {
                     val errorResponse = response.errorBody()?.string()
                     val statusCode = response.code()

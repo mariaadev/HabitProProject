@@ -132,7 +132,7 @@ class HabitosActivity : AppCompatActivity() {
     }
 
     private fun obtenerHabitos() {
-        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
 
         apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
             override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
