@@ -133,7 +133,7 @@ class CrearHabito : AppCompatActivity() {
             R.id.rbManana -> "Mañana"
             R.id.rbTarde -> "Tarde"
             R.id.rbNoche -> "Noche"
-            else -> "Cualquiera"
+            else -> "Mañana"
         }
 
 
