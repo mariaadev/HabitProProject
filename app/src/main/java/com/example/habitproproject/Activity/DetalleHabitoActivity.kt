@@ -1,14 +1,19 @@
 package com.example.habitproproject.Activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.Image
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -17,6 +22,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.habitproproject.API.ApiService
+import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Adapter.CalendarAdapter
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Model.DiaCalendario
@@ -24,6 +31,9 @@ import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -33,18 +43,20 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private lateinit var bottomNavigationViewHab: BottomNavigationView
     private val daysInMonth = 31
     private val calendarDays = mutableListOf<DiaCalendario>()
-
+    private var habito: Habitos? = null
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalle_habito)
 
         /*Aplicar un o altre depenent de la versió del sdk*/
-        val habito: Habitos? = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        this.habito = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("habito", Habitos::class.java)
         } else {
             intent.getParcelableExtra("habito")
         }
+
 
 
         if (habito != null) {
@@ -67,14 +79,14 @@ class DetalleHabitoActivity : AppCompatActivity() {
         bottomNavigationViewHab = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-        val nombre = habito.nombre
-        val descripcion = habito.descripcion
-        val progreso = habito.progreso
-        val completado = habito.completado
-        val fechaInicio = habito.fechaInicio
-        val fechaFin = habito.fechaFin
-        val imagenId = habito.imagenId
-        val tiempoEnMinutos = habito.tiempoEnMinutos
+        val nombre = habito!!.nombre
+        val descripcion = habito!!.descripcion
+        val progreso = habito!!.progreso
+        val completado = habito!!.completado
+        val fechaInicio = habito!!.fechaInicio
+        val fechaFin = habito!!.fechaFin
+        val imagenId = habito!!.imagenId
+        val tiempoEnMinutos = habito!!.tiempoEnMinutos
 
         //Parsear las fechas de inicio y fin usando SimpleDateFormat
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -123,10 +135,56 @@ class DetalleHabitoActivity : AppCompatActivity() {
             if (completado) "Estado: Completado" else "Estado: En progreso"
         findViewById<TextView>(R.id.textFechas).text = "Desde: $fechaInicio\nHasta: $fechaFin"
         findViewById<TextView>(R.id.textTiempo).text = "Tiempo estimado: $tiempoEnMinutos min"
-
+            findViewById<ImageView>(R.id.buttonEliminar).setOnClickListener {
+                mostrarDialogoConfirmacion()
+            }
         } else {
             Toast.makeText(this, "Error: No se pudo obtener el hábito", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun mostrarDialogoConfirmacion() {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar Hábito")
+            .setMessage("¿Estás seguro de que deseas eliminar este hábito?")
+            .setPositiveButton("Eliminar") { _, _ -> eliminarHabito() }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun eliminarHabito() {
+        habito?.let { habito ->
+            val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+            habito.id?.let {
+                apiService.deleteHabito(it).enqueue(object : Callback<Unit> {
+                    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                        if (response.isSuccessful) {
+                            Log.d("EliminarHabito", "Hábito eliminado correctamente")
+                            Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
+                            redirigirAHabitosActivity()
+                        } else {
+                            Log.e("EliminarHabito", "Error al eliminar: ${response.errorBody()?.string()}")
+                            Toast.makeText(this@DetalleHabitoActivity, "Error al eliminar", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
+                    override fun onFailure(call: Call<Unit>, t: Throwable) {
+                        Toast.makeText(this@DetalleHabitoActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
+    }
+
+
+    private fun redirigirAHabitosActivity() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, HabitosActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }, 500) /*redirigir a la activity de llista d'hàbits*/
     }
 
     private fun establecerBottomNavigationView() {
