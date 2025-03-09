@@ -1,27 +1,37 @@
 package com.example.habitproproject.Activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.API.ApiService
+import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TusHabitosActivity : AppCompatActivity() {
 
     private lateinit var habitosAdapterMañana: TusHabitosAdapter
     private lateinit var habitosAdapterTarde: TusHabitosAdapter
     private lateinit var habitosAdapterNoche: TusHabitosAdapter
-    private lateinit var listaHabitosMañana: List<Habitos>
-    private lateinit var listaHabitosTarde: List<Habitos>
-    private lateinit var listaHabitosNoche: List<Habitos>
+    private lateinit var listaHabitosMañana: MutableList<Habitos>
+    private lateinit var listaHabitosTarde: MutableList<Habitos>
+    private lateinit var listaHabitosNoche: MutableList<Habitos>
 
     private lateinit var bottomNavigationView: BottomNavigationView
+    private val sharedPreferences by lazy {
+        getSharedPreferences("HABITOS_PREF", Context.MODE_PRIVATE)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,9 +42,9 @@ class TusHabitosActivity : AppCompatActivity() {
 
         bottomNavigationView.selectedItemId = R.id.habits
 
-        listaHabitosMañana = emptyList()
-        listaHabitosTarde = emptyList()
-        listaHabitosNoche = emptyList()
+        listaHabitosMañana = mutableListOf()
+        listaHabitosTarde = mutableListOf()
+        listaHabitosNoche = mutableListOf()
 
         habitosAdapterMañana = TusHabitosAdapter(listaHabitosMañana)
         habitosAdapterTarde = TusHabitosAdapter(listaHabitosTarde)
@@ -59,8 +69,48 @@ class TusHabitosActivity : AppCompatActivity() {
             val intent = Intent(this, CrearHabito::class.java)
             startActivity(intent)
         }
+
+        obtenerHabitosDesdeAPI()
     }
 
+    private fun obtenerHabitosDesdeAPI() {
+        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+        apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
+            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { listaHabitos ->
+                        listaHabitosMañana.clear()
+                        listaHabitosTarde.clear()
+                        listaHabitosNoche.clear()
+
+                        listaHabitos.forEach { habito ->
+                            when (habito.id?.let { obtenerMomentoDia(it) }) {
+                                "Mañana" -> listaHabitosMañana.add(habito)
+                                "Tarde" -> listaHabitosTarde.add(habito)
+                                "Noche" -> listaHabitosNoche.add(habito)
+                            }
+                        }
+
+                        actualizarRecyclerViews()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
+                Toast.makeText(this@TusHabitosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun obtenerMomentoDia(idHabito: Int): String {
+        return sharedPreferences.getString("$idHabito.MOMENTO_DIA", "Cualquiera") ?: "Cualquiera"
+    }
+
+    private fun actualizarRecyclerViews() {
+        habitosAdapterMañana.notifyDataSetChanged()
+        habitosAdapterTarde.notifyDataSetChanged()
+        habitosAdapterNoche.notifyDataSetChanged()
+    }
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             val currentActivity = this::class.java

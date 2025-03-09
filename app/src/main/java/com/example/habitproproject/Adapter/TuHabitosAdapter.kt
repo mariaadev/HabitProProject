@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.habitproproject.Activity.DetalleHabitoActivity
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 
 class TusHabitosAdapter(
-    private val listaHabitos: List<Habitos>
+    private val listaHabitos: MutableList<Habitos>
 ) : RecyclerView.Adapter<TusHabitosAdapter.HabitosViewHolderMañana>() {
 
 
@@ -47,13 +48,17 @@ class TusHabitosAdapter(
             context.startActivity(intent)
         }
     }
-
+    fun actualizarLista(nuevaLista: List<Habitos>) {
+        listaHabitos.clear()
+        listaHabitos.addAll(nuevaLista)
+        notifyDataSetChanged()
+    }
     class HabitosViewHolderMañana (itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textNombreHabit: TextView = itemView.findViewById(R.id.textNombreHabit)
         private val imageHabit: ImageView = itemView.findViewById(R.id.imageHabit)
         fun bind(habito: Habitos) {
             textNombreHabit.text = habito.nombre
-            //imageHabit.setImageResource(habito.imagenId)
+            Glide.with(itemView.context).load(habito.imagenId).into(imageHabit)
 
             val layoutParams = imageHabit.layoutParams
                 layoutParams.width = 50
