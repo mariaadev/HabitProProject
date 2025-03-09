@@ -90,7 +90,7 @@ class HabitosActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-
+        bottomNavigationView.selectedItemId = R.id.home
         /*RecyclerView Dias*/
         val recyclerDias = findViewById<RecyclerView>(R.id.recyclerDias)
         recyclerDias.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -159,12 +159,10 @@ class HabitosActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    val intent = Intent(this, HabitosActivity::class.java)
-                    startActivity(intent)
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, TushabitosActivity::class.java)
+                    val intent = Intent(this, TusHabitosActivity::class.java)
                     startActivity(intent)
                     true
                 }

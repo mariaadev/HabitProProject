@@ -77,8 +77,8 @@ class ProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.habits -> {
-                    if (TushabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
-                        startActivity(Intent(this, TushabitosActivity::class.java))
+                    if (TusHabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, TusHabitosActivity::class.java))
                         finish()
                     }
                     true

@@ -6,63 +6,218 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CrearHabito">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="60dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="240dp"
+            android:title="@string/crear_h_bito"
+            app:navigationIcon="@drawable/ic_back_arrow"
+            app:titleTextColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/guardar" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_marginTop="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
         android:padding="16dp">
 
         <LinearLayout
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnGuardar"
+            <LinearLayout
+                android:id="@+id/containerNombreHabito"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre_del_h_bito"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etNombreHabito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ej_leer_hacer_ejercicio" />
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardar"
-                android:layout_gravity="end" />
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nombre del hábito" android:textStyle="bold"/>
-            <EditText android:id="@+id/etNombreHabito" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ej. Leer, Hacer ejercicio" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Selecciona una imagen" android:textStyle="bold"/>
+                android:layout_marginBottom="10dp"
+                android:text="@string/selecciona_una_imagen"
+                android:textStyle="bold" />
 
             <FrameLayout
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/menu_background"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:background="@color/menu_background">
 
                 <ImageView
-                android:id="@+id/ivSeleccionarImagen"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
-                android:src="@drawable/subir_imagen"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:focusable="true"/>
+                    android:id="@+id/ivSeleccionarImagen"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/subir_imagen" />
             </FrameLayout>
 
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Descripción" android:textStyle="bold"/>
-            <EditText android:id="@+id/etDescripcion" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Describe el hábito" android:inputType="textMultiLine" />
+            <LinearLayout
+                android:id="@+id/containerDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Objetivo" android:textStyle="bold"/>
-            <EditText android:id="@+id/etObjetivo" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ej. Leer 30 páginas" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/descripci_n"
+                    android:textStyle="bold" />
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="¿Cuándo lo realizarás?" android:textStyle="bold"/>
-            <RadioGroup android:id="@+id/rgMomentoDia" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                <RadioButton android:id="@+id/rbManana" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mañana" />
-                <RadioButton android:id="@+id/rbTarde" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tarde" />
-                <RadioButton android:id="@+id/rbNoche" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Noche" />
-                <RadioButton android:id="@+id/rbCualquiera" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cualquiera" />
-            </RadioGroup>
+                <EditText
+                    android:id="@+id/etDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/describe_el_h_bito"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fecha de inicio" android:textStyle="bold"/>
-            <EditText android:id="@+id/etFechaInicio" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Selecciona la fecha" android:focusable="false" />
+            <LinearLayout
+                android:id="@+id/containerObjetivo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fecha de fin" android:textStyle="bold"/>
-            <EditText android:id="@+id/etFechaFin" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Selecciona la fecha" android:focusable="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Objetivo"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etObjetivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ej. Leer 30 páginas" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerRadioButtons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cu_ndo_lo_realizar_s"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgMomentoDia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbManana"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Mañana" />
+
+                    <RadioButton
+                        android:id="@+id/rbTarde"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_height="wrap_content"
+                        android:text="Tarde" />
+
+                    <RadioButton
+                        android:id="@+id/rbNoche"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_height="wrap_content"
+                        android:text="Noche" />
+
+                    <RadioButton
+                        android:id="@+id/rbCualquiera"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Cualquiera" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de inicio"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etFechaInicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Selecciona la fecha" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de fin"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etFechaFin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Selecciona la fecha" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

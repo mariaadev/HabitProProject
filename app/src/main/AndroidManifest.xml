@@ -22,7 +22,7 @@
             android:name=".Activity.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.TushabitosActivity"
+            android:name=".Activity.TusHabitosActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.EstadisticasActivity"

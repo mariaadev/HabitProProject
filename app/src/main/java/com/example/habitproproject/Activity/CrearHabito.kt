@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -47,6 +48,7 @@ class CrearHabito : AppCompatActivity() {
         "http://13.216.192.241/images/imagen4.png",
         "http://13.216.192.241/images/imagen5.png",
         "http://13.216.192.241/images/imagen6.png",
+        "http://13.216.192.241/images/imagen7.png",
         "http://13.216.192.241/images/imagen8.png"
     )
 
@@ -75,6 +77,15 @@ class CrearHabito : AppCompatActivity() {
         etFechaFin.setOnClickListener { mostrarDatePickerDialog(etFechaFin) }
 
         btnGuardar.setOnClickListener { guardarHabito() }
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun mostrarSelectorImagenes() {
@@ -131,7 +142,7 @@ class CrearHabito : AppCompatActivity() {
             nombre = nombre,
             descripcion = descripcion,
             progreso = 0,
-            tiempoEnMinutos = 30,
+            tiempoEnMinutos = 0,
             fechaInicio = fechaInicio,
             fechaFin = fechaFin,
             completado = false,
