@@ -2,7 +2,9 @@ package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
@@ -119,6 +121,11 @@ class HabitosActivity : AppCompatActivity() {
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerHabitos.adapter = habitosAdapter
 
+        val buttonAdd = findViewById<ImageView>(R.id.buttonAdd)
+        buttonAdd.setOnClickListener {
+            val intent = Intent(this, CrearHabito::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateUI() {

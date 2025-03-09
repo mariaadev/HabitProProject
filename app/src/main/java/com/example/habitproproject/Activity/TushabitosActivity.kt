@@ -2,6 +2,7 @@ package com.example.habitproproject.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +14,7 @@ import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 
 class TushabitosActivity : AppCompatActivity() {
 
@@ -66,6 +68,11 @@ class TushabitosActivity : AppCompatActivity() {
         recyclerHabitosNoche.adapter = habitosAdapterNoche
 
 
+        val buttonAdd = findViewById<MaterialButton>(R.id.buttonAdd)
+        buttonAdd.setOnClickListener {
+            val intent = Intent(this, CrearHabito::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun establecerBottomNavigationView() {
