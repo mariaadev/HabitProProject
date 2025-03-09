@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.Adapter.CalendarAdapter
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Model.DiaCalendario
+import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -36,7 +38,9 @@ class DetalleHabitoActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalle_habito)
 
+        val habito: Habitos? = intent.getParcelableExtra("habito", Habitos::class.java)
 
+        if (habito != null) {
         // Inicializar los días del mes
         for (i in 1..daysInMonth) {
             calendarDays.add(DiaCalendario(i, false))  // Todos los días comienzan sin marcar
@@ -56,14 +60,14 @@ class DetalleHabitoActivity : AppCompatActivity() {
         bottomNavigationViewHab = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 
-        val nombre = intent.getStringExtra("nombre") ?: "Sin nombre"
-        val descripcion = intent.getStringExtra("duracion") ?: "Sin descripción"
-        val progreso = intent.getIntExtra("progreso", 0)
-        val completado = intent.getBooleanExtra("completado", false)
-        val fechaInicio = intent.getStringExtra("fechaInicio") ?: "Sin fecha de inicio"
-        val fechaFin = intent.getStringExtra("fechaFin") ?: "Sin fecha de fin"
-        val imagenId = intent.getIntExtra("imagenId", R.drawable.ic_study)
-        val tiempoEnMinutos = intent.getIntExtra("tiempoEnMinutos", 0)
+        val nombre = habito.nombre
+        val descripcion = habito.descripcion
+        val progreso = habito.progreso
+        val completado = habito.completado
+        val fechaInicio = habito.fechaInicio
+        val fechaFin = habito.fechaFin
+        val imagenId = habito.imagenId
+        val tiempoEnMinutos = habito.tiempoEnMinutos
 
         //Parsear las fechas de inicio y fin usando SimpleDateFormat
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -108,6 +112,10 @@ class DetalleHabitoActivity : AppCompatActivity() {
             if (completado) "Estado: Completado" else "Estado: En progreso"
         findViewById<TextView>(R.id.textFechas).text = "Desde: $fechaInicio\nHasta: $fechaFin"
         findViewById<TextView>(R.id.textTiempo).text = "Tiempo estimado: $tiempoEnMinutos min"
+
+        } else {
+            Toast.makeText(this, "Error: No se pudo obtener el hábito", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun establecerBottomNavigationView() {

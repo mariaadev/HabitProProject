@@ -1,6 +1,7 @@
 package com.example.habitproproject.Adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class HabitosAdapter(
         notifyDataSetChanged()
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitosViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_habito, parent, false)
@@ -34,15 +36,7 @@ class HabitosAdapter(
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, DetalleHabitoActivity::class.java).apply {
-                putExtra("nombre", habito.nombre)
-                putExtra("duracion", habito.descripcion)
-                putExtra("progreso", habito.progreso)
-                putExtra("completado", habito.completado)
-                putExtra("fechaInicio", habito.fechaInicio)
-                putExtra("fechaFin", habito.fechaFin)
-                putExtra("imagenId", habito.imagenId)
-                putExtra("tiempoEnMinutos", habito.tiempoEnMinutos)
-
+                putExtra("habito", habito)
             }
             context.startActivity(intent)
         }
@@ -56,6 +50,8 @@ class HabitosAdapter(
         private val imageHabit: ImageView = itemView.findViewById(R.id.imageHabit)
 
         fun bind(habito: Habitos) {
+            Log.d("HabitosAdapter", "Habit: ${habito.nombre}, Progreso: ${habito.progreso}, Tiempo en minutos: ${habito.tiempoEnMinutos}, ImagenId: ${habito.imagenId}")
+
             textNombreHabit.text = habito.nombre
             textDescripcion.text = habito.descripcion
             if (habito.imagenId.isNotEmpty()) {
