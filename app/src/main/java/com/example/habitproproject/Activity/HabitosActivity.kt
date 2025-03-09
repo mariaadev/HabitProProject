@@ -163,7 +163,7 @@ class HabitosActivity : AppCompatActivity() {
                     true
                 }
                 R.id.habits -> {
-                    val intent = Intent(this, TushabitosActivity::class.java)
+                    val intent = Intent(this, TusHabitosActivity::class.java)
                     startActivity(intent)
                     true
                 }
