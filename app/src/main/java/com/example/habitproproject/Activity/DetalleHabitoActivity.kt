@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.habitproproject.Adapter.CalendarAdapter
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Model.DiaCalendario
@@ -38,7 +39,13 @@ class DetalleHabitoActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalle_habito)
 
-        val habito: Habitos? = intent.getParcelableExtra("habito", Habitos::class.java)
+        /*Aplicar un o altre depenent de la versió del sdk*/
+        val habito: Habitos? = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("habito", Habitos::class.java)
+        } else {
+            intent.getParcelableExtra("habito")
+        }
+
 
         if (habito != null) {
         // Inicializar los días del mes
@@ -102,10 +109,14 @@ class DetalleHabitoActivity : AppCompatActivity() {
         // Configura el progreso
         progressBar.progress = progreso
         progressText.text = "$progreso%"
-        progressIcon1.setImageResource(imagenId)
+            Glide.with(this)
+                .load(imagenId)
+                .into(progressIcon1)
         progressIcon2.setImageResource(R.drawable.medalla)
 
-        findViewById<ImageView>(R.id.imageViewDetalleHabito).setImageResource(imagenId)
+            Glide.with(this)
+                .load(imagenId)
+                .into(findViewById<ImageView>(R.id.imageViewDetalleHabito))
         findViewById<TextView>(R.id.textDescripcion).text = "Tiempo total: $descripcion"
         findViewById<TextView>(R.id.textProgreso).text = "Progreso: $progreso%"
         findViewById<TextView>(R.id.textCompletado).text =
