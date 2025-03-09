@@ -86,7 +86,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/buttonAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#FFE6E6"
