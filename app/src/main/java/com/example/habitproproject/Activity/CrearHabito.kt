@@ -135,7 +135,7 @@ class CrearHabito : AppCompatActivity() {
             fechaInicio = fechaInicio,
             fechaFin = fechaFin,
             completado = false,
-            imagenId = ""
+            imagenId = imagenSeleccionada
         )
 
         val apiService = RetrofitClient.getInstance().create(ApiService::class.java)

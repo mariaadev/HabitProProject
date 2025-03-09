@@ -54,6 +54,7 @@ class HabitosAdapter(
 
             textNombreHabit.text = habito.nombre
             textDescripcion.text = habito.descripcion
+
             if (habito.imagenId.isNotEmpty()) {
                 Glide.with(itemView.context)
                     .load(habito.imagenId)

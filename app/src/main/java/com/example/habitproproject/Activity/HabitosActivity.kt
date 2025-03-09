@@ -133,7 +133,6 @@ class HabitosActivity : AppCompatActivity() {
     }
 
     private fun obtenerHabitos() {
-        Log.d("HabitosActivity", "Obteniendo hábitos...")
         val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
 
         apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
@@ -142,17 +141,6 @@ class HabitosActivity : AppCompatActivity() {
                     val habitosObtenidos = response.body()
                     Log.d("HabitosActivity", "Respuesta de la API: $habitosObtenidos")
                     listaHabitos = response.body() ?: emptyList()
-                    listaHabitos.forEach { habito ->
-                        Log.d("HabitosActivity", "Nombre: ${habito.nombre}")
-                        Log.d("HabitosActivity", "Descripción: ${habito.descripcion}")
-                        Log.d("HabitosActivity", "Progreso: ${habito.progreso}")
-                        Log.d("HabitosActivity", "Completado: ${habito.completado}")
-                        Log.d("HabitosActivity", "Fecha de inicio: ${habito.fechaInicio}")
-                        Log.d("HabitosActivity", "Fecha de fin: ${habito.fechaFin}")
-                        Log.d("HabitosActivity", "Imagen ID: ${habito.imagenId}")
-                        Log.d("HabitosActivity", "Tiempo en minutos: ${habito.tiempoEnMinutos}")
-                    }
-
                     habitosAdapter = HabitosAdapter(listaHabitos)
                     habitosAdapter.actualizarListaHabitos(listaHabitos)
                     val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
