@@ -19,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TushabitosActivity : AppCompatActivity() {
+class TusHabitosActivity : AppCompatActivity() {
 
     private lateinit var habitosAdapterMañana: TusHabitosAdapter
     private lateinit var habitosAdapterTarde: TusHabitosAdapter
@@ -99,12 +99,12 @@ class TushabitosActivity : AppCompatActivity() {
                         actualizarRecyclerViews()
                     }
                 } else {
-                    Toast.makeText(this@TushabitosActivity, "Error al cargar los hábitos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TusHabitosActivity, "Error al cargar los hábitos", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
-                Toast.makeText(this@TushabitosActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TusHabitosActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
             }
         })
     }
