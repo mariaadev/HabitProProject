@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -125,6 +126,7 @@ class CrearHabito : AppCompatActivity() {
 
 
         val nuevoHabito = Habitos(
+            id = 0,
             nombre = nombre,
             descripcion = descripcion,
             progreso = 0,
@@ -132,7 +134,7 @@ class CrearHabito : AppCompatActivity() {
             fechaInicio = fechaInicio,
             fechaFin = fechaFin,
             completado = false,
-            imagenId = 0
+            imagenId = ""
         )
 
         val apiService = RetrofitClient.instance.create(ApiService::class.java)
@@ -146,6 +148,9 @@ class CrearHabito : AppCompatActivity() {
                     }
                     Toast.makeText(this@CrearHabito, "Hábito creado exitosamente", Toast.LENGTH_SHORT).show()
                 } else {
+                    val errorResponse = response.errorBody()?.string()
+                    val statusCode = response.code()
+                    Log.e("API_ERROR", "Código de respuesta: $statusCode, Error: $errorResponse")
                     Toast.makeText(this@CrearHabito, "Error al crear hábito", Toast.LENGTH_SHORT).show()
                 }
             }

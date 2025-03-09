@@ -7,13 +7,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.habitproproject.Activity.DetalleHabitoActivity
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 
 class HabitosAdapter(
-    private val listaHabitos: List<Habitos>
+    private var listaHabitos: List<Habitos>
 ) : RecyclerView.Adapter<HabitosAdapter.HabitosViewHolder>() {
+
+    fun actualizarListaHabitos(nuevaLista: List<Habitos>) {
+        listaHabitos = nuevaLista
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitosViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -52,7 +58,15 @@ class HabitosAdapter(
         fun bind(habito: Habitos) {
             textNombreHabit.text = habito.nombre
             textDescripcion.text = habito.descripcion
-            imageHabit.setImageResource(habito.imagenId)
+            if (habito.imagenId.isNotEmpty()) {
+                Glide.with(itemView.context)
+                    .load(habito.imagenId)
+                    .placeholder(R.drawable.subir_imagen)
+                    .error(R.drawable.ic_clear)
+                    .into(imageHabit)
+            } else {
+                imageHabit.setImageResource(R.drawable.subir_imagen)
+            }
         }
     }
 }

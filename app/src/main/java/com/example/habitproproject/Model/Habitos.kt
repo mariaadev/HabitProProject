@@ -9,5 +9,5 @@ data class Habitos(
     val fechaInicio: String,
     val fechaFin: String,
     val completado: Boolean,
-    val imagenId: Int
+    val imagenId: String
 )

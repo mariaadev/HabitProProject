@@ -53,7 +53,7 @@ class TusHabitosAdapter(
         private val imageHabit: ImageView = itemView.findViewById(R.id.imageHabit)
         fun bind(habito: Habitos) {
             textNombreHabit.text = habito.nombre
-            imageHabit.setImageResource(habito.imagenId)
+            //imageHabit.setImageResource(habito.imagenId)
 
             val layoutParams = imageHabit.layoutParams
                 layoutParams.width = 50

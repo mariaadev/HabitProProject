@@ -7,7 +7,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
+import retrofit2.Call
+import retrofit2.Callback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitproproject.API.ApiService
+import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Adapter.DiasAdapter
 import com.example.habitproproject.Model.Habitos
@@ -24,11 +27,12 @@ import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import retrofit2.Response
 
 
 class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
-    private lateinit var listaHabitos: List<Habitos>
+    private  var listaHabitos: List<Habitos> = emptyList()
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private lateinit var drawerLayout: DrawerLayout
@@ -102,18 +106,7 @@ class HabitosActivity : AppCompatActivity() {
         val adapter = DiasAdapter(listaDias)
         recyclerDias.adapter = adapter
 
-        /*RecyclerView Hábitos*/
-        listaHabitos = listOf(
-            Habitos(null,"Salir a correr", "30 min", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_running),
-            Habitos(null,"Beber agua", "3/8 vasos", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_water),
-            Habitos(null,"Estudiar", "2 horas", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_study),
-            Habitos(null,"Programar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_coding),
-            Habitos(null,"Comer sano", "2 veces por semana", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_healthy),
-            Habitos(null,"Leer", "10 páginas", 40, 30, "2023-12-02", "2024-02-01", false, R.drawable.ic_read),
-            Habitos(null,"Desconectar", "3 horas", 20, 180, "2023-12-05", "2024-01-15", false, R.drawable.ic_mobile),
-            Habitos(null,"Ir al gimnasio", "2 dias", 50, 120, "2023-12-01", "2024-01-01", false, R.drawable.ic_gym),
 
-            )
 
         habitosAdapter = HabitosAdapter(listaHabitos)
 
@@ -126,6 +119,8 @@ class HabitosActivity : AppCompatActivity() {
             val intent = Intent(this, CrearHabito::class.java)
             startActivity(intent)
         }
+
+        obtenerHabitos()
     }
 
     private fun updateUI() {
@@ -136,6 +131,27 @@ class HabitosActivity : AppCompatActivity() {
 
     }
 
+    private fun obtenerHabitos() {
+        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+
+        apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
+            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
+                if (response.isSuccessful) {
+                    listaHabitos = response.body() ?: emptyList()
+                    habitosAdapter = HabitosAdapter(listaHabitos)
+                    habitosAdapter.actualizarListaHabitos(listaHabitos)
+                    val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
+                    recyclerHabitos.adapter = habitosAdapter
+                } else {
+                    Toast.makeText(this@HabitosActivity, "Error al obtener los hábitos", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
+                Toast.makeText(this@HabitosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
