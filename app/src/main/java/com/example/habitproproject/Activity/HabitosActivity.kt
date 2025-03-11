@@ -155,6 +155,7 @@ class HabitosActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
