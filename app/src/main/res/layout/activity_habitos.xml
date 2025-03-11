@@ -6,6 +6,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFE6E6"
     tools:context=".Activity.HabitosActivity">
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +14,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFE6E6"
+    android:layout_marginTop="30dp"
     tools:context=".Activity.HabitosActivity">
 
     <RelativeLayout
