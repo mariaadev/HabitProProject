@@ -5,6 +5,12 @@ plugins {
     id("kotlin-parcelize")
 }
 
+kapt {
+    useBuildCache = false
+    correctErrorTypes = true
+}
+
+
 
 android {
     namespace = "com.example.habitproproject"

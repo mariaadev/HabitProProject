@@ -177,6 +177,13 @@ class DetalleHabitoActivity : AppCompatActivity() {
         }
     }
 
+    private fun editarHabito(){
+        val intent = Intent(this, CrearHabito::class.java).apply {
+            putExtra("habito", habito)
+        }
+        this.startActivity(intent)
+    }
+
 
     private fun redirigirAHabitosActivity() {
         Handler(Looper.getMainLooper()).postDelayed({

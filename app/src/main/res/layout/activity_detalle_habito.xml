@@ -25,6 +25,17 @@
         </androidx.appcompat.widget.Toolbar>
 
         <ImageView
+            android:id="@+id/buttonEditar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/my_toolbar"
+            app:layout_constraintEnd_toStartOf="@+id/buttonEliminar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
+            app:srcCompat="@drawable/editar" />
+
+        <ImageView
             android:id="@+id/buttonEliminar"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -32,7 +43,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toTopOf="@+id/scrollView"
             app:layout_constraintEnd_toEndOf="@+id/my_toolbar"
-            app:srcCompat="@android:drawable/ic_delete" />
+            app:srcCompat="@drawable/eliminar" />
 
         <android.widget.ScrollView
             android:id="@+id/scrollView"
