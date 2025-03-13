@@ -109,11 +109,14 @@ class HabitosActivity : AppCompatActivity() {
 
 
 
+
         habitosAdapter = HabitosAdapter(listaHabitos)
 
         val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerHabitos.adapter = habitosAdapter
+        /*optimitzar llista*/
+        recyclerHabitos.setHasFixedSize(true)
 
         val buttonAdd = findViewById<ImageView>(R.id.buttonAdd)
         buttonAdd.setOnClickListener {
@@ -183,10 +186,6 @@ class HabitosActivity : AppCompatActivity() {
         }
     }
 
-    private fun abrirAjustesActivity() {
-        val intent = Intent(this, AjustesActivity::class.java)
-        startActivity(intent)
-    }
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
