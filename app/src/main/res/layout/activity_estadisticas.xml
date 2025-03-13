@@ -3,33 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
+    android:id="@+id/drawerLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE6E6"
+    android:background="@color/menu_background"
+    android:padding="16dp"
     tools:context=".Activity.EstadisticasActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/my_toolbar2"
+            android:id="@+id/my_toolbar3"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:background="#FFE6E6"
             app:layout_constraintTop_toTopOf="parent">
+
         </androidx.appcompat.widget.Toolbar>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,8 +164,9 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
-        </ScrollView>
+
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationView"
@@ -189,6 +194,7 @@
             app:menu="@menu/bottom_nav_menu" />
 
     </LinearLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

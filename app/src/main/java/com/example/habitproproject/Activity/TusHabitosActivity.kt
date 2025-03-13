@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.API.ApiService
@@ -15,6 +17,7 @@ import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +31,8 @@ class TusHabitosActivity : AppCompatActivity() {
     private lateinit var listaHabitosTarde: MutableList<Habitos>
     private lateinit var listaHabitosNoche: MutableList<Habitos>
 
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     private lateinit var bottomNavigationView: BottomNavigationView
     private val sharedPreferences by lazy {
         getSharedPreferences("HABITOS_PREF", Context.MODE_PRIVATE)
@@ -74,6 +79,42 @@ class TusHabitosActivity : AppCompatActivity() {
 
         carregarHabitos();
 
+        /*Configuración toolbar*/
+        val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        toolbar.setTitle("");
+
+        // Configurar DrawerLayout
+        drawerLayout = findViewById(R.id.drawerLayout2)
+        navigationView = findViewById(R.id.navigationView)
+        // Configurar el icono de navegación
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
+        toolbar.setNavigationOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        // Manejar clics en los elementos del NavigationView
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_settings -> {
+                    val intent = Intent(this, AjustesActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_theme -> {
+                    Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
+                }
+                R.id.menu_log_out -> {
+                    val intent = Intent(this, IniciarSesionActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_help -> {
+                    Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
     private fun carregarHabitos(){

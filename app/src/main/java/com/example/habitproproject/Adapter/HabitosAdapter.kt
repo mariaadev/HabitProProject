@@ -18,8 +18,10 @@ class HabitosAdapter(
 ) : RecyclerView.Adapter<HabitosAdapter.HabitosViewHolder>() {
 
     fun actualizarListaHabitos(nuevaLista: List<Habitos>) {
+        /*avisar d'un item nou per actualitzar llista */
+        val oldSize = listaHabitos.size
         listaHabitos = nuevaLista
-        notifyDataSetChanged()
+        notifyItemInserted(oldSize)
     }
 
 
