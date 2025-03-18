@@ -11,6 +11,7 @@ import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -19,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Model.Dia
@@ -39,9 +41,11 @@ class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
     private  var listaHabitos: List<Habitos> = emptyList()
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var dialogCarga: AlertDialog
 
     override fun onStart() {
         super.onStart()
@@ -59,6 +63,11 @@ class HabitosActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
         toolbar.setTitle("");
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            obtenerHabitos()
+        }
 
         // Configurar DrawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -139,16 +148,17 @@ class HabitosActivity : AppCompatActivity() {
 
     }
 
-    private fun obtenerHabitos(){
+    private fun obtenerHabitos() {
+        swipeRefreshLayout.isRefreshing = true  // Activar el indicador de refresco
 
-        CoroutineScope(Dispatchers.Main).launch{
-            try{
-                val habitosObtenidos = withContext(Dispatchers.IO){
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val habitosObtenidos = withContext(Dispatchers.IO) {
                     val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
                     apiService.getHabitos()
                 }
 
-                if(habitosObtenidos != null){
+                if (habitosObtenidos != null) {
                     listaHabitos = habitosObtenidos
                     habitosAdapter = HabitosAdapter(listaHabitos)
                     habitosAdapter.actualizarListaHabitos(listaHabitos)
@@ -157,14 +167,13 @@ class HabitosActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@HabitosActivity, "Error al obtener los hábitos", Toast.LENGTH_SHORT).show()
                 }
-
-            }catch (e: Exception) {
-                // Manejo de errores
+            } catch (e: Exception) {
                 Toast.makeText(this@HabitosActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                swipeRefreshLayout.isRefreshing = false  // Desactivar el indicador de refresco
             }
         }
     }
-
 
 
     private fun establecerBottomNavigationView() {

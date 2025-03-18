@@ -2,6 +2,8 @@ package com.example.habitproproject.Activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.media.Image
 import android.os.Bundle
 import android.os.Handler
@@ -45,7 +47,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private val calendarDays = mutableListOf<DiaCalendario>()
     private var habito: Habitos? = null
     private lateinit var btn_editar: ImageView
-
+    private lateinit var dialogCarga: AlertDialog
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,6 +146,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Error: No se pudo obtener el hábito", Toast.LENGTH_SHORT).show()
         }
+
         btn_editar = findViewById(R.id.buttonEditar)
         btn_editar.setOnClickListener {editarHabito()}
     }
@@ -157,6 +160,27 @@ class DetalleHabitoActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun mostrarDialogoCarga() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
+        val imageViewLoading = dialogView.findViewById<ImageView>(R.id.imageViewLoadings)
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.loading2)
+            .into(imageViewLoading)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        dialogCarga = builder.create()
+        dialogCarga.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogCarga.show()
+    }
+
+    private fun ocultarDialogoCarga() {
+        if (::dialogCarga.isInitialized && dialogCarga.isShowing) {
+            dialogCarga.dismiss()
+        }
+    }
     private fun eliminarHabito() {
         habito?.let { habito ->
             val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
@@ -183,7 +207,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
     }
 
     private fun editarHabito(){
-        val intent = Intent(this, EditarActivity::class.java).apply {
+        val intent = Intent(this, CrearHabito::class.java).apply {
             putExtra("habito", habito)
         }
         this.startActivity(intent)
