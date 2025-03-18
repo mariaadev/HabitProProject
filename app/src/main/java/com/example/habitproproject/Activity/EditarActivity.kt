@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -139,10 +140,13 @@ class EditarActivity : AppCompatActivity() {
     private fun mostrarSelectorImagenes(){
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_seleccionar_imagen, null)
         val recyclerView = dialogView.findViewById<RecyclerView>(R.id.recyclerViewImagenes)
+
+
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = ImageAdapter(imagenesUrl) { url ->
             imagenSeleccionada = url
             Glide.with(this).load(url).into(ivSeleccionarImagen)
+
         }
 
         AlertDialog.Builder(this)
