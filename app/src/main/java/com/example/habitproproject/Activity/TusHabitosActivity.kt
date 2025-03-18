@@ -1,5 +1,6 @@
 package com.example.habitproproject.Activity
 
+import TusHabitosAdapter
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
-import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
