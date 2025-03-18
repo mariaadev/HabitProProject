@@ -32,6 +32,16 @@
     <string name="_0">0%</string>
     <string name="resumen">Resum</string>
     <string name="recu_rdame">Recorda\'m</string>
+
+    <string name="crear_h_bito">Crear Hàbit</string>
+    <string name="guardar">Guardar</string>
+    <string name="eliminando_h_bito">Eliminant hàbit…</string>
+    <string name="nombre_del_h_bito">Nom de l\'hàbit</string>
+    <string name="ej_leer_hacer_ejercicio">Ej. Llegir, Fer exercici</string>
+    <string name="descripci_n">Descripció</string>
+    <string name="describe_el_h_bito">Descriu l\'hàbit</string>
+    <string name="selecciona_una_imagen">Selecciona una imatge</string>
+    <string name="cu_ndo_lo_realizar_s">¿Quan el realitzaràs?</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>
