@@ -2,6 +2,8 @@ package com.example.habitproproject.Activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.media.Image
 import android.os.Bundle
 import android.os.Handler
@@ -44,6 +46,8 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private val daysInMonth = 31
     private val calendarDays = mutableListOf<DiaCalendario>()
     private var habito: Habitos? = null
+    private lateinit var dialogCarga: AlertDialog
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,12 +156,35 @@ class DetalleHabitoActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun mostrarDialogoCarga() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
+        val imageViewLoading = dialogView.findViewById<ImageView>(R.id.imageViewLoadings)
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.loading2)
+            .into(imageViewLoading)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        dialogCarga = builder.create()
+        dialogCarga.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogCarga.show()
+    }
+
+    private fun ocultarDialogoCarga() {
+        if (::dialogCarga.isInitialized && dialogCarga.isShowing) {
+            dialogCarga.dismiss()
+        }
+    }
     private fun eliminarHabito() {
         habito?.let { habito ->
             val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
             habito.id?.let {
+                //mostrarDialogoCarga()
                 apiService.deleteHabito(it).enqueue(object : Callback<Unit> {
                     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                        //ocultarDialogoCarga()
                         if (response.isSuccessful) {
                             Log.d("EliminarHabito", "Hábito eliminado correctamente")
                             Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
@@ -170,6 +197,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
 
 
                     override fun onFailure(call: Call<Unit>, t: Throwable) {
+                        ocultarDialogoCarga()
                         Toast.makeText(this@DetalleHabitoActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
                     }
                 })

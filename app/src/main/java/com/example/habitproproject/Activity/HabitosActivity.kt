@@ -1,6 +1,9 @@
 package com.example.habitproproject.Activity
 
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,6 +14,7 @@ import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -19,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Model.Dia
@@ -39,6 +44,7 @@ class HabitosActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
+    private lateinit var dialogCarga: AlertDialog
     override fun onStart() {
         super.onStart()
         updateUI()
@@ -135,12 +141,45 @@ class HabitosActivity : AppCompatActivity() {
 
     }
 
+    private fun mostrarDialogoCarga() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
+        val imageViewLoading = dialogView.findViewById<ImageView>(R.id.imageViewLoadings)
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.loading2)
+            .into(imageViewLoading)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        dialogCarga = builder.create()
+        dialogCarga.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogView.setBackgroundColor(Color.TRANSPARENT)
+        dialogCarga.show()
+
+        val params = dialogCarga.window?.attributes
+        params?.width = 150.dpToPx()
+        params?.height = 150.dpToPx()
+        dialogCarga.window?.attributes = params
+    }
+
+    fun Int.dpToPx(): Int {
+        return (this * Resources.getSystem().displayMetrics.density).toInt()
+    }
+
+
+    private fun ocultarDialogoCarga() {
+        if (::dialogCarga.isInitialized && dialogCarga.isShowing) {
+            dialogCarga.dismiss()
+        }
+    }
     private fun obtenerHabitos() {
         val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
-
+        mostrarDialogoCarga()
         apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
             override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
                 if (response.isSuccessful) {
+                    ocultarDialogoCarga()
                     val habitosObtenidos = response.body()
                     Log.d("HabitosActivity", "Respuesta de la API: $habitosObtenidos")
                     listaHabitos = response.body() ?: emptyList()
