@@ -23,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
@@ -40,6 +41,8 @@ class HabitosActivity : AppCompatActivity() {
     private lateinit var habitosAdapter: HabitosAdapter
     private  var listaHabitos: List<Habitos> = emptyList()
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -61,6 +64,12 @@ class HabitosActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
         toolbar.setTitle("");
+
+        /*Configurar Swipe Refresh*/
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            obtenerHabitos()
+        }
 
         // Configurar DrawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -141,45 +150,14 @@ class HabitosActivity : AppCompatActivity() {
 
     }
 
-    private fun mostrarDialogoCarga() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
-        val imageViewLoading = dialogView.findViewById<ImageView>(R.id.imageViewLoadings)
-        Glide.with(this)
-            .asGif()
-            .load(R.drawable.loading2)
-            .into(imageViewLoading)
 
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        builder.setCancelable(false)
-        dialogCarga = builder.create()
-        dialogCarga.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogView.setBackgroundColor(Color.TRANSPARENT)
-        dialogCarga.show()
-
-        val params = dialogCarga.window?.attributes
-        params?.width = 150.dpToPx()
-        params?.height = 150.dpToPx()
-        dialogCarga.window?.attributes = params
-    }
-
-    fun Int.dpToPx(): Int {
-        return (this * Resources.getSystem().displayMetrics.density).toInt()
-    }
-
-
-    private fun ocultarDialogoCarga() {
-        if (::dialogCarga.isInitialized && dialogCarga.isShowing) {
-            dialogCarga.dismiss()
-        }
-    }
     private fun obtenerHabitos() {
         val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
-        mostrarDialogoCarga()
+        swipeRefreshLayout.isRefreshing = true
         apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
             override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
+                swipeRefreshLayout.isRefreshing = false
                 if (response.isSuccessful) {
-                    ocultarDialogoCarga()
                     val habitosObtenidos = response.body()
                     Log.d("HabitosActivity", "Respuesta de la API: $habitosObtenidos")
                     listaHabitos = response.body() ?: emptyList()
@@ -193,6 +171,7 @@ class HabitosActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
+                swipeRefreshLayout.isRefreshing = false
                 Toast.makeText(this@HabitosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

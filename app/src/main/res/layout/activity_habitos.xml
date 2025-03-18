@@ -124,6 +124,12 @@
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/darker_gray" />
 
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerHabitos"
                 android:layout_width="match_parent"
@@ -131,6 +137,8 @@
                 android:layout_marginVertical="8dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         </LinearLayout>
     </RelativeLayout>
 
