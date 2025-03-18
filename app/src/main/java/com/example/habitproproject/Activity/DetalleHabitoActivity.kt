@@ -46,6 +46,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private val daysInMonth = 31
     private val calendarDays = mutableListOf<DiaCalendario>()
     private var habito: Habitos? = null
+    private lateinit var btn_editar: ImageView
     private lateinit var dialogCarga: AlertDialog
 
     @SuppressLint("SuspiciousIndentation")
@@ -145,6 +146,9 @@ class DetalleHabitoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Error: No se pudo obtener el hábito", Toast.LENGTH_SHORT).show()
         }
+
+        btn_editar = findViewById(R.id.buttonEditar)
+        btn_editar.setOnClickListener {editarHabito()}
     }
 
     private fun mostrarDialogoConfirmacion() {
@@ -181,10 +185,8 @@ class DetalleHabitoActivity : AppCompatActivity() {
         habito?.let { habito ->
             val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
             habito.id?.let {
-                //mostrarDialogoCarga()
                 apiService.deleteHabito(it).enqueue(object : Callback<Unit> {
                     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                        //ocultarDialogoCarga()
                         if (response.isSuccessful) {
                             Log.d("EliminarHabito", "Hábito eliminado correctamente")
                             Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
@@ -197,7 +199,6 @@ class DetalleHabitoActivity : AppCompatActivity() {
 
 
                     override fun onFailure(call: Call<Unit>, t: Throwable) {
-                        ocultarDialogoCarga()
                         Toast.makeText(this@DetalleHabitoActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
                     }
                 })

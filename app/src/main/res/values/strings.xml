@@ -52,6 +52,8 @@
     <string name="ma_ana">Mañana</string>
     <string name="ej_leer_30_p_ginas">Ej. Leer 30 páginas</string>
     <string name="eliminando_h_bito">Eliminando hábito...</string>
+    <string name="editar_habito">Editar Habito</string>
+
 
     <string-array name="idiomas">
         <item>Español</item>

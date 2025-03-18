@@ -11,8 +11,11 @@ import com.example.habitproproject.R
 class ImageAdapter(private val imagenes: List<String>, private val onClick: (String) -> Unit) :
     RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
+    private var imagenSeleccionada: String? = null
+
     inner class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.ivImagen)
+        val overlayView: View = view.findViewById(R.id.seleccionadoOverlay)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
@@ -21,8 +24,19 @@ class ImageAdapter(private val imagenes: List<String>, private val onClick: (Str
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
+        val imageUrl = imagenes[position]
         Glide.with(holder.imageView.context).load(imagenes[position]).into(holder.imageView)
-        holder.imageView.setOnClickListener { onClick(imagenes[position]) }
+        if (imageUrl == imagenSeleccionada) {
+            holder.overlayView.visibility = View.VISIBLE
+        } else {
+            holder.overlayView.visibility = View.GONE
+        }
+
+        holder.imageView.setOnClickListener {
+            imagenSeleccionada = imageUrl
+            notifyDataSetChanged()
+            onClick(imageUrl)
+        }
     }
 
     override fun getItemCount(): Int = imagenes.size

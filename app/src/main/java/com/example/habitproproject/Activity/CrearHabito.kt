@@ -183,6 +183,7 @@ class CrearHabito : AppCompatActivity() {
         editor.putString("$idHabito.MOMENTO_DIA", momentoDia)
         editor.putString("$idHabito.OBJETIVO", objetivo)
         editor.apply()
+        Log.e("MiApp", "Guardado: $idHabito.MOMENTO_DIA = $momentoDia, $idHabito.OBJETIVO = $objetivo")
     }
 }
 
