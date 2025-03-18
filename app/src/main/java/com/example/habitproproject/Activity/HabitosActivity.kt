@@ -28,6 +28,10 @@ import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 
@@ -135,15 +139,17 @@ class HabitosActivity : AppCompatActivity() {
 
     }
 
-    private fun obtenerHabitos() {
-        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+    private fun obtenerHabitos(){
 
-        apiService.getHabitos().enqueue(object : Callback<List<Habitos>> {
-            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
-                if (response.isSuccessful) {
-                    val habitosObtenidos = response.body()
-                    Log.d("HabitosActivity", "Respuesta de la API: $habitosObtenidos")
-                    listaHabitos = response.body() ?: emptyList()
+        CoroutineScope(Dispatchers.Main).launch{
+            try{
+                val habitosObtenidos = withContext(Dispatchers.IO){
+                    val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+                    apiService.getHabitos()
+                }
+
+                if(habitosObtenidos != null){
+                    listaHabitos = habitosObtenidos
                     habitosAdapter = HabitosAdapter(listaHabitos)
                     habitosAdapter.actualizarListaHabitos(listaHabitos)
                     val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
@@ -151,13 +157,15 @@ class HabitosActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@HabitosActivity, "Error al obtener los hábitos", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
-                Toast.makeText(this@HabitosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }catch (e: Exception) {
+                // Manejo de errores
+                Toast.makeText(this@HabitosActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
+
+
 
     private fun establecerBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->

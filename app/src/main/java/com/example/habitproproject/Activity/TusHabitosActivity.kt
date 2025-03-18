@@ -13,11 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
+import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -118,37 +123,39 @@ class TusHabitosActivity : AppCompatActivity() {
     }
 
     private fun carregarHabitos(){
-        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
-        val call = apiService.getHabitos()
-
-        call.enqueue(object : retrofit2.Callback<List<Habitos>> {
-            override fun onResponse(call: Call<List<Habitos>>, response: Response<List<Habitos>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { listaHabitos ->
-                        listaHabitosMañana.clear()
-                        listaHabitosTarde.clear()
-                        listaHabitosNoche.clear()
-
-                        listaHabitos.forEach { habito ->
-                            when (habito.id?.let { obtenerMomentoDia(it) }) {
-                                "Mañana" -> listaHabitosMañana.add(habito)
-                                "Tarde" -> listaHabitosTarde.add(habito)
-                                "Noche" -> listaHabitosNoche.add(habito)
-                            }
-                        }
-
-                        actualizarRecyclerViews()
-                    }
-                } else {
-                    Toast.makeText(this@TusHabitosActivity, "Error al cargar los hábitos", Toast.LENGTH_SHORT).show()
+        CoroutineScope(Dispatchers.Main).launch{
+            try{
+                val habitosObtenidos = withContext(Dispatchers.IO){
+                    val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+                    apiService.getHabitos()
                 }
-            }
 
-            override fun onFailure(call: Call<List<Habitos>>, t: Throwable) {
-                Toast.makeText(this@TusHabitosActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
+                if(habitosObtenidos != null){
+                    listaHabitosMañana.clear()
+                    listaHabitosTarde.clear()
+                    listaHabitosNoche.clear()
+                    habitosObtenidos.forEach { habito ->
+                        when (habito.id?.let { obtenerMomentoDia(it) }) {
+                            "Mañana" -> listaHabitosMañana.add(habito)
+                            "Tarde" -> listaHabitosTarde.add(habito)
+                            "Noche" -> listaHabitosNoche.add(habito)
+                        }
+                    }
+
+                    actualizarRecyclerViews()
+
+                } else {
+                    Toast.makeText(this@TusHabitosActivity, "Error al obtener los hábitos", Toast.LENGTH_SHORT).show()
+                }
+
+            }catch (e: Exception) {
+                // Manejo de errores
+                Toast.makeText(this@TusHabitosActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
+
+
 
     private fun obtenerMomentoDia(idHabito: Int): String {
         return sharedPreferences.getString("$idHabito.MOMENTO_DIA", "Cualquiera") ?: "Cualquiera"

@@ -12,7 +12,7 @@ import retrofit2.http.Path
 interface ApiService {
 
     @GET("habitos")
-    fun getHabitos(): Call<List<Habitos>>
+    suspend fun getHabitos(): List<Habitos>
 
     @POST("habitos")
     fun createHabitos(@Body nuevoHabito: Habitos): Call<Habitos>
