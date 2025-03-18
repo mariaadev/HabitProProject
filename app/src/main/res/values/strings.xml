@@ -39,6 +39,7 @@
     <string name="describe_el_h_bito">Describe el hábito</string>
     <string name="selecciona_una_imagen">Selecciona una imagen</string>
     <string name="cu_ndo_lo_realizar_s">¿Cuándo lo realizarás?</string>
+    <string name="eliminando_h_bito">Eliminando Hábito...</string>
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>
