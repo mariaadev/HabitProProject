@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habitproproject.Activity.IniciarSesionActivity
 import com.example.habitproproject.Activity.TusHabitosActivity
-import com.example.habitproproject.Adapter.TusHabitosAdapter
 import com.example.habitproproject.R
 
 class SplashActivity : AppCompatActivity() {

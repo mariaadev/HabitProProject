@@ -39,6 +39,20 @@
     <string name="describe_el_h_bito">Describe el hábito</string>
     <string name="selecciona_una_imagen">Selecciona una imagen</string>
     <string name="cu_ndo_lo_realizar_s">¿Cuándo lo realizarás?</string>
+    <string name="editar">Editar</string>
+    <string name="selecionar_nueva_imagen">Selecionar nueva Imagen</string>
+    <string name="editar_nombre_del_habito">Editar Nombre del Habito</string>
+    <string name="editar_descripci_n">Editar Descripción</string>
+    <string name="editar_objetivo">Editar Objetivo</string>
+    <string name="editar_fecha_de_inicio">Editar Fecha de inicio</string>
+    <string name="editar_fecha_de_fin">Editar Fecha de fin</string>
+    <string name="selecciona_la_fecha">Selecciona la fecha</string>
+    <string name="noche">Noche</string>
+    <string name="tarde">Tarde</string>
+    <string name="ma_ana">Mañana</string>
+    <string name="ej_leer_30_p_ginas">Ej. Leer 30 páginas</string>
+    <string name="eliminando_h_bito">Eliminando hábito...</string>
+
     <string-array name="idiomas">
         <item>Español</item>
         <item>Català</item>
