@@ -88,10 +88,10 @@ class EditarActivity : AppCompatActivity() {
             etFechaFin = findViewById(R.id.etFechaFin)
             ivSeleccionarImagen = findViewById(R.id.ivSeleccionarImagen)
             rgMomentoDia = findViewById(R.id.rgMomentoDia)
-            btnEditar = findViewById(R.id.btnGuardar)
+            btnEditar = findViewById(R.id.btnEditar)
 
 
-            val datosHabitos = id?.let { recuperarDeSharedPreferences(it) }
+            val datosHabitos = id?.let { recuperarDeSharedPreferences(id) }
 
             etNombreHabito.setText(nombre)
             etDescripcion.setText(descripcion)
@@ -122,15 +122,16 @@ class EditarActivity : AppCompatActivity() {
                     EditarHabito(id)
                 }
             }
-            val toolbar: Toolbar = findViewById(R.id.toolbar)
-            setSupportActionBar(toolbar)
 
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
 
-            toolbar.setNavigationOnClickListener {
-                onBackPressed()
-            }
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
 
     }
@@ -170,11 +171,14 @@ class EditarActivity : AppCompatActivity() {
 
 
     private fun recuperarDeSharedPreferences(idHabito: Int): Pair<String,String>? {
+        Log.e("MiApp", "Entra" );
         val momentoDia = sharedPreferences.getString("$idHabito.MOMENTO_DIA", null)
         val objetivo = sharedPreferences.getString("$idHabito.OBJETIVO", null)
 
+        Log.e("MiApp", "Objetivo: " + objetivo );
+
         return if(momentoDia != null && objetivo != null){
-            Pair(momentoDia,objetivo)
+            Pair(objetivo,momentoDia)
         } else {
             null
         }

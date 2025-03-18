@@ -44,6 +44,9 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private val daysInMonth = 31
     private val calendarDays = mutableListOf<DiaCalendario>()
     private var habito: Habitos? = null
+    private lateinit var btn_editar: ImageView
+
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,6 +144,8 @@ class DetalleHabitoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Error: No se pudo obtener el hábito", Toast.LENGTH_SHORT).show()
         }
+        btn_editar = findViewById(R.id.buttonEditar)
+        btn_editar.setOnClickListener {editarHabito()}
     }
 
     private fun mostrarDialogoConfirmacion() {
@@ -178,7 +183,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
     }
 
     private fun editarHabito(){
-        val intent = Intent(this, CrearHabito::class.java).apply {
+        val intent = Intent(this, EditarActivity::class.java).apply {
             putExtra("habito", habito)
         }
         this.startActivity(intent)
