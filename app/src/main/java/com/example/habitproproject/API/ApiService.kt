@@ -15,7 +15,7 @@ interface ApiService {
     suspend fun getHabitos(): List<Habitos>
 
     @POST("habitos")
-    fun createHabitos(@Body nuevoHabito: Habitos): Call<Habitos>
+    suspend fun createHabitos(@Body nuevoHabito: Habitos): Habitos
 
     @PUT("habitos/{id}")
     fun updateHabito(@Path("id") id: Int, @Body habito: Habitos): Call<Habitos>

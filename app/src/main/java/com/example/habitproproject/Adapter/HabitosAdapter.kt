@@ -17,12 +17,18 @@ class HabitosAdapter(
     private var listaHabitos: List<Habitos>
 ) : RecyclerView.Adapter<HabitosAdapter.HabitosViewHolder>() {
 
+
     fun actualizarListaHabitos(nuevaLista: List<Habitos>) {
-        /*avisar d'un item nou per actualitzar llista */
-        val oldSize = listaHabitos.size
+        val diferencia = nuevaLista.size - listaHabitos.size
         listaHabitos = nuevaLista
-        notifyItemInserted(oldSize)
+
+        if (diferencia > 0) {
+            notifyItemInserted(listaHabitos.size - 1)
+        } else {
+            notifyDataSetChanged()
+        }
     }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitosViewHolder {

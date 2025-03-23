@@ -1,5 +1,6 @@
 package com.example.habitproproject.Activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -32,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -120,8 +123,7 @@ class HabitosActivity : AppCompatActivity() {
         val adapter = DiasAdapter(listaDias)
         recyclerDias.adapter = adapter
 
-
-
+        obtenerHabitos()
 
         habitosAdapter = HabitosAdapter(listaHabitos)
 
@@ -137,7 +139,6 @@ class HabitosActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        obtenerHabitos()
     }
 
     private fun updateUI() {
@@ -153,17 +154,18 @@ class HabitosActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                delay(1000)
                 val habitosObtenidos = withContext(Dispatchers.IO) {
                     val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
                     apiService.getHabitos()
                 }
 
+                Log.d("HabitosActivity", "Lista de hábitos obtenida: $habitosObtenidos")
+
                 if (habitosObtenidos != null) {
                     listaHabitos = habitosObtenidos
-                    habitosAdapter = HabitosAdapter(listaHabitos)
                     habitosAdapter.actualizarListaHabitos(listaHabitos)
-                    val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
-                    recyclerHabitos.adapter = habitosAdapter
+                    habitosAdapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(this@HabitosActivity, "Error al obtener los hábitos", Toast.LENGTH_SHORT).show()
                 }
