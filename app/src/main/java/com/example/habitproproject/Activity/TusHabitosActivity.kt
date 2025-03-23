@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class TusHabitosActivity : AppCompatActivity() {
 
@@ -36,6 +38,11 @@ class TusHabitosActivity : AppCompatActivity() {
     private lateinit var listaHabitosMañana: MutableList<Habitos>
     private lateinit var listaHabitosTarde: MutableList<Habitos>
     private lateinit var listaHabitosNoche: MutableList<Habitos>
+
+    private lateinit var originalHabitosMañana: List<Habitos>
+    private lateinit var originalHabitosTarde: List<Habitos>
+    private lateinit var originalHabitosNoche: List<Habitos>
+    private lateinit var searchView: SearchView
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -54,10 +61,15 @@ class TusHabitosActivity : AppCompatActivity() {
 
         bottomNavigationView.selectedItemId = R.id.habits
 
-
         listaHabitosMañana = mutableListOf()
         listaHabitosTarde = mutableListOf()
         listaHabitosNoche = mutableListOf()
+
+        carregarHabitos()
+
+        originalHabitosMañana = listaHabitosMañana.toList()
+        originalHabitosTarde = listaHabitosTarde.toList()
+        originalHabitosNoche = listaHabitosNoche.toList()
 
         habitosAdapterMañana = TusHabitosAdapter(listaHabitosMañana) { habitoSeleccionado ->
             abrirDetallesHabito(habitoSeleccionado)
@@ -85,6 +97,19 @@ class TusHabitosActivity : AppCompatActivity() {
         val recyclerHabitosNoche = findViewById<RecyclerView>(R.id.recyclerHabitosNoche)
         recyclerHabitosNoche.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerHabitosNoche.adapter = habitosAdapterNoche
+
+
+        val searchView = findViewById<SearchView>(R.id.searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterHabitos(newText)
+                return true
+            }
+        })
 
         val buttonAdd = findViewById<MaterialButton>(R.id.buttonAdd)
         buttonAdd.setOnClickListener {
@@ -132,6 +157,36 @@ class TusHabitosActivity : AppCompatActivity() {
         }
     }
 
+    private fun filterHabitos(query: String?) {
+        val queryLower = query?.lowercase(Locale.getDefault()) ?: ""
+
+        if (queryLower.isEmpty()) {
+            habitosAdapterMañana.actualizarLista(originalHabitosMañana)
+            habitosAdapterTarde.actualizarLista(originalHabitosTarde)
+            habitosAdapterNoche.actualizarLista(originalHabitosNoche)
+        } else {
+            // Filtrar los hábitos para cada lista (Mañana, Tarde, Noche)
+            val filteredMañana = originalHabitosMañana.filter {
+                it.nombre.lowercase(Locale.getDefault()).contains(queryLower)
+            }
+            val filteredTarde = originalHabitosTarde.filter {
+                it.nombre.lowercase(Locale.getDefault()).contains(queryLower)
+            }
+            val filteredNoche = originalHabitosNoche.filter {
+                it.nombre.lowercase(Locale.getDefault()).contains(queryLower)
+            }
+
+            // Actualizar los adaptadores con los datos filtrados
+            habitosAdapterMañana.actualizarLista(filteredMañana)
+            habitosAdapterTarde.actualizarLista(filteredTarde)
+            habitosAdapterNoche.actualizarLista(filteredNoche)
+        }
+    }
+
+
+
+
+
     private fun abrirDetallesHabito(habito: Habitos) {
         val intent = Intent(this, DetalleHabitoActivity::class.java).apply {
             putExtra("HABITO", habito)
@@ -158,6 +213,9 @@ class TusHabitosActivity : AppCompatActivity() {
                             "Noche" -> listaHabitosNoche.add(habito)
                         }
                     }
+                    originalHabitosMañana = listaHabitosMañana.toList()
+                    originalHabitosTarde = listaHabitosTarde.toList()
+                    originalHabitosNoche = listaHabitosNoche.toList()
 
                     actualizarRecyclerViews()
 
