@@ -33,6 +33,10 @@ import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -182,29 +186,26 @@ class DetalleHabitoActivity : AppCompatActivity() {
         }
     }
     private fun eliminarHabito() {
-        habito?.let { habito ->
-            val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
-            habito.id?.let {
-                apiService.deleteHabito(it).enqueue(object : Callback<Unit> {
-                    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                        if (response.isSuccessful) {
-                            Log.d("EliminarHabito", "Hábito eliminado correctamente")
-                            Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
-                            redirigirAHabitosActivity()
-                        } else {
-                            Log.e("EliminarHabito", "Error al eliminar: ${response.errorBody()?.string()}")
-                            Toast.makeText(this@DetalleHabitoActivity, "Error al eliminar", Toast.LENGTH_SHORT).show()
-                        }
+        habito?.id?.let { id ->
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+
+                    withContext(Dispatchers.IO) {
+                        apiService.deleteHabito(id)
                     }
 
-
-                    override fun onFailure(call: Call<Unit>, t: Throwable) {
-                        Toast.makeText(this@DetalleHabitoActivity, "Fallo en la conexión", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                    Log.d("EliminarHabito", "Hábito eliminado correctamente")
+                    Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
+                    redirigirAHabitosActivity()
+                } catch (e: Exception) {
+                    Log.e("EliminarHabito", "Error al eliminar: ${e.message}")
+                    Toast.makeText(this@DetalleHabitoActivity, "Error al eliminar", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
+
 
     private fun editarHabito(){
         val intent = Intent(this, CrearHabito::class.java).apply {

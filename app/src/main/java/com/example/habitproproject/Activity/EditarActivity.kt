@@ -24,6 +24,10 @@ import com.example.habitproproject.API.RetrofitClient
 import com.example.habitproproject.Adapter.ImageAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -214,32 +218,29 @@ class EditarActivity : AppCompatActivity() {
             imagenId = imagenSeleccionada
         )
 
-        val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
-        apiService.updateHabito(id, nuevoHabito).enqueue(object : Callback<Habitos> {
-            override fun onResponse(call: Call<Habitos>, response: Response<Habitos>) {
-                if (response.isSuccessful) {
-                    val habit = response.body()
-                    habit?.id?.let { habitId  ->
-                        /*emmagatzemar moment dia i objectiu en sharedpreferences*/
-                        guardarEnSharedPreferences(habitId , momentoDia, objetivo)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
+                val habit = apiService.updateHabito(id, nuevoHabito)
+
+                withContext(Dispatchers.Main) {
+                    habit.id?.let { habitId ->
+                        guardarEnSharedPreferences(habitId, momentoDia, objetivo)
                     }
-                    Toast.makeText(this@EditarActivity, "Hábito creado exitosamente", Toast.LENGTH_SHORT).show()
-                    /*navegar al llistat d'hàbits*/
+
+                    Toast.makeText(this@EditarActivity, "Hábito actualizado exitosamente", Toast.LENGTH_SHORT).show()
+
                     val intent = Intent(this@EditarActivity, HabitosActivity::class.java)
                     startActivity(intent)
                     finish()
-                } else {
-                    val errorResponse = response.errorBody()?.string()
-                    val statusCode = response.code()
-                    Log.e("API_ERROR", "Código de respuesta: $statusCode, Error: $errorResponse")
-                    Toast.makeText(this@EditarActivity, "Error al crear hábito", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("API_ERROR", "Error al actualizar hábito: ${e.message}")
+                    Toast.makeText(this@EditarActivity, "Error al actualizar hábito", Toast.LENGTH_SHORT).show()
                 }
             }
-
-            override fun onFailure(call: Call<Habitos>, t: Throwable) {
-                    Toast.makeText(this@EditarActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        }
     }
 
     private fun guardarEnSharedPreferences(idHabito: Int, momentoDia: String, objetivo: String) {
