@@ -208,7 +208,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
 
 
     private fun editarHabito(){
-        val intent = Intent(this, CrearHabito::class.java).apply {
+        val intent = Intent(this, EditarActivity::class.java).apply {
             putExtra("habito", habito)
         }
         this.startActivity(intent)
