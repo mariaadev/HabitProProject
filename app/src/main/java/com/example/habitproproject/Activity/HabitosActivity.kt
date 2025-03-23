@@ -50,6 +50,14 @@ class HabitosActivity : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var dialogCarga: AlertDialog
 
+    private val habitResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                obtenerHabitos()
+            }
+        }
+
+
     override fun onStart() {
         super.onStart()
         updateUI()
@@ -130,15 +138,24 @@ class HabitosActivity : AppCompatActivity() {
         val recyclerHabitos = findViewById<RecyclerView>(R.id.recyclerHabitos)
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerHabitos.adapter = habitosAdapter
-        /*optimitzar llista*/
-        recyclerHabitos.setHasFixedSize(true)
+        recyclerHabitos.clipToPadding = false
+        recyclerHabitos.clipChildren = false
 
         val buttonAdd = findViewById<ImageView>(R.id.buttonAdd)
         buttonAdd.setOnClickListener {
             val intent = Intent(this, CrearHabito::class.java)
-            startActivity(intent)
+            habitResultLauncher.launch(intent)
+
+
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            obtenerHabitos()
+        }
     }
 
     private fun updateUI() {

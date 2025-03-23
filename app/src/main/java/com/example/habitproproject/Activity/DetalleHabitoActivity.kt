@@ -1,6 +1,7 @@
 package com.example.habitproproject.Activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -52,6 +53,9 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private var habito: Habitos? = null
     private lateinit var btn_editar: ImageView
     private lateinit var dialogCarga: AlertDialog
+    private val sharedPreferences by lazy {
+        getSharedPreferences("HABITOS_PREF", Context.MODE_PRIVATE)
+    }
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -196,6 +200,8 @@ class DetalleHabitoActivity : AppCompatActivity() {
                     }
 
                     Log.d("EliminarHabito", "Hábito eliminado correctamente")
+                    val idHabito = habito!!.id ?: return@launch
+                    eliminarDeSharedPreferences(idHabito)
                     Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
                     redirigirAHabitosActivity()
                 } catch (e: Exception) {
@@ -206,6 +212,13 @@ class DetalleHabitoActivity : AppCompatActivity() {
         }
     }
 
+    private fun eliminarDeSharedPreferences(idHabito: Int) {
+        val editor = sharedPreferences.edit()
+        editor.remove("$idHabito.MOMENTO_DIA")
+        editor.remove("$idHabito.OBJETIVO")
+        editor.apply()
+        Log.e("MiApp", "Eliminado: $idHabito.MOMENTO_DIA y $idHabito.OBJETIVO")
+    }
 
     private fun editarHabito(){
         val intent = Intent(this, CrearHabito::class.java).apply {

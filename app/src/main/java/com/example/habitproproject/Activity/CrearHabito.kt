@@ -170,9 +170,10 @@ class CrearHabito : AppCompatActivity() {
 
                 Toast.makeText(this@CrearHabito, "Hábito creado exitosamente", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this@CrearHabito, HabitosActivity::class.java)
-                startActivity(intent)
+                val intent = Intent()
+                setResult(Activity.RESULT_OK, intent)
                 finish()
+
 
             } catch (e:Exception){
                 Toast.makeText(this@CrearHabito, "Error: ${e.message}", Toast.LENGTH_SHORT).show()

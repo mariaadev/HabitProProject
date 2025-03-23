@@ -1,6 +1,7 @@
 package com.example.habitproproject.Activity
 
 import TusHabitosAdapter
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -155,6 +156,25 @@ class TusHabitosActivity : AppCompatActivity() {
         }
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val idHabitoEliminado = data?.getIntExtra("ID_HABITO_ELIMINADO", -1)
+            if (idHabitoEliminado != null && idHabitoEliminado != -1) {
+                eliminarHabitoDeLista(idHabitoEliminado)
+            }
+        }
+    }
+
+    private fun eliminarHabitoDeLista(idHabito: Int) {
+        listaHabitosMañana.removeAll { it.id == idHabito }
+        listaHabitosTarde.removeAll { it.id == idHabito }
+        listaHabitosNoche.removeAll { it.id == idHabito }
+
+        actualizarRecyclerViews()
+    }
 
 
     private fun obtenerMomentoDia(idHabito: Int): String {

@@ -19,14 +19,8 @@ class HabitosAdapter(
 
 
     fun actualizarListaHabitos(nuevaLista: List<Habitos>) {
-        val diferencia = nuevaLista.size - listaHabitos.size
         listaHabitos = nuevaLista
-
-        if (diferencia > 0) {
-            notifyItemInserted(listaHabitos.size - 1)
-        } else {
-            notifyDataSetChanged()
-        }
+        notifyDataSetChanged()
     }
 
 
@@ -39,6 +33,7 @@ class HabitosAdapter(
 
     override fun onBindViewHolder(holder: HabitosViewHolder, position: Int) {
         val habito = listaHabitos[position]
+
         holder.bind(habito)
 
         holder.itemView.setOnClickListener {
