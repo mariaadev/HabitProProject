@@ -59,9 +59,18 @@ class TusHabitosActivity : AppCompatActivity() {
         listaHabitosTarde = mutableListOf()
         listaHabitosNoche = mutableListOf()
 
-        habitosAdapterMañana = TusHabitosAdapter(listaHabitosMañana)
-        habitosAdapterTarde = TusHabitosAdapter(listaHabitosTarde)
-        habitosAdapterNoche = TusHabitosAdapter(listaHabitosNoche)
+        habitosAdapterMañana = TusHabitosAdapter(listaHabitosMañana) { habitoSeleccionado ->
+            abrirDetallesHabito(habitoSeleccionado)
+        }
+
+        habitosAdapterTarde = TusHabitosAdapter(listaHabitosTarde) { habitoSeleccionado ->
+            abrirDetallesHabito(habitoSeleccionado)
+        }
+
+        habitosAdapterNoche = TusHabitosAdapter(listaHabitosNoche) { habitoSeleccionado ->
+            abrirDetallesHabito(habitoSeleccionado)
+        }
+
 
 
 
@@ -121,6 +130,13 @@ class TusHabitosActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    private fun abrirDetallesHabito(habito: Habitos) {
+        val intent = Intent(this, DetalleHabitoActivity::class.java).apply {
+            putExtra("HABITO", habito)
+        }
+        startActivity(intent)
     }
 
     private fun carregarHabitos(){
