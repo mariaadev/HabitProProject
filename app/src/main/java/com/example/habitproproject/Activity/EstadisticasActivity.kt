@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
@@ -30,7 +31,7 @@ class EstadisticasActivity : AppCompatActivity() {
 
    private lateinit var navigationView: NavigationView
    private lateinit var drawerLayout: DrawerLayout
-//    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var bottomNavigationView: BottomNavigationView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,11 @@ class EstadisticasActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_estadisticas)
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        establecerBottomNavigationView()
+
+        bottomNavigationView.selectedItemId = R.id.stats
 
         pieChart = findViewById(R.id.pieChart)
         btnSave = findViewById(R.id.btnSave)
@@ -93,39 +99,39 @@ class EstadisticasActivity : AppCompatActivity() {
         }
     }
 
-//    private fun establecerBottomNavigationView() {
-//        bottomNavigationView.setOnItemSelectedListener { menuItem ->
-//            val currentActivity = this::class.java
-//            when (menuItem.itemId) {
-//                R.id.home -> {
-//                    if (HabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
-//                        startActivity(Intent(this, HabitosActivity::class.java))
-//                        finish()
-//                    }
-//                    true
-//                }
-//                R.id.habits -> {
-//                    if (TusHabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
-//                        startActivity(Intent(this, TusHabitosActivity::class.java))
-//                        finish()
-//                    }
-//                    true
-//                }
-//                R.id.stats -> {
-//
-//                    true
-//                }
-//                R.id.profile -> {
-//                    if (ProfileActivity::class.java.isAssignableFrom(currentActivity).not()) {
-//                        startActivity(Intent(this, ProfileActivity::class.java))
-//                        finish()
-//                    }
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//    }
+    private fun establecerBottomNavigationView() {
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            val currentActivity = this::class.java
+            when (menuItem.itemId) {
+                R.id.home -> {
+                   if (HabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                        startActivity(Intent(this, HabitosActivity::class.java))
+                       finish()
+                    }
+                    true
+                }
+                R.id.habits -> {
+                    if (TusHabitosActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                       startActivity(Intent(this, TusHabitosActivity::class.java))
+                        finish()
+                    }
+                    true
+               }
+                R.id.stats -> {
+
+                   true
+                }
+               R.id.profile -> {
+                    if (ProfileActivity::class.java.isAssignableFrom(currentActivity).not()) {
+                       startActivity(Intent(this, ProfileActivity::class.java))
+                        finish()
+                    }
+                   true
+               }
+                else -> false
+            }
+       }
+    }
 
 
     private fun setupPieChart() {
