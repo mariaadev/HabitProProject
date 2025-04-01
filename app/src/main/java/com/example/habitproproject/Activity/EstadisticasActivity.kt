@@ -1,20 +1,24 @@
 package com.example.habitproproject.Activity
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.habitproproject.R
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import kotlinx.coroutines.CoroutineScope
+import com.google.android.material.navigation.NavigationView
 
 
 class EstadisticasActivity : AppCompatActivity() {
@@ -24,8 +28,8 @@ class EstadisticasActivity : AppCompatActivity() {
     private var prefs: SharedPreferences? = null
 
 
-//    private lateinit var navigationView: NavigationView
-//    private lateinit var drawerLayout: DrawerLayout
+   private lateinit var navigationView: NavigationView
+   private lateinit var drawerLayout: DrawerLayout
 //    private lateinit var bottomNavigationView: BottomNavigationView
 
 
@@ -39,38 +43,54 @@ class EstadisticasActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSave)
         btnReset = findViewById(R.id.btnReset)
 
-        // Configurar SharedPreferences
+        /*Configuración toolbar*/
+        val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        toolbar.setTitle("Estadísticas");
+
+        // Configurar DrawerLayout
+        drawerLayout = findViewById(R.id.drawerlayout)
+        navigationView = findViewById(R.id.navigationView)
+        // Configurar el icono de navegación
+        toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
+        toolbar.setNavigationOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        /*Configurar SharedPreferences*/
         prefs = getSharedPreferences("HabitStats", MODE_PRIVATE)
 
-        // Configurar PieChart
+        /*Configurar PieChart*/
         setupPieChart()
         loadPieChartData()
 
-        // Botón Guardar
+
         btnSave.setOnClickListener(View.OnClickListener { view: View? -> saveData() })
 
-        // Botón Resetear
+
         btnReset.setOnClickListener(View.OnClickListener { view: View? -> resetData() })
-//        navigationView.setNavigationItemSelectedListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.menu_settings -> {
-//                    val intent = Intent(this, AjustesActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                R.id.menu_theme -> {
-//                    Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
-//                }
-//                R.id.menu_log_out -> {
-//                    val intent = Intent(this, IniciarSesionActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                R.id.menu_help -> {
-//                    Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            drawerLayout.closeDrawer(GravityCompat.START)
-//            true
-//        }
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+           when (menuItem.itemId) {
+                R.id.menu_settings -> {
+                   val intent = Intent(this, AjustesActivity::class.java)
+                   startActivity(intent)
+                }
+                R.id.menu_theme -> {
+                    Toast.makeText(this, "Tema seleccionado", Toast.LENGTH_SHORT).show()
+                }
+                R.id.menu_log_out -> {
+                    val intent = Intent(this, IniciarSesionActivity::class.java)
+                startActivity(intent)
+                }
+                R.id.menu_help -> {
+                    Toast.makeText(this, "Help seleccionado", Toast.LENGTH_SHORT).show()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
 //    private fun establecerBottomNavigationView() {
@@ -170,12 +190,11 @@ class EstadisticasActivity : AppCompatActivity() {
         editor.putInt("delete", 0)
         editor.apply()
 
-        // Recargar datos en el gráfico
+        /*Recargar datos en el gráfico*/
         loadPieChartData()
     }
 
     companion object {
-        // Método estático para incrementar eventos desde otras partes de la app
         fun incrementAction(context: Context, action: String?) {
             val prefs = context.getSharedPreferences("HabitStats", MODE_PRIVATE)
             val count = prefs.getInt(action, 0)
