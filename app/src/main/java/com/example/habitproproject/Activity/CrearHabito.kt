@@ -169,6 +169,8 @@ class CrearHabito : AppCompatActivity() {
                 }
 
                 Toast.makeText(this@CrearHabito, "Hábito creado exitosamente", Toast.LENGTH_SHORT).show()
+                EstadisticasActivity.incrementAction(this@CrearHabito, "create")
+
 
                 val intent = Intent()
                 setResult(Activity.RESULT_OK, intent)

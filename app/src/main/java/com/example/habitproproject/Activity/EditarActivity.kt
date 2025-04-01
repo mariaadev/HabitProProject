@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -28,9 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -229,6 +225,8 @@ class EditarActivity : AppCompatActivity() {
                     }
 
                     Toast.makeText(this@EditarActivity, "Hábito actualizado exitosamente", Toast.LENGTH_SHORT).show()
+                    EstadisticasActivity.incrementAction(this@EditarActivity, "update")
+
 
                     val intent = Intent(this@EditarActivity, HabitosActivity::class.java)
                     startActivity(intent)

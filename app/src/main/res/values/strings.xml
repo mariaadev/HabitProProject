@@ -53,6 +53,9 @@
     <string name="ej_leer_30_p_ginas">Ej. Leer 30 páginas</string>
     <string name="eliminando_h_bito">Eliminando hábito...</string>
     <string name="editar_habito">Editar Habito</string>
+    <string name="fecha_de_inicio">Fecha de inicio</string>
+    <string name="guardar_datos">Guardar Datos</string>
+    <string name="resetear_datos">Resetear Datos</string>
 
 
     <string-array name="idiomas">

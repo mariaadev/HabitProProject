@@ -45,7 +45,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
 class DetalleHabitoActivity : AppCompatActivity() {
     private lateinit var bottomNavigationViewHab: BottomNavigationView
     private val daysInMonth = 31
@@ -200,6 +199,7 @@ class DetalleHabitoActivity : AppCompatActivity() {
                     }
 
                     Log.d("EliminarHabito", "Hábito eliminado correctamente")
+                    EstadisticasActivity.incrementAction(this@DetalleHabitoActivity, "delete")
                     val idHabito = habito!!.id ?: return@launch
                     eliminarDeSharedPreferences(idHabito)
                     Toast.makeText(this@DetalleHabitoActivity, "Hábito eliminado", Toast.LENGTH_SHORT).show()
