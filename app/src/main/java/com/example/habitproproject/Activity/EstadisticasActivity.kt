@@ -13,17 +13,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.habitproproject.R
+import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
 class EstadisticasActivity : AppCompatActivity() {
     private lateinit var pieChart: PieChart
+    private lateinit var barChart: HorizontalBarChart
     private lateinit var btnSave: Button
     private lateinit var btnReset: Button
     private var prefs: SharedPreferences? = null
@@ -31,7 +38,7 @@ class EstadisticasActivity : AppCompatActivity() {
 
    private lateinit var navigationView: NavigationView
    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var bottomNavigationView: BottomNavigationView
+   private lateinit var bottomNavigationView: BottomNavigationView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +46,7 @@ class EstadisticasActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_estadisticas)
+        incrementActivityAccess(this, "stats")
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
@@ -46,6 +54,7 @@ class EstadisticasActivity : AppCompatActivity() {
         bottomNavigationView.selectedItemId = R.id.stats
 
         pieChart = findViewById(R.id.pieChart)
+        barChart = findViewById(R.id.barChart)
         btnSave = findViewById(R.id.btnSave)
         btnReset = findViewById(R.id.btnReset)
 
@@ -56,10 +65,9 @@ class EstadisticasActivity : AppCompatActivity() {
         toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
         toolbar.setTitle("Estadísticas");
 
-        // Configurar DrawerLayout
         drawerLayout = findViewById(R.id.drawerlayout)
         navigationView = findViewById(R.id.navigationView)
-        // Configurar el icono de navegación
+
         toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
         toolbar.setNavigationOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -71,11 +79,17 @@ class EstadisticasActivity : AppCompatActivity() {
         setupPieChart()
         loadPieChartData()
 
+        /*Configurar BarChart horizontal*/
+        setupBarChart()
+        loadBarChartData()
 
         btnSave.setOnClickListener(View.OnClickListener { view: View? -> saveData() })
 
 
-        btnReset.setOnClickListener(View.OnClickListener { view: View? -> resetData() })
+        btnReset.setOnClickListener {
+            resetData()
+            resetDataActivities()
+        }
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
            when (menuItem.itemId) {
@@ -139,12 +153,10 @@ class EstadisticasActivity : AppCompatActivity() {
         pieChart!!.holeRadius = 45f
         pieChart!!.transparentCircleRadius = 50f
 
-        // Fuente personalizada
         pieChart!!.setCenterTextColor(Color.BLACK)
         pieChart!!.centerText = "Estadísticas del CRUD de Hábitos"
         pieChart!!.setCenterTextSize(14f)
 
-        // Leyenda
         val l = pieChart!!.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -153,18 +165,16 @@ class EstadisticasActivity : AppCompatActivity() {
     }
 
     private fun loadPieChartData() {
-        // Obtener datos guardados en SharedPreferences
+        /*Obtener datos de sharedPrefs*/
         val createCount = prefs!!.getInt("create", 0)
         val updateCount = prefs!!.getInt("update", 0)
         val deleteCount = prefs!!.getInt("delete", 0)
 
-        // Lista de entradas para el gráfico
         val entries = ArrayList<PieEntry>()
         entries.add(PieEntry(createCount.toFloat(), "Crear"))
         entries.add(PieEntry(updateCount.toFloat(), "Actualizar"))
         entries.add(PieEntry(deleteCount.toFloat(), "Eliminar"))
 
-        // Configurar dataset
         val dataSet = PieDataSet(entries, "Acciones del Usuario")
         val pastelGreen = Color.parseColor("#77DD77")
         val pastelBlue = Color.parseColor("#A2C2E0")
@@ -173,10 +183,72 @@ class EstadisticasActivity : AppCompatActivity() {
         dataSet.setColors(pastelGreen, pastelBlue, pastelRed)
         dataSet.valueTextSize = 12f
 
-        // Configurar datos del gráfico
+
         val pieData = PieData(dataSet)
         pieChart!!.data = pieData
-        pieChart!!.invalidate() // Refrescar gráfico
+        pieChart!!.invalidate()
+    }
+
+    private fun setupBarChart() {
+        barChart.description.isEnabled = false
+        barChart.setDrawGridBackground(false)
+        barChart.setDrawBarShadow(false)
+        barChart.setDrawValueAboveBar(true)
+
+        val legend = barChart.legend
+        legend.isEnabled = false
+
+        val xAxis = barChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f
+
+        val leftAxis = barChart.axisLeft
+        leftAxis.setDrawGridLines(false)
+
+        val rightAxis = barChart.axisRight
+        rightAxis.isEnabled = false
+    }
+
+    private fun loadBarChartData() {
+        val homeCount = prefs!!.getInt("home", 0)
+        val habitosCount = prefs!!.getInt("habitos", 0)
+        val statsCount = prefs!!.getInt("stats", 0)
+        val profileCount = prefs!!.getInt("profile", 0)
+        val settingsCount = prefs!!.getInt("settings", 0)
+
+        val entries = ArrayList<BarEntry>()
+        entries.add(BarEntry(0f, homeCount.toFloat()))
+        entries.add(BarEntry(1f, habitosCount.toFloat()))
+        entries.add(BarEntry(2f, statsCount.toFloat()))
+        entries.add(BarEntry(3f, profileCount.toFloat()))
+        entries.add(BarEntry(4f, settingsCount.toFloat()))
+
+        val dataSet = BarDataSet(entries, "Accesos a Actividades")
+        dataSet.setColors(
+            Color.BLUE, Color.GREEN, Color.RED, Color.MAGENTA, Color.CYAN
+        )
+        dataSet.valueTextSize = 12f
+
+        val barData = BarData(dataSet)
+        barData.barWidth = 0.6f
+        barChart.data = barData
+
+        val labels = listOf("Home", "Hábitos", "Tus Hábitos", "Estadísticas", "Perfil", "Ajustes")
+        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        barChart.xAxis.textSize = 12f
+        barChart.xAxis.setDrawGridLines(false)
+        barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        barChart.axisLeft.setDrawGridLines(false)
+        /*Evitar valores negativos*/
+        barChart.axisLeft.axisMinimum = 0f
+
+        barChart.axisRight.isEnabled = false
+        barChart.description.isEnabled = false
+        barChart.legend.isEnabled = false
+
+        barChart.invalidate()
     }
 
     private fun saveData() {
@@ -189,7 +261,7 @@ class EstadisticasActivity : AppCompatActivity() {
 
 
     private fun resetData() {
-        // Resetear valores a 0
+
         val editor = prefs!!.edit()
         editor.putInt("create", 0)
         editor.putInt("update", 0)
@@ -200,11 +272,29 @@ class EstadisticasActivity : AppCompatActivity() {
         loadPieChartData()
     }
 
+    private fun resetDataActivities() {
+        val editor = prefs!!.edit()
+        editor.putInt("home", 0)
+        editor.putInt("habits", 0)
+        editor.putInt("stats", 0)
+        editor.putInt("profile", 0)
+        editor.putInt("settings", 0)
+        editor.apply()
+
+        loadBarChartData()
+    }
+
     companion object {
         fun incrementAction(context: Context, action: String?) {
             val prefs = context.getSharedPreferences("HabitStats", MODE_PRIVATE)
             val count = prefs.getInt(action, 0)
             prefs.edit().putInt(action, count + 1).apply()
+        }
+
+        fun incrementActivityAccess(context: Context, activityName: String) {
+            val prefs = context.getSharedPreferences("HabitStats", MODE_PRIVATE)
+            val count = prefs.getInt(activityName, 0)
+            prefs.edit().putInt(activityName, count + 1).apply()
         }
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.habitproproject.Activity.EstadisticasActivity.Companion.incrementActivityAccess
 import com.example.habitproproject.R
 import org.w3c.dom.Text
 import java.util.Locale
@@ -21,7 +22,7 @@ class AjustesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_ajustes)
-
+        incrementActivityAccess(this, "settings")
         /*Configuración toolbar*/
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
+import com.example.habitproproject.Activity.EstadisticasActivity.Companion.incrementActivityAccess
 import com.example.habitproproject.Adapter.HabitosAdapter
 import com.example.habitproproject.Model.Habitos
 import com.example.habitproproject.R
@@ -55,7 +56,7 @@ class TusHabitosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_tushabitos)
-
+        incrementActivityAccess(this, "habits")
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         establecerBottomNavigationView()
 

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.habitproproject.API.ApiService
 import com.example.habitproproject.API.RetrofitClient
+import com.example.habitproproject.Activity.EstadisticasActivity.Companion.incrementActivityAccess
 import com.example.habitproproject.Model.Dia
 import com.example.habitproproject.Adapter.DiasAdapter
 import com.example.habitproproject.Model.Habitos
@@ -67,7 +68,7 @@ class HabitosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_habitos)
-
+        incrementActivityAccess(this, "home")
         /*Configuración toolbar*/
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
