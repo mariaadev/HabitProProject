@@ -72,6 +72,8 @@ class DetalleHabitoActivity : AppCompatActivity() {
 
 
         if (habito != null) {
+
+            val btnEstadisticas = findViewById<Button>(R.id.btn_estadisticas)
         // Inicializar los días del mes
             for (i in 1..daysInMonth) {
                 calendarDays.add(DiaCalendario(i, false))  // Todos los días comienzan sin marcar
@@ -113,6 +115,12 @@ class DetalleHabitoActivity : AppCompatActivity() {
             val daysText = "$diasCompletados días"
 
             findViewById<TextView>(R.id.textViewDays).text = "($daysText)"
+
+            btnEstadisticas.setOnClickListener {
+                val intent = Intent(this, EstadisticasHabitoActivity::class.java)
+                intent.putExtra("habitId", habito!!.id)
+                startActivity(intent)
+            }
 
             /*Configuración toolbar*/
             val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);

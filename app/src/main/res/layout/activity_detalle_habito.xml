@@ -255,6 +255,12 @@
                         android:textColor="#000000"
                         android:textSize="24sp" />
 
+                    <Button
+                        android:id="@+id/btn_estadisticas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ver estadisticas" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"

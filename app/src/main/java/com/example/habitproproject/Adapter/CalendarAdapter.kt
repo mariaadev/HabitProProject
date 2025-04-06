@@ -51,12 +51,29 @@ class CalendarAdapter(
     // Función para guardar los días seleccionados en SharedPreferences
     private fun saveSelectedDays(context: Context, habitId: String, selectedDays: List<DiaCalendario>) {
         val sharedPreferences = context.getSharedPreferences("HabitPreferences", Context.MODE_PRIVATE)
+        val calendarPrefs = context.getSharedPreferences("HabitCalendarPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
+        val weekEditor = calendarPrefs.edit()
 
         val selectedDaysSet = selectedDays.filter { it.isChecked }.map { it.day.toString() }.toSet()
         editor.putStringSet("habit_${habitId}_days", selectedDaysSet)
+
+        // Calcular días por semana (suponiendo semanas de 7 días empezando el día 1)
+        val weeks = mutableMapOf<Int, Int>()
+        selectedDays.filter { it.isChecked }.forEach { day ->
+            val weekNumber = ((day.day - 1) / 7) + 1
+            weeks[weekNumber] = weeks.getOrDefault(weekNumber, 0) + 1
+        }
+
+        // Guardar cada semana en HabitCalendarPrefs
+        for ((week, count) in weeks) {
+            weekEditor.putInt("habit_${habitId}_week_$week", count)
+        }
+
         editor.apply()
+        weekEditor.apply()
     }
+
 
     // Función para cargar los días seleccionados desde SharedPreferences
     private fun loadSelectedDays(context: Context, habitId: String): List<Int> {
