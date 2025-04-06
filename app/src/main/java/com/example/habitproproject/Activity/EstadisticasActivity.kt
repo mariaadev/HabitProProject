@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
@@ -212,7 +213,7 @@ class EstadisticasActivity : AppCompatActivity() {
 
     private fun loadBarChartData() {
         val homeCount = prefs!!.getInt("home", 0)
-        val habitosCount = prefs!!.getInt("habitos", 0)
+        val habitosCount = prefs!!.getInt("habits", 0)
         val statsCount = prefs!!.getInt("stats", 0)
         val profileCount = prefs!!.getInt("profile", 0)
         val settingsCount = prefs!!.getInt("settings", 0)
@@ -226,15 +227,26 @@ class EstadisticasActivity : AppCompatActivity() {
 
         val dataSet = BarDataSet(entries, "Accesos a Actividades")
         dataSet.setColors(
-            Color.BLUE, Color.GREEN, Color.RED, Color.MAGENTA, Color.CYAN
+            Color.parseColor("#A2C2E0"),
+            Color.parseColor("#77DD77"),
+            Color.parseColor("#F6A6C1"),
+            Color.parseColor("#CBAACB"),
+            Color.parseColor("#FFFACD")
         )
+
         dataSet.valueTextSize = 12f
 
+        /*Mostrar números enteros*/
+        dataSet.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.toInt().toString()
+            }
+        }
         val barData = BarData(dataSet)
         barData.barWidth = 0.6f
         barChart.data = barData
 
-        val labels = listOf("Home", "Hábitos", "Tus Hábitos", "Estadísticas", "Perfil", "Ajustes")
+        val labels = listOf("Home", "Tus Hábitos", "Estadísticas", "Perfil", "Ajustes")
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         barChart.xAxis.textSize = 12f
         barChart.xAxis.setDrawGridLines(false)
@@ -259,6 +271,12 @@ class EstadisticasActivity : AppCompatActivity() {
         editor.apply()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        /*recargar gráfico para que actualice el recuento cuando se accede a ajustes*/
+        loadBarChartData()
+    }
 
     private fun resetData() {
 
