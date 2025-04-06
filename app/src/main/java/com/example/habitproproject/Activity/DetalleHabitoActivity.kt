@@ -1,11 +1,14 @@
 package com.example.habitproproject.Activity
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.Image
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,8 +19,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -45,6 +50,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+
 class DetalleHabitoActivity : AppCompatActivity() {
     private lateinit var bottomNavigationViewHab: BottomNavigationView
     private val daysInMonth = 31
@@ -52,10 +59,13 @@ class DetalleHabitoActivity : AppCompatActivity() {
     private var habito: Habitos? = null
     private lateinit var btn_editar: ImageView
     private lateinit var dialogCarga: AlertDialog
+
+    private lateinit var recyclerView: RecyclerView
     private val sharedPreferences by lazy {
         getSharedPreferences("HABITOS_PREF", Context.MODE_PRIVATE)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,13 +83,22 @@ class DetalleHabitoActivity : AppCompatActivity() {
 
         if (habito != null) {
 
+            ContextCompat.registerReceiver(
+                this,
+                resetReceiver,
+                IntentFilter("com.tuapp.RESET_HABITO"),
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+
+
+
             val btnEstadisticas = findViewById<Button>(R.id.btn_estadisticas)
         // Inicializar los días del mes
             for (i in 1..daysInMonth) {
                 calendarDays.add(DiaCalendario(i, false))  // Todos los días comienzan sin marcar
             }
 
-            val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+            recyclerView = findViewById(R.id.recyclerView)
             recyclerView.layoutManager = GridLayoutManager(this, 7)  // 7 columnas por semana (Lunes a Domingo)
             recyclerView.isNestedScrollingEnabled = false
 
@@ -271,4 +290,25 @@ class DetalleHabitoActivity : AppCompatActivity() {
             }
         }
     }
+
+    private val resetReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.tuapp.RESET_HABITO") {
+                val habitIdReset = intent.getIntExtra("habitId", -1)
+                if (habito?.id == habitIdReset) {
+                    calendarDays.forEach { it.isChecked = false }
+                    recyclerView.adapter?.notifyDataSetChanged()
+                    // También eliminar la selección de días en SharedPreferences
+                    val sharedPrefs = getSharedPreferences("HabitPreferences", MODE_PRIVATE)
+                    sharedPrefs.edit().remove("habit_${habitIdReset}_days").apply()
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(resetReceiver)
+    }
+
 }

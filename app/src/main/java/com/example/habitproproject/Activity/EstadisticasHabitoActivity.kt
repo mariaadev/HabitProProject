@@ -1,5 +1,6 @@
 package com.example.habitproproject.Activity
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.android.material.navigation.NavigationView
 import android.widget.Toast
+import com.github.mikephil.charting.formatter.ValueFormatter
 
 class EstadisticasHabitoActivity : AppCompatActivity() {
 
@@ -44,10 +46,13 @@ class EstadisticasHabitoActivity : AppCompatActivity() {
         val toolbar: androidx.appcompat.widget.Toolbar =  findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setNavigationIcon(R.drawable.ic_menu_habits);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
         toolbar.setTitle("Estadísticas Habito");
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
-        toolbar.setNavigationIcon(R.drawable.ic_menu_habits)
+
 
         setupBarChart()
         loadHabitData(habitId)
@@ -59,6 +64,10 @@ class EstadisticasHabitoActivity : AppCompatActivity() {
         btnReset.setOnClickListener {
             resetHabitData(habitId)
             loadHabitData(habitId)
+
+            val intent = Intent("com.tuapp.RESET_HABITO")
+            intent.putExtra("habitId", habitId)
+            sendBroadcast(intent)
         }
 
     }
@@ -79,9 +88,20 @@ class EstadisticasHabitoActivity : AppCompatActivity() {
         xAxis.granularity = 1f
         xAxis.textSize = 12f
 
-        barChart.axisLeft.axisMinimum = 0f
+        val yAxis = barChart.axisLeft
+        yAxis.axisMinimum = 0f
+        yAxis.axisMaximum = 7f
+        yAxis.granularity = 1f
+        yAxis.setLabelCount(8, true) // Para mostrar del 0 al 7
+        yAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.toInt().toString() // Sin decimales
+            }
+        }
+
         barChart.axisRight.isEnabled = false
     }
+
 
     private fun loadHabitData(habitId: Int) {
         val entries = ArrayList<BarEntry>()
@@ -98,7 +118,7 @@ class EstadisticasHabitoActivity : AppCompatActivity() {
         }
 
         val dataSet = BarDataSet(entries, "Días cumplidos")
-        dataSet.setColors(Color.parseColor("#FFA07A"))
+        dataSet.setColors(Color.parseColor("#8C4A5F"))
         dataSet.valueTextSize = 14f
 
         val barData = BarData(dataSet)
