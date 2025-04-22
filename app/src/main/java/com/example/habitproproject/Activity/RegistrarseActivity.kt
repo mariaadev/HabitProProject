@@ -6,14 +6,21 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habitproproject.R
+import com.example.habitproproject.ViewModel.RegistrarseViewModel
+import com.example.habitproproject.databinding.ActivityRegistrarseBinding
 
 class RegistrarseActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityRegistrarseBinding
+    private val model:RegistrarseViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_registrarse)
+        binding=ActivityRegistrarseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         val textView: TextView = findViewById(R.id.toInicio)
@@ -31,6 +38,10 @@ class RegistrarseActivity : AppCompatActivity() {
             val intent = Intent(this, IniciarSesionActivity::class.java)
             startActivity(intent)
         }
+
+//        model.validaciodades.observe(this){Estat ->
+//            binding.
+//        }
 
 
 
