@@ -61,5 +61,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
-
+    // https://mvnrepository.com/artifact/com.modernmt.text/profanity-filter
+    implementation("com.modernmt.text:profanity-filter:1.0.0")
+    // https://mvnrepository.com/artifact/com.vdurmont/emoji-java
+    implementation("com.vdurmont:emoji-java:5.1.1")
 }
