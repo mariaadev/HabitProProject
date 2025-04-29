@@ -11,6 +11,8 @@ class RegistrarseViewModel: ViewModel() {
 
     private var _nomUsuari:String=""
     private var _contrasenya:String=""
+    private var _contrasenyaConfirma:String=""
+    private var _correu:String=""
 
     private val _formularivalid = MutableLiveData<Boolean>(false)
     val formularivalid: LiveData<Boolean> = _formularivalid
@@ -21,12 +23,153 @@ class RegistrarseViewModel: ViewModel() {
     private val _errorContrasenya = MutableLiveData<String>("")
     val errorContrasenya: LiveData<String> = _errorContrasenya
 
-    // comprovacions de nom d'usuari
+    private val _errorContrasenyaConfirma = MutableLiveData<String>("")
+    val errorContrasenyaConfirma: LiveData<String> = _errorContrasenyaConfirma
+
+
     fun actualitzaNomUsuari(nomUsuari: String){
         _nomUsuari = nomUsuari
         comprova_nomUsuari()
     }
 
+    fun actualitzaContrasenya(contrasenya: String){
+        _contrasenya = contrasenya
+        comprova_contrasenya()
+    }
+
+    fun actualitzaContrasenyaConfirma(contrasenyaConfirm: String){
+        _contrasenyaConfirma = contrasenyaConfirm
+        comprova_contrasenya()
+    }
+
+    // comprovacions contrasenya
+    private fun comprova_contrasenya(){
+        comprova_contrasenyaBuit()
+        comprova_contrasenyaEspais()
+        comprova_contrasenyaMassaCurt()
+        comprova_contrasenyaMassaLlarg()
+        comprova_contrasenyaMajuscula()
+        comprova_contrasenyaMinuscula()
+        comprova_contrasenyaNumero()
+        comprova_contrasenyaAmbCaractersEspecials()
+        comprova_contrasenyaEmojis()
+        comprova_contrasenyaAccents()
+        comprova_contrasenyaParaulesPerilloses()
+        comprova_contrasenyaIgualNomUsuari()
+        comprova_contrasenyaIgualCorreu()
+
+        if (_errorContrasenya.value.isNullOrEmpty()) {
+            comprova_contrasenyaCoincideix()
+        }
+    }
+
+    private fun comprova_contrasenyaBuit(){
+        if(_contrasenya.isEmpty()){
+            _errorContrasenya.value = "La contrasenya és obligatoria"
+        }
+        if(_contrasenyaConfirma.isEmpty()){
+            _errorContrasenyaConfirma.value = "La contrasenya és obligatoria"
+        }
+    }
+
+    private fun comprova_contrasenyaCoincideix(){
+        if(_contrasenya != _contrasenyaConfirma && _contrasenya.isNotEmpty() && _contrasenyaConfirma.isNotEmpty()){
+            _errorContrasenya.value = "La contrasenya no coincideix"
+            _errorContrasenyaConfirma.value = "La contrasenya no coincideix"
+        }
+    }
+
+    private fun comprova_contrasenyaEspais(){
+        if(_contrasenya.isNotEmpty() && _contrasenya.first().isWhitespace()){
+            _errorContrasenya.value = "No es permet utilitzar espais en blanc al inici"
+
+        } else if(_contrasenya.isNotEmpty() && _contrasenya.last().isWhitespace()){
+            _errorContrasenya.value = "No es permet utilitzar espais en blanc al final"
+
+        } else if(_contrasenya.trim().contains(" ")){
+            _errorContrasenya.value = "No es permet utilitzar espais en blanc al mix"
+
+        }
+
+    }
+
+    private fun comprova_contrasenyaMassaCurt(){
+        if(_contrasenya.length< 8){
+            _errorContrasenya.value = "La contrasenya ha de tenir un mínim de 8 caràcters"
+        }
+    }
+
+    private fun comprova_contrasenyaMassaLlarg(){
+        if(_contrasenya.length > 64){
+            _errorContrasenya.value = "La contrasenya ha de tenir un màxim de 128 caràcters"
+        }
+    }
+
+    private fun comprova_contrasenyaMajuscula(){
+        if(_contrasenya.none() { it.isUpperCase()}){
+            _errorContrasenya.value = "La contrasenya ha de tenir almenys una lletra majúscula"
+
+        }
+    }
+
+    private fun comprova_contrasenyaMinuscula(){
+        if(_contrasenya.none() { it.isLowerCase()}){
+            _errorContrasenya.value = "La contrasenya ha de tenir almenys una lletra minúscula"
+
+        }
+    }
+
+    private fun comprova_contrasenyaNumero(){
+        if(_contrasenya.none() { it.isDigit()}){
+            _errorContrasenya.value = "La contrasenya ha de tenir almenys un número"
+        }
+    }
+
+    private fun comprova_contrasenyaAmbCaractersEspecials(){
+        if (_contrasenya.none { !it.isLetterOrDigit() && !it.isWhitespace() }) {
+            _errorContrasenya.value = "La contrasenya ha de tenir almenys un caràcter especial"
+        }
+    }
+
+    private fun comprova_contrasenyaEmojis(){
+        val emojis = EmojiParser.extractEmojis(_contrasenya)
+        if(emojis.isNotEmpty()){
+            _errorContrasenya.value = "No es permet utilitzar emojis"
+        }
+    }
+
+    private fun comprova_contrasenyaAccents(){
+        val textNormalitzat = Normalizer.normalize(_contrasenya, Normalizer.Form.NFD)
+
+        if(textNormalitzat.any { it in '\u0300'..'\u036F'}){
+            _errorContrasenya.value = "No es permet utilitzar caràcters diacrítics"
+
+        }
+    }
+
+    private fun comprova_contrasenyaParaulesPerilloses(){
+        val keywordsProhibides = listOf("select", "drop", "insert", "delete", "script", "eval", "<", ">", "--", "/*", "*/")
+
+        if(keywordsProhibides.any { keyword -> _contrasenya.lowercase().contains(keyword)}){
+            _errorContrasenya.value = "No es permet utilitzar paraules reservades o perilloses"
+
+        }
+    }
+
+    private fun comprova_contrasenyaIgualNomUsuari(){
+        if(_nomUsuari.equals(_contrasenya)){
+            _errorContrasenya.value = "No es permet que la contrasenya sigui igual al nom d'usuari"
+        }
+    }
+
+    private fun comprova_contrasenyaIgualCorreu(){
+        if(_correu.equals(_contrasenya)){
+            _errorContrasenya.value = "No es permet que la contrasenya sigui igual al correu"
+        }
+    }
+
+
+    // comprovacions de nom d'usuari
     private fun comprova_nomUsuari(){
         comprova_nomUsuariBuit()
         comprova_nomUsuariMassaCurt()
@@ -107,7 +250,6 @@ class RegistrarseViewModel: ViewModel() {
         val emojis = EmojiParser.extractEmojis(_nomUsuari)
         if(emojis.isNotEmpty()){
             _errorNomUsuari.value = "No es permet utilitzar emojis"
-
         }
     }
 
