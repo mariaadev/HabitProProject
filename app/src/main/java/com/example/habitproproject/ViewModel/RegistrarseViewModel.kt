@@ -12,8 +12,14 @@ class RegistrarseViewModel: ViewModel() {
     private var _nomUsuari:String=""
     private var _contrasenya:String=""
 
-    private val _errorNomUsuari = MutableLiveData<String>()
+    private val _formularivalid = MutableLiveData<Boolean>(false)
+    val formularivalid: LiveData<Boolean> = _formularivalid
+
+    private val _errorNomUsuari = MutableLiveData<String>("")
     val errorNomUsuari: LiveData<String> = _errorNomUsuari
+
+    private val _errorContrasenya = MutableLiveData<String>("")
+    val errorContrasenya: LiveData<String> = _errorContrasenya
 
     // comprovacions de nom d'usuari
     fun actualitzaNomUsuari(nomUsuari: String){
