@@ -7,21 +7,13 @@ import com.modernmt.text.profanity.ProfanityFilter
 import com.vdurmont.emoji.EmojiParser
 import java.text.Normalizer
 
-data class EstatRegistre(
-    var esValid: Boolean, // Indica si los datos son correcto
-    var errorNomUsuari: String?, // Mensaje de error por el nombre de usuario
-    var errorEmail: String?, // Mensaje de error por el email
-    var errorContrasenya: String?, // Mensaje de error por contrasenya
-    var errorFechaNacimiento: String? // Mensaje de error por fecha de nacimiento
-)
-
 class RegistrarseViewModel: ViewModel() {
 
     private var _nomUsuari:String=""
     private var _contrasenya:String=""
 
-    private val _validaciodades = MutableLiveData<EstatRegistre>()
-    val validaciodades: LiveData<EstatRegistre> = _validaciodades
+    private val _errorNomUsuari = MutableLiveData<String>()
+    val errorNomUsuari: LiveData<String> = _errorNomUsuari
 
     // comprovacions de nom d'usuari
     fun actualitzaNomUsuari(nomUsuari: String){
@@ -41,24 +33,23 @@ class RegistrarseViewModel: ViewModel() {
         comprova_nomUsuariEmojis()
         comprova_nomUsuariAccents()
         comprova_nomUsuariParaulesPerilloses()
-
     }
 
     private fun comprova_nomUsuariBuit(){
         if(_nomUsuari.isEmpty()){
-            _validaciodades.value?.errorNomUsuari = "El nom d'usuari és obligatori"
+            _errorNomUsuari.value = "El nom d'usuari és obligatori"
         }
     }
 
     private fun comprova_nomUsuariMassaCurt(){
         if(_nomUsuari.length < 3){
-            _validaciodades.value?.errorNomUsuari = "El nom d'usuari ha de tenir un mínim de 3 caràcters"
+            _errorNomUsuari.value = "El nom d'usuari ha de tenir un mínim de 3 caràcters"
         }
     }
 
     private fun comprova_nomUsuariMassaLlarg(){
         if(_nomUsuari.length > 10){
-            _validaciodades.value?.errorNomUsuari = "El nom d'usuari ha de tenir un màxim de 10 caràcters"
+            _errorNomUsuari.value = "El nom d'usuari ha de tenir un màxim de 10 caràcters"
         }
     }
 
@@ -66,32 +57,32 @@ class RegistrarseViewModel: ViewModel() {
         val profanityFilter = ProfanityFilter()
 
         if(profanityFilter.test("es", _nomUsuari) || profanityFilter.test("en", _nomUsuari)|| profanityFilter.test("ca", _nomUsuari)){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar paraules ofensives"
+            _errorNomUsuari.value = "No es permet utilitzar paraules ofensives"
         }
     }
 
     private fun comprova_nomUsuariEspais(){
         if(_nomUsuari.isNotEmpty() && _nomUsuari.first().isWhitespace()){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar espais en blanc al inici"
+            _errorNomUsuari.value = "No es permet utilitzar espais en blanc al inici"
 
         } else if(_nomUsuari.isNotEmpty() && _nomUsuari.last().isWhitespace()){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar espais en blanc al final"
+            _errorNomUsuari.value = "No es permet utilitzar espais en blanc al final"
 
         } else if(_nomUsuari.trim().contains(" ")){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar espais en blanc al mix"
+            _errorNomUsuari.value = "No es permet utilitzar espais en blanc al mix"
 
         }
     }
 
     private fun comprova_nomUsuariNumeros(){
         if(_nomUsuari.all { it.isDigit() }){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar només números"
+            _errorNomUsuari.value = "No es permet utilitzar només números"
         }
     }
 
     private fun comprova_nomUsuariMinimTresLletres(){
         if(_nomUsuari.count { it.isLetter() } < 3){
-            _validaciodades.value?.errorNomUsuari = "Es necesita almenys tres lletres"
+            _errorNomUsuari.value = "Es necesita almenys tres lletres"
         }
     }
 
@@ -102,14 +93,14 @@ class RegistrarseViewModel: ViewModel() {
                     it != '.'
 
             }){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar símbols especials"
+            _errorNomUsuari.value = "No es permet utilitzar símbols especials"
         }
     }
 
     private fun comprova_nomUsuariEmojis(){
         val emojis = EmojiParser.extractEmojis(_nomUsuari)
         if(emojis.isNotEmpty()){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar emojis"
+            _errorNomUsuari.value = "No es permet utilitzar emojis"
 
         }
     }
@@ -118,7 +109,7 @@ class RegistrarseViewModel: ViewModel() {
         val textNormalitzat = Normalizer.normalize(_nomUsuari, Normalizer.Form.NFD)
 
         if(textNormalitzat.any { it in '\u0300'..'\u036F'}){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar caràcters diacrítics"
+            _errorNomUsuari.value = "No es permet utilitzar caràcters diacrítics"
 
         }
     }
@@ -127,7 +118,7 @@ class RegistrarseViewModel: ViewModel() {
         val keywordsProhibides = listOf("select", "drop", "insert", "delete", "script", "eval", "<", ">", "--", "/*", "*/")
 
         if(keywordsProhibides.any { keyword -> _nomUsuari.lowercase().contains(keyword)}){
-            _validaciodades.value?.errorNomUsuari = "No es permet utilitzar paraules reservades o perilloses"
+            _errorNomUsuari.value = "No es permet utilitzar paraules reservades o perilloses"
 
         }
     }

@@ -19,7 +19,7 @@ class RegistrarseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityRegistrarseBinding.inflate(layoutInflater)
+        binding = ActivityRegistrarseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -41,6 +41,14 @@ class RegistrarseActivity : AppCompatActivity() {
 
 //        model.validaciodades.observe(this){Estat ->
 //            binding.
+//        }
+
+//        model.errorNomUsuari.observe(this) { erroNomUsuari ->
+//            if(erroNomUsuari.isNullOrBlank()){
+//                binding.regNomUsuari.error=null
+//            } else {
+//                binding.regNomUsuari.setError(errorNomUsuari)
+ //               }
 //        }
 
 
