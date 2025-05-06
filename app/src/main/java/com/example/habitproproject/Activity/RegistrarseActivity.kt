@@ -3,9 +3,11 @@ package com.example.habitproproject.Activity
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.core.widget.addTextChangedListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habitproproject.R
@@ -39,19 +41,48 @@ class RegistrarseActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        model.validaciodades.observe(this){Estat ->
-//            binding.
-//        }
+        binding.nombreUsuario.editText?.addTextChangedListener {
+            model.actualitzaNomUsuari(it.toString())
+        }
 
-//        model.errorNomUsuari.observe(this) { erroNomUsuari ->
-//            if(erroNomUsuari.isNullOrBlank()){
-//                binding.regNomUsuari.error=null
-//            } else {
-//                binding.regNomUsuari.setError(errorNomUsuari)
- //               }
-//        }
+        binding.contraseA1.editText?.addTextChangedListener {
+            model.actualitzaContrasenya(it.toString())
+        }
 
+        binding.contraseA2.editText?.addTextChangedListener {
+            model.actualitzaContrasenyaConfirma(it.toString())
+        }
 
+        model.errorNomUsuari.observe(this) { errorNomUsuari ->
+            if(errorNomUsuari.isNullOrBlank()){
+                binding.nombreUsuario.error= null
+            } else {
+                binding.nombreUsuario.setError(errorNomUsuari)
+            }
+        }
+
+        model.errorContrasenya.observe(this) { errorContrasenya ->
+            if(errorContrasenya.isNullOrBlank()){
+                binding.contraseA1.error= null
+            } else {
+                binding.contraseA1.setError(errorContrasenya)
+            }
+        }
+
+        model.errorContrasenyaConfirma.observe(this) { errorContrasenyaConfirma ->
+            if(errorContrasenyaConfirma.isNullOrBlank()){
+                binding.contraseA2.error= null
+            } else {
+                binding.contraseA2.setError(errorContrasenyaConfirma)
+            }
+        }
 
     }
+
+    private fun registrarUsuari(view: View?){
+        model.registraUsuari()
+    }
+
+
+
 }

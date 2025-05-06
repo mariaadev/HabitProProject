@@ -57,8 +57,22 @@ class RegistrarseViewModel: ViewModel() {
         _telefon = telefon
         comprova_telefon()
     }
+
+    fun comprovadadesusuari(){
+        comprova_nomUsuari()
+        comprova_contrasenya()
+    }
+
+    fun registraUsuari(){
+        comprovadadesusuari()
+        if(_formularivalid.value!!){
+
+        }
+    }
+
+
     // comprovacions contrasenya
-    private fun comprova_contrasenya(){
+    public fun comprova_contrasenya(){
         comprova_contrasenyaBuit()
         comprova_contrasenyaEspais()
         comprova_contrasenyaMassaCurt()
@@ -77,6 +91,7 @@ class RegistrarseViewModel: ViewModel() {
             comprova_contrasenyaCoincideix()
         }
     }
+
 
     public fun comprova_correu() {
         comprova_correuBuit()
@@ -215,8 +230,9 @@ class RegistrarseViewModel: ViewModel() {
     }
 
 
+    
 
-    private fun comprova_contrasenyaBuit(){
+    public fun comprova_contrasenyaBuit(){
         if(_contrasenya.isEmpty()){
             _errorContrasenya.value = "La contrasenya és obligatoria"
         }
@@ -225,14 +241,14 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_contrasenyaCoincideix(){
+    public fun comprova_contrasenyaCoincideix(){
         if(_contrasenya != _contrasenyaConfirma && _contrasenya.isNotEmpty() && _contrasenyaConfirma.isNotEmpty()){
             _errorContrasenya.value = "La contrasenya no coincideix"
             _errorContrasenyaConfirma.value = "La contrasenya no coincideix"
         }
     }
 
-    private fun comprova_contrasenyaEspais(){
+    public fun comprova_contrasenyaEspais(){
         if(_contrasenya.isNotEmpty() && _contrasenya.first().isWhitespace()){
             _errorContrasenya.value = "No es permet utilitzar espais en blanc al inici"
 
@@ -246,52 +262,52 @@ class RegistrarseViewModel: ViewModel() {
 
     }
 
-    private fun comprova_contrasenyaMassaCurt(){
+    public fun comprova_contrasenyaMassaCurt(){
         if(_contrasenya.length< 8){
             _errorContrasenya.value = "La contrasenya ha de tenir un mínim de 8 caràcters"
         }
     }
 
-    private fun comprova_contrasenyaMassaLlarg(){
+    public fun comprova_contrasenyaMassaLlarg(){
         if(_contrasenya.length > 64){
             _errorContrasenya.value = "La contrasenya ha de tenir un màxim de 128 caràcters"
         }
     }
 
-    private fun comprova_contrasenyaMajuscula(){
+    public fun comprova_contrasenyaMajuscula(){
         if(_contrasenya.none() { it.isUpperCase()}){
             _errorContrasenya.value = "La contrasenya ha de tenir almenys una lletra majúscula"
 
         }
     }
 
-    private fun comprova_contrasenyaMinuscula(){
+    public fun comprova_contrasenyaMinuscula(){
         if(_contrasenya.none() { it.isLowerCase()}){
             _errorContrasenya.value = "La contrasenya ha de tenir almenys una lletra minúscula"
 
         }
     }
 
-    private fun comprova_contrasenyaNumero(){
+    public fun comprova_contrasenyaNumero(){
         if(_contrasenya.none() { it.isDigit()}){
             _errorContrasenya.value = "La contrasenya ha de tenir almenys un número"
         }
     }
 
-    private fun comprova_contrasenyaAmbCaractersEspecials(){
+    public fun comprova_contrasenyaAmbCaractersEspecials(){
         if (_contrasenya.none { !it.isLetterOrDigit() && !it.isWhitespace() }) {
             _errorContrasenya.value = "La contrasenya ha de tenir almenys un caràcter especial"
         }
     }
 
-    private fun comprova_contrasenyaEmojis(){
+    public fun comprova_contrasenyaEmojis(){
         val emojis = EmojiParser.extractEmojis(_contrasenya)
         if(emojis.isNotEmpty()){
             _errorContrasenya.value = "No es permet utilitzar emojis"
         }
     }
 
-    private fun comprova_contrasenyaAccents(){
+    public fun comprova_contrasenyaAccents(){
         val textNormalitzat = Normalizer.normalize(_contrasenya, Normalizer.Form.NFD)
 
         if(textNormalitzat.any { it in '\u0300'..'\u036F'}){
@@ -300,7 +316,7 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_contrasenyaParaulesPerilloses(){
+    public fun comprova_contrasenyaParaulesPerilloses(){
         val keywordsProhibides = listOf("select", "drop", "insert", "delete", "script", "eval", "<", ">", "--", "/*", "*/")
 
         if(keywordsProhibides.any { keyword -> _contrasenya.lowercase().contains(keyword)}){
@@ -309,13 +325,13 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_contrasenyaIgualNomUsuari(){
+    public fun comprova_contrasenyaIgualNomUsuari(){
         if(_nomUsuari.equals(_contrasenya)){
             _errorContrasenya.value = "No es permet que la contrasenya sigui igual al nom d'usuari"
         }
     }
 
-    private fun comprova_contrasenyaIgualCorreu(){
+    public fun comprova_contrasenyaIgualCorreu(){
         if(_correu.equals(_contrasenya)){
             _errorContrasenya.value = "No es permet que la contrasenya sigui igual al correu"
         }
@@ -323,7 +339,7 @@ class RegistrarseViewModel: ViewModel() {
 
 
     // comprovacions de nom d'usuari
-    private fun comprova_nomUsuari(){
+    public fun comprova_nomUsuari(){
         comprova_nomUsuariBuit()
         comprova_nomUsuariMassaCurt()
         comprova_nomUsuariMassaLlarg()
@@ -337,25 +353,25 @@ class RegistrarseViewModel: ViewModel() {
         comprova_nomUsuariParaulesPerilloses()
     }
 
-    private fun comprova_nomUsuariBuit(){
+    public fun comprova_nomUsuariBuit(){
         if(_nomUsuari.isEmpty()){
             _errorNomUsuari.value = "El nom d'usuari és obligatori"
         }
     }
 
-    private fun comprova_nomUsuariMassaCurt(){
+    public fun comprova_nomUsuariMassaCurt(){
         if(_nomUsuari.length < 3){
             _errorNomUsuari.value = "El nom d'usuari ha de tenir un mínim de 3 caràcters"
         }
     }
 
-    private fun comprova_nomUsuariMassaLlarg(){
+    public fun comprova_nomUsuariMassaLlarg(){
         if(_nomUsuari.length > 10){
             _errorNomUsuari.value = "El nom d'usuari ha de tenir un màxim de 10 caràcters"
         }
     }
 
-    private fun comprova_nomUsuariParaulesOfensives(){
+    public fun comprova_nomUsuariParaulesOfensives(){
         val profanityFilter = ProfanityFilter()
 
         if(profanityFilter.test("es", _nomUsuari) || profanityFilter.test("en", _nomUsuari)|| profanityFilter.test("ca", _nomUsuari)){
@@ -363,7 +379,7 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_nomUsuariEspais(){
+    public fun comprova_nomUsuariEspais(){
         if(_nomUsuari.isNotEmpty() && _nomUsuari.first().isWhitespace()){
             _errorNomUsuari.value = "No es permet utilitzar espais en blanc al inici"
 
@@ -376,19 +392,19 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_nomUsuariNumeros(){
+    public fun comprova_nomUsuariNumeros(){
         if(_nomUsuari.all { it.isDigit() }){
             _errorNomUsuari.value = "No es permet utilitzar només números"
         }
     }
 
-    private fun comprova_nomUsuariMinimTresLletres(){
+    public fun comprova_nomUsuariMinimTresLletres(){
         if(_nomUsuari.count { it.isLetter() } < 3){
             _errorNomUsuari.value = "Es necesita almenys tres lletres"
         }
     }
 
-    private fun comprova_nomUsuariSimbolsEspecials() {
+    public fun comprova_nomUsuariSimbolsEspecials() {
         if(_nomUsuari.any{
             !it.isLetterOrDigit() &&
                     it != '_' &&
@@ -399,14 +415,14 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_nomUsuariEmojis(){
+    public fun comprova_nomUsuariEmojis(){
         val emojis = EmojiParser.extractEmojis(_nomUsuari)
         if(emojis.isNotEmpty()){
             _errorNomUsuari.value = "No es permet utilitzar emojis"
         }
     }
 
-    private fun comprova_nomUsuariAccents(){
+    public fun comprova_nomUsuariAccents(){
         val textNormalitzat = Normalizer.normalize(_nomUsuari, Normalizer.Form.NFD)
 
         if(textNormalitzat.any { it in '\u0300'..'\u036F'}){
@@ -415,7 +431,7 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-    private fun comprova_nomUsuariParaulesPerilloses(){
+    public fun comprova_nomUsuariParaulesPerilloses(){
         val keywordsProhibides = listOf("select", "drop", "insert", "delete", "script", "eval", "<", ">", "--", "/*", "*/")
 
         if(keywordsProhibides.any { keyword -> _nomUsuari.lowercase().contains(keyword)}){

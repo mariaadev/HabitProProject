@@ -65,4 +65,5 @@ dependencies {
     implementation("com.modernmt.text:profanity-filter:1.0.0")
     // https://mvnrepository.com/artifact/com.vdurmont/emoji-java
     implementation("com.vdurmont:emoji-java:5.1.1")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 }
