@@ -15,7 +15,9 @@ class RegistrarseViewModelTest {
 
     // Tests nom d'usuari
     @Test
-    fun `actualitzanomUsuari`(){
-
+    fun `actualitzaNomUsuari`(){
+        viewModel.actualitzaNomUsuari("")
+        viewModel.comprova_nomUsuariBuit()
+        assertEquals("", viewModel.errorNomUsuari.value)
     }
 }
