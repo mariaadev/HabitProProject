@@ -13,6 +13,7 @@ class RegistrarseViewModel: ViewModel() {
     private var _contrasenya:String=""
     private var _contrasenyaConfirma:String=""
     private var _correu:String=""
+    private var _telefon:String=""
 
     private val _formularivalid = MutableLiveData<Boolean>(false)
     val formularivalid: LiveData<Boolean> = _formularivalid
@@ -25,6 +26,12 @@ class RegistrarseViewModel: ViewModel() {
 
     private val _errorContrasenyaConfirma = MutableLiveData<String>("")
     val errorContrasenyaConfirma: LiveData<String> = _errorContrasenyaConfirma
+
+    private val _errorCorreu = MutableLiveData<String>("")
+    val errorCorreu: LiveData<String> = _errorCorreu
+
+    private val _errorTelefon = MutableLiveData<String>("")
+    val errorTelefon: LiveData<String> = _errorTelefon
 
 
     fun actualitzaNomUsuari(nomUsuari: String){
@@ -42,6 +49,14 @@ class RegistrarseViewModel: ViewModel() {
         comprova_contrasenya()
     }
 
+    fun actualitzaCorreu(correu: String){
+        _correu = correu
+        comprova_correu()
+    }
+    fun actualitzaTelefon(telefon: String){
+        _telefon = telefon
+        comprova_telefon()
+    }
     // comprovacions contrasenya
     private fun comprova_contrasenya(){
         comprova_contrasenyaBuit()
@@ -62,6 +77,144 @@ class RegistrarseViewModel: ViewModel() {
             comprova_contrasenyaCoincideix()
         }
     }
+
+    public fun comprova_correu() {
+        comprova_correuBuit()
+        comprova_correuNomesArroba()
+        comprova_correuSenseArrobaAmbExtensio()
+        comprova_correuSenseArrobaSenseDomini()
+        comprova_correuArrobaSenseNomNiExtensio()
+        comprova_correuNomSenseDominiIExtensio()
+        comprova_correuSenseUsuari()
+        comprova_correuNomesExtensio()
+        comprova_correuSenseNomAmbArrobaIExtensio()
+        comprova_correuSenseDomini()
+        comprova_correuAmbCaractersEspecialsValids()
+        comprova_correuMultiplesArrobas()
+        comprova_correuEspaisInici()
+        comprova_correuEspaisMig()
+        comprova_correuEspaisFinal()
+        comprova_correuMajuscules()
+        comprova_correuMesDe100Caracters()
+        comprova_correuComencaPerSimbol()
+    }
+
+
+    public fun comprova_telefon(){
+
+    }
+
+    public fun comprova_correuBuit(){
+        if(_correu.isEmpty()){
+            _errorCorreu.value = "El correu electrònic és obligatori"
+        }
+    }
+
+    public fun comprova_correuNomesArroba(){
+        if(_correu.equals("@")){
+            _errorCorreu.value = "El correu electrònic no té el format correcte"
+        }
+    }
+
+    public fun comprova_correuSenseArrobaAmbExtensio() {
+        if (_correu.contains(".") && !_correu.contains("@")) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuSenseArrobaSenseDomini() {
+        if (!_correu.contains("@") && !_correu.contains(".")) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuArrobaSenseNomNiExtensio() {
+        if (_correu.startsWith("@") && !_correu.contains(".")) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuNomSenseDominiIExtensio() {
+        if (_correu.endsWith("@")) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuSenseUsuari() {
+        if (_correu.startsWith("@") && _correu.contains(".")) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuNomesExtensio() {
+        if (_correu == ".com") {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuSenseNomAmbArrobaIExtensio() {
+        if (_correu == "@.com") {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuSenseDomini() {
+        if (_correu.matches(Regex("^[^@]+@\\.com$"))) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuAmbCaractersEspecialsValids() {
+        val regex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
+        if (regex.matches(_correu)) {
+            _errorCorreu.value = ""
+        }
+    }
+
+    public fun comprova_correuMultiplesArrobas() {
+        if (_correu.count { it == '@' } > 1) {
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+        }
+    }
+
+    public fun comprova_correuEspaisInici() {
+        if (_correu.startsWith(" ")) {
+            _errorCorreu.value = "El correu electrònic no pot contenir espais en blanc. Exemple: nom@gmail.com."
+        }
+    }
+
+    public fun comprova_correuEspaisMig() {
+        if (_correu.contains(" ")) {
+            _errorCorreu.value = "El correu electrònic no pot contenir espais en blanc. Exemple: nom@gmail.com."
+        }
+    }
+
+    public fun comprova_correuEspaisFinal() {
+        if (_correu.endsWith(" ")) {
+            _errorCorreu.value = "El correu electrònic no pot contenir espais en blanc. Exemple: nom@gmail.com."
+        }
+    }
+
+    public fun comprova_correuMajuscules() {
+        val regex = Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", RegexOption.IGNORE_CASE)
+        if (regex.matches(_correu)) {
+            _errorCorreu.value = ""
+        }
+    }
+
+    public fun comprova_correuMesDe100Caracters() {
+        if (_correu.length > 100) {
+            _errorCorreu.value = "El correu electrònic no pot superar els 100 caràcters. Exemple: nom@gmail.com."
+        }
+    }
+
+    public fun comprova_correuComencaPerSimbol() {
+        if (_correu.isNotEmpty() && !Character.isLetterOrDigit(_correu[0])) {
+            _errorCorreu.value = "El correu electrònic no pot començar per un símbol. Exemple: nom@gmail.com."
+        }
+    }
+
+
 
     private fun comprova_contrasenyaBuit(){
         if(_contrasenya.isEmpty()){
