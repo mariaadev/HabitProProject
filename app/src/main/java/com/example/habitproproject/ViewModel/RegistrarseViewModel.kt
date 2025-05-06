@@ -42,6 +42,18 @@ class RegistrarseViewModel: ViewModel() {
         comprova_contrasenya()
     }
 
+    fun comprovadadesusuari(){
+        comprova_nomUsuari()
+        comprova_contrasenya()
+    }
+
+    fun registraUsuari(){
+        comprovadadesusuari()
+        if(_formularivalid.value!!){
+
+        }
+    }
+
     // comprovacions contrasenya
     private fun comprova_contrasenya(){
         comprova_contrasenyaBuit()
