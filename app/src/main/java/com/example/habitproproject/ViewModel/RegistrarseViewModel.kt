@@ -127,7 +127,7 @@ class RegistrarseViewModel: ViewModel() {
 
     public fun comprova_correuNomesArroba(){
         if(_correu.equals("@")){
-            _errorCorreu.value = "El correu electrònic no té el format correcte"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
 
@@ -162,22 +162,26 @@ class RegistrarseViewModel: ViewModel() {
     }
 
     public fun comprova_correuNomesExtensio() {
-        if (_correu == ".com") {
+        if (_correu.matches(Regex("^\\.[a-zA-Z]{2,}$"))) {
             _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
+
 
     public fun comprova_correuSenseNomAmbArrobaIExtensio() {
-        if (_correu == "@.com") {
+        val regex = Regex("^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+        if (_correu.matches(Regex("^(?:@|@[a-zA-Z]{2,})$")) || !_correu.matches(regex)) {
             _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
 
+
     public fun comprova_correuSenseDomini() {
-        if (_correu.matches(Regex("^[^@]+@\\.com$"))) {
+        if (_correu.matches(Regex("^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
             _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
+
 
     public fun comprova_correuAmbCaractersEspecialsValids() {
         val regex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
@@ -229,8 +233,6 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-
-    
 
     public fun comprova_contrasenyaBuit(){
         if(_contrasenya.isEmpty()){

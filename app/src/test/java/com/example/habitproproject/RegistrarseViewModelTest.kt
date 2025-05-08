@@ -24,7 +24,7 @@ class RegistrarseViewModelTest {
     fun `actualitzaCorreu retorna error quan només conté arroba`() {
         viewModel.actualitzaCorreu("@")
         viewModel.comprova_correuNomesArroba()
-        assertEquals("El correu electrònic no té el format correcte", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
     }
 
     @Test
