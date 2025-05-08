@@ -116,7 +116,16 @@ class RegistrarseViewModel: ViewModel() {
 
 
     public fun comprova_telefon(){
-
+        comprova_telefonBuit()
+        comprova_telefonMesDe9Digits()
+        comprova_telefonMenysDe9Digits()
+        comprova_telefonAmbLletres()
+        comprova_telefonAmbLletresINouDigits()
+        comprova_telefonAmbSimbolsINouDigits()
+        comprova_telefonAmbEspaisINouDigits()
+        comprova_telefonAmbEspaisIMenysDe9Digits()
+        comprova_telefonAmbSimbolsIMenysDe9Digits()
+        comprova_telefonAmbLletresIMenysDe9Digits()
     }
 
     public fun comprova_correuBuit(){
@@ -233,6 +242,77 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
+    fun comprova_telefonBuit() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.isBlank()) {
+            _errorTelefon.value = "El telèfon és obligatori."
+        }
+    }
+
+    fun comprova_telefonMesDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length > 9 && _telefon.all { it.isDigit() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits."
+        }
+    }
+
+    fun comprova_telefonMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length < 9 && _telefon.all { it.isDigit() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits."
+        }
+    }
+
+    fun comprova_telefonAmbLletres() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length < 9 && _telefon.any { it.isLetter() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits."
+        }
+    }
+
+    fun comprova_telefonAmbLletresINouDigits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length == 9 && _telefon.any { it.isLetter() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
+        }
+    }
+
+    fun comprova_telefonAmbSimbolsINouDigits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        val regex = Regex("[^\\d]")
+        if (_telefon.length == 9 && regex.containsMatchIn(_telefon.filter { !it.isWhitespace() && !it.isLetterOrDigit() })) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
+        }
+    }
+
+    fun comprova_telefonAmbEspaisINouDigits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.replace(" ", "").length == 9 && _telefon.contains(" ")) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+        }
+    }
+
+    fun comprova_telefonAmbEspaisIMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.replace(" ", "").length < 9 && _telefon.contains(" ")) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+        }
+    }
+
+    fun comprova_telefonAmbSimbolsIMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        val regex = Regex("[^\\d]")
+        if (_telefon.length < 9 && regex.containsMatchIn(_telefon.filter { !it.isWhitespace() && !it.isLetterOrDigit() })) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+        }
+    }
+
+    fun comprova_telefonAmbLletresIMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length < 9 && _telefon.any { it.isLetter() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+        }
+    }
 
     public fun comprova_contrasenyaBuit(){
         if(_contrasenya.isEmpty()){
