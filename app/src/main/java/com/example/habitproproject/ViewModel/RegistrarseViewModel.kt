@@ -303,14 +303,14 @@ class RegistrarseViewModel: ViewModel() {
         if (_errorTelefon.value!!.isNotEmpty()) return
         val regex = Regex("[^\\d]")
         if (_telefon.length < 9 && regex.containsMatchIn(_telefon.filter { !it.isWhitespace() && !it.isLetterOrDigit() })) {
-            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
         }
     }
 
     fun comprova_telefonAmbLletresIMenysDe9Digits() {
         if (_errorTelefon.value!!.isNotEmpty()) return
         if (_telefon.length < 9 && _telefon.any { it.isLetter() }) {
-            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
         }
     }
 
