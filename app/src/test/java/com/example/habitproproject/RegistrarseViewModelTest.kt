@@ -233,10 +233,118 @@ class RegistrarseViewModelTest {
 
     // test contrasenya
     @Test
-    fun `actualitzaContrasenya retorna error quan el nom d'usuari té paraules reservades o perilloses`(){
-        viewModel.actualitzaNomUsuari("dropTable")
-        viewModel.comprova_nomUsuariParaulesPerilloses()
-        assertEquals("No es permet utilitzar paraules reservades o perilloses", viewModel.errorNomUsuari.value)
+    fun `actualitzaContrasenya retorna error quan la contrasenya esta buida`(){
+        viewModel.actualitzaContrasenya("")
+        viewModel.comprova_contrasenyaBuit()
+        assertEquals("La contrasenya és obligatoria", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya és massa curta`(){
+        viewModel.actualitzaContrasenya("Ab1\$")
+        viewModel.comprova_contrasenyaMassaCurt()
+        assertEquals("La contrasenya ha de tenir un mínim de 8 caràcters", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya és massa llarga`(){
+        viewModel.actualitzaContrasenya("EstaContrasenyaÉsMoltLlargaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123!")
+        viewModel.comprova_contrasenyaMassaLlarg()
+        assertEquals("La contrasenya ha de tenir un màxim de 128 caràcters", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya no conté majúscula`(){
+        viewModel.actualitzaContrasenya("contrasenya1\$")
+        viewModel.comprova_contrasenyaMajuscula()
+        assertEquals("La contrasenya ha de tenir almenys una lletra majúscula", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya no conté minúscula`(){
+        viewModel.actualitzaContrasenya("PASSWORD1\$")
+        viewModel.comprova_contrasenyaMinuscula()
+        assertEquals("La contrasenya ha de tenir almenys una lletra minúscula", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya no conté número`(){
+        viewModel.actualitzaContrasenya("Password\$")
+        viewModel.comprova_contrasenyaNumero()
+        assertEquals("La contrasenya ha de tenir almenys un número", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya no conté caràcter especial`(){
+        viewModel.actualitzaContrasenya("Password1")
+        viewModel.comprova_contrasenyaAmbCaractersEspecials()
+        assertEquals("La contrasenya ha de tenir almenys un caràcter especial", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya té espais al principi`(){
+        viewModel.actualitzaContrasenya(" Password1\$")
+        viewModel.comprova_contrasenyaEspais()
+        assertEquals("No es permet utilitzar espais en blanc al inici", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya té espais al final`(){
+        viewModel.actualitzaContrasenya("Password1\$ ")
+        viewModel.comprova_contrasenyaEspais()
+        assertEquals("No es permet utilitzar espais en blanc al final", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya té espais al mig`(){
+        viewModel.actualitzaContrasenya("Pass word1$")
+        viewModel.comprova_contrasenyaEspais()
+        assertEquals("No es permet utilitzar espais en blanc al mix", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya té emojis`(){
+        viewModel.actualitzaContrasenya("Password1\$\uD83D\uDE00")
+        viewModel.comprova_contrasenyaEmojis()
+        assertEquals("No es permet utilitzar emojis", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya té accents`(){
+        viewModel.actualitzaContrasenya("Pássword1\$")
+        viewModel.comprova_contrasenyaAccents()
+        assertEquals("No es permet utilitzar caràcters diacrítics", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya té paraules reservades`(){
+        viewModel.actualitzaContrasenya("select123\$")
+        viewModel.comprova_contrasenyaParaulesPerilloses()
+        assertEquals("No es permet utilitzar paraules reservades o perilloses", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya és igual a nom d'usuari`(){
+        viewModel.actualitzaNomUsuari("Lamasloca_567")
+        viewModel.actualitzaContrasenya("Lamasloca_567")
+        viewModel.comprova_contrasenyaIgualNomUsuari()
+        assertEquals("No es permet que la contrasenya sigui igual al nom d'usuari", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya retorna error quan la contrasenya és igual a el correu`(){
+        viewModel.actualitzaCorreu("usuari@email.com")
+        viewModel.actualitzaContrasenya("usuari@email.com")
+        viewModel.comprova_contrasenyaIgualCorreu()
+        assertEquals("No es permet que la contrasenya sigui igual al correu", viewModel.errorContrasenya.value)
+    }
+
+    @Test
+    fun `actualitzaContrasenya i actualitzaContrasenyaConfirm retorna error quan les contrasenyes no coincideiz`(){
+        viewModel.actualitzaContrasenyaConfirma("Password1\$")
+        viewModel.actualitzaContrasenya("Password2\$")
+        viewModel.comprova_contrasenyaCoincideix()
+        assertEquals("La contrasenya no coincideix", viewModel.errorContrasenyaConfirma.value)
     }
 
 }
