@@ -105,5 +105,12 @@ class RegistrarseViewModelTest {
         assertEquals("No es permet utilitzar paraules reservades o perilloses", viewModel.errorNomUsuari.value)
     }
 
+    // test contrasenya
+    @Test
+    fun `actualitzaContrasenya retorna error quan el nom d'usuari té paraules reservades o perilloses`(){
+        viewModel.actualitzaNomUsuari("dropTable")
+        viewModel.comprova_nomUsuariParaulesPerilloses()
+        assertEquals("No es permet utilitzar paraules reservades o perilloses", viewModel.errorNomUsuari.value)
+    }
 
 }

@@ -70,29 +70,6 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
-
-    // comprovacions contrasenya
-    public fun comprova_contrasenya(){
-        comprova_contrasenyaBuit()
-        comprova_contrasenyaEspais()
-        comprova_contrasenyaMassaCurt()
-        comprova_contrasenyaMassaLlarg()
-        comprova_contrasenyaMajuscula()
-        comprova_contrasenyaMinuscula()
-        comprova_contrasenyaNumero()
-        comprova_contrasenyaAmbCaractersEspecials()
-        comprova_contrasenyaEmojis()
-        comprova_contrasenyaAccents()
-        comprova_contrasenyaParaulesPerilloses()
-        comprova_contrasenyaIgualNomUsuari()
-        comprova_contrasenyaIgualCorreu()
-
-        if (_errorContrasenya.value.isNullOrEmpty()) {
-            comprova_contrasenyaCoincideix()
-        }
-    }
-
-
     public fun comprova_correu() {
         comprova_correuBuit()
         comprova_correuNomesArroba()
@@ -230,6 +207,26 @@ class RegistrarseViewModel: ViewModel() {
     }
 
 
+    // comprovacions contrasenya
+    public fun comprova_contrasenya(){
+        comprova_contrasenyaBuit()
+        comprova_contrasenyaEspais()
+        comprova_contrasenyaMassaCurt()
+        comprova_contrasenyaMassaLlarg()
+        comprova_contrasenyaMajuscula()
+        comprova_contrasenyaMinuscula()
+        comprova_contrasenyaNumero()
+        comprova_contrasenyaAmbCaractersEspecials()
+        comprova_contrasenyaEmojis()
+        comprova_contrasenyaAccents()
+        comprova_contrasenyaParaulesPerilloses()
+        comprova_contrasenyaIgualNomUsuari()
+        comprova_contrasenyaIgualCorreu()
+
+        if (_errorContrasenya.value.isNullOrEmpty()) {
+            comprova_contrasenyaCoincideix()
+        }
+    }
     
 
     public fun comprova_contrasenyaBuit(){
