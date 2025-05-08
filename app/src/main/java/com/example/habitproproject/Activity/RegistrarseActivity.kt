@@ -53,6 +53,14 @@ class RegistrarseActivity : AppCompatActivity() {
             model.actualitzaContrasenyaConfirma(it.toString())
         }
 
+        binding.correo.editText?.addTextChangedListener {
+            model.actualitzaCorreu(it.toString())
+        }
+
+        binding.telefono.editText?.addTextChangedListener {
+            model.actualitzaTelefon(it.toString())
+        }
+
         model.errorNomUsuari.observe(this) { errorNomUsuari ->
             if(errorNomUsuari.isNullOrBlank()){
                 binding.nombreUsuario.error= null
@@ -74,6 +82,22 @@ class RegistrarseActivity : AppCompatActivity() {
                 binding.contraseA2.error= null
             } else {
                 binding.contraseA2.setError(errorContrasenyaConfirma)
+            }
+        }
+
+        model.errorCorreu.observe(this) { errorCorreu ->
+            if(errorCorreu.isNullOrBlank()){
+                binding.correo.error= null
+            } else {
+                binding.correo.setError(errorCorreu)
+            }
+        }
+
+        model.errorTelefon.observe(this) { errorTelefon ->
+            if(errorTelefon.isNullOrBlank()){
+                binding.telefono.error= null
+            } else {
+                binding.telefono.setError(errorTelefon)
             }
         }
 
