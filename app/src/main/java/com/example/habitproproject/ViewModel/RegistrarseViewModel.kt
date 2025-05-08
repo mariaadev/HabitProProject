@@ -70,6 +70,9 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
+
+
+
     public fun comprova_correu() {
         comprova_correuBuit()
         comprova_correuNomesArroba()
@@ -93,7 +96,16 @@ class RegistrarseViewModel: ViewModel() {
 
 
     public fun comprova_telefon(){
-
+        comprova_telefonBuit()
+        comprova_telefonMesDe9Digits()
+        comprova_telefonMenysDe9Digits()
+        comprova_telefonAmbLletres()
+        comprova_telefonAmbLletresINouDigits()
+        comprova_telefonAmbSimbolsINouDigits()
+        comprova_telefonAmbEspaisINouDigits()
+        comprova_telefonAmbEspaisIMenysDe9Digits()
+        comprova_telefonAmbSimbolsIMenysDe9Digits()
+        comprova_telefonAmbLletresIMenysDe9Digits()
     }
 
     public fun comprova_correuBuit(){
@@ -104,7 +116,7 @@ class RegistrarseViewModel: ViewModel() {
 
     public fun comprova_correuNomesArroba(){
         if(_correu.equals("@")){
-            _errorCorreu.value = "El correu electrònic no té el format correcte"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
 
@@ -139,19 +151,20 @@ class RegistrarseViewModel: ViewModel() {
     }
 
     public fun comprova_correuNomesExtensio() {
-        if (_correu == ".com") {
+        if (_correu.matches(Regex("^\\.[a-zA-Z]{2,}$"))) {
             _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
 
     public fun comprova_correuSenseNomAmbArrobaIExtensio() {
-        if (_correu == "@.com") {
+        val regex = Regex("^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+        if (_correu.matches(Regex("^(?:@|@[a-zA-Z]{2,})$")) || !_correu.matches(regex)) {
             _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
 
     public fun comprova_correuSenseDomini() {
-        if (_correu.matches(Regex("^[^@]+@\\.com$"))) {
+        if (_correu.matches(Regex("^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
             _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
         }
     }
@@ -206,8 +219,78 @@ class RegistrarseViewModel: ViewModel() {
         }
     }
 
+    fun comprova_telefonBuit() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.isBlank()) {
+            _errorTelefon.value = "El telèfon és obligatori."
+        }
+    }
 
-    // comprovacions contrasenya
+    fun comprova_telefonMesDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length > 9 && _telefon.all { it.isDigit() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits."
+        }
+    }
+
+    fun comprova_telefonMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length < 9 && _telefon.all { it.isDigit() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits."
+        }
+    }
+
+    fun comprova_telefonAmbLletres() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length < 9 && _telefon.any { it.isLetter() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits."
+        }
+    }
+
+    fun comprova_telefonAmbLletresINouDigits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length == 9 && _telefon.any { it.isLetter() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
+        }
+    }
+
+    fun comprova_telefonAmbSimbolsINouDigits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        val regex = Regex("[^\\d]")
+        if (_telefon.length == 9 && regex.containsMatchIn(_telefon.filter { !it.isWhitespace() && !it.isLetterOrDigit() })) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
+        }
+    }
+
+    fun comprova_telefonAmbEspaisINouDigits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.replace(" ", "").length == 9 && _telefon.contains(" ")) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+        }
+    }
+
+    fun comprova_telefonAmbEspaisIMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.replace(" ", "").length < 9 && _telefon.contains(" ")) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais."
+        }
+    }
+
+    fun comprova_telefonAmbSimbolsIMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        val regex = Regex("[^\\d]")
+        if (_telefon.length < 9 && regex.containsMatchIn(_telefon.filter { !it.isWhitespace() && !it.isLetterOrDigit() })) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
+        }
+    }
+
+    fun comprova_telefonAmbLletresIMenysDe9Digits() {
+        if (_errorTelefon.value!!.isNotEmpty()) return
+        if (_telefon.length < 9 && _telefon.any { it.isLetter() }) {
+            _errorTelefon.value = "El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter."
+        }
+    }
+
     public fun comprova_contrasenya(){
         comprova_contrasenyaBuit()
         comprova_contrasenyaEspais()
@@ -227,7 +310,6 @@ class RegistrarseViewModel: ViewModel() {
             comprova_contrasenyaCoincideix()
         }
     }
-    
 
     public fun comprova_contrasenyaBuit(){
         if(_contrasenya.isEmpty()){

@@ -13,6 +13,7 @@ class RegistrarseViewModelTest {
 
     private val viewModel = RegistrarseViewModel()
 
+    /*Tests correu*/
     @Test
     fun `actualitzaCorreu retorna error quan el correu és buit`() {
         viewModel.actualitzaCorreu("")
@@ -24,7 +25,7 @@ class RegistrarseViewModelTest {
     fun `actualitzaCorreu retorna error quan només conté arroba`() {
         viewModel.actualitzaCorreu("@")
         viewModel.comprova_correuNomesArroba()
-        assertEquals("El correu electrònic no té el format correcte", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
     }
 
     @Test
@@ -137,6 +138,77 @@ class RegistrarseViewModelTest {
         viewModel.actualitzaCorreu(".usuari@gmail.com")
         viewModel.comprova_correuComencaPerSimbol()
         assertEquals("El correu electrònic no pot començar per un símbol. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
+    }
+
+    /*Tests Telèfon*/
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon és buit`() {
+        viewModel.actualitzaTelefon("")
+        viewModel.comprova_telefonBuit()
+        assertEquals("El telèfon és obligatori.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon té més de 9 dígits`() {
+        viewModel.actualitzaTelefon("6543589409")
+        viewModel.comprova_telefonMesDe9Digits()
+        assertEquals("El telèfon ha de tenir 9 dígits.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon té menys de 9 dígits`() {
+        viewModel.actualitzaTelefon("6543")
+        viewModel.comprova_telefonMenysDe9Digits()
+        assertEquals("El telèfon ha de tenir 9 dígits.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté lletres i és curt`() {
+        viewModel.actualitzaTelefon("aaaa")
+        viewModel.comprova_telefonAmbLletres()
+        assertEquals("El telèfon ha de tenir 9 dígits.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté lletres i té 9 dígits`() {
+        viewModel.actualitzaTelefon("aaa678594")
+        viewModel.comprova_telefonAmbLletresINouDigits()
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté símbols i té 9 dígits`() {
+        viewModel.actualitzaTelefon("$67859$49")
+        viewModel.comprova_telefonAmbSimbolsINouDigits()
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté espais i té 9 dígits`() {
+        viewModel.actualitzaTelefon("678 59 489")
+        viewModel.comprova_telefonAmbEspaisINouDigits()
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté espais i té menys de 9 dígits`() {
+        viewModel.actualitzaTelefon("6 7 8 5 9")
+        viewModel.comprova_telefonAmbEspaisIMenysDe9Digits()
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter ni espais.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté símbols i té menys de 9 dígits`() {
+        viewModel.actualitzaTelefon("6%7&8/5=9")
+        viewModel.comprova_telefonAmbSimbolsIMenysDe9Digits()
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.", viewModel.errorTelefon.value)
+    }
+
+    @Test
+    fun `actualitzaTelefon retorna error quan el telèfon conté lletres i té menys de 9 dígits`() {
+        viewModel.actualitzaTelefon("6a7aaa5a9")
+        viewModel.comprova_telefonAmbLletresIMenysDe9Digits()
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.", viewModel.errorTelefon.value)
     }
 
     // Tests nom d'usuari
