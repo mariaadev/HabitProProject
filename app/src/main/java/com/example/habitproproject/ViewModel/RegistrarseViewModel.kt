@@ -61,6 +61,8 @@ class RegistrarseViewModel: ViewModel() {
     fun comprovadadesusuari(){
         comprova_nomUsuari()
         comprova_contrasenya()
+        comprova_correu()
+        comprova_telefon()
     }
 
     fun registraUsuari(){
