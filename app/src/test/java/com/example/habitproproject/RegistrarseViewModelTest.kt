@@ -18,75 +18,75 @@ class RegistrarseViewModelTest {
     fun `actualitzaCorreu retorna error quan el correu és buit`() {
         viewModel.actualitzaCorreu("")
         viewModel.comprova_correuBuit()
-        assertEquals("El correu electrònic és obligatori", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic és obligatori.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan només conté arroba`() {
         viewModel.actualitzaCorreu("@")
         viewModel.comprova_correuNomesArroba()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan el correu no conté arroba però sí extensió`() {
         viewModel.actualitzaCorreu("usuari.com")
         viewModel.comprova_correuSenseArrobaAmbExtensio()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan el correu no conté ni arroba ni domini`() {
         viewModel.actualitzaCorreu("usuari")
         viewModel.comprova_correuSenseArrobaSenseDomini()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan només hi ha arroba i domini sense usuari`() {
         viewModel.actualitzaCorreu("@domini")
         viewModel.comprova_correuArrobaSenseNomNiExtensio()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan només hi ha usuari sense domini ni extensió`() {
         viewModel.actualitzaCorreu("pepe@")
         viewModel.comprova_correuNomSenseDominiIExtensio()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan només hi ha domini i extensió sense usuari`() {
         viewModel.actualitzaCorreu("@domini.com")
         viewModel.comprova_correuSenseUsuari()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan només hi ha extensió sense nom ni arroba`() {
         viewModel.actualitzaCorreu(".com")
         viewModel.comprova_correuNomesExtensio()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan hi ha arroba i extensió però sense nom ni domini`() {
         viewModel.actualitzaCorreu("@.com")
         viewModel.comprova_correuSenseNomAmbArrobaIExtensio()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna error quan hi ha usuari i extensió però falta el domini`() {
         viewModel.actualitzaCorreu("usuari@.com")
         viewModel.comprova_correuSenseDomini()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test
     fun `actualitzaCorreu retorna cap error quan el correu conté caràcters especials vàlids`() {
-        viewModel.actualitzaCorreu("usuari.lau@gmail.com")
+        viewModel.actualitzaCorreu("usuari.lau@gmail.com.")
         viewModel.comprova_correuAmbCaractersEspecialsValids()
         assertEquals("", viewModel.errorCorreu.value)
     }
@@ -95,7 +95,7 @@ class RegistrarseViewModelTest {
     fun `actualitzaCorreu retorna error quan hi ha múltiples arrobes`() {
         viewModel.actualitzaCorreu("usuari@@domini.com")
         viewModel.comprova_correuMultiplesArrobas()
-        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com", viewModel.errorCorreu.value)
+        assertEquals("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.", viewModel.errorCorreu.value)
     }
 
     @Test

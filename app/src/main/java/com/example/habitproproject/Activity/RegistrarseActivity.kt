@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.widget.addTextChangedListener
 import androidx.activity.viewModels
@@ -30,13 +31,15 @@ class RegistrarseActivity : AppCompatActivity() {
 
         val button: Button = findViewById(R.id.toHabitos)
 
-//        button.setOnClickListener {
-////            val intent = Intent(this, HabitosActivity::class.java)
-////            startActivity(intent)
-//
-//        }
+        button.setOnClickListener {
+            if (validarCamps()) {
+                val intent = Intent(this, HabitosActivity::class.java)
+                startActivity(intent)
+            } else {
 
-        binding.toHabitos.setOnClickListener(this::registrarUsuari)
+                Toast.makeText(this, "Por favor, corrige los errores", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         textView.setOnClickListener {
 
@@ -48,21 +51,22 @@ class RegistrarseActivity : AppCompatActivity() {
             model.actualitzaNomUsuari(it.toString())
         }
 
-        binding.contraseA1.editText?.addTextChangedListener {
+        binding.contraseA1.addTextChangedListener {
             model.actualitzaContrasenya(it.toString())
         }
 
-        binding.contraseA2.editText?.addTextChangedListener {
+        binding.contraseA2.addTextChangedListener {
             model.actualitzaContrasenyaConfirma(it.toString())
         }
 
-        binding.correo.editText?.addTextChangedListener {
+        binding.correo.addTextChangedListener {
             model.actualitzaCorreu(it.toString())
         }
 
-        binding.telefono.editText?.addTextChangedListener {
+        binding.telefono.addTextChangedListener {
             model.actualitzaTelefon(it.toString())
         }
+
 
         model.errorNomUsuari.observe(this) { errorNomUsuari ->
             if(errorNomUsuari.isNullOrBlank()){
@@ -111,5 +115,19 @@ class RegistrarseActivity : AppCompatActivity() {
     }
 
 
+    private fun validarCamps(): Boolean {
+        var isValid = true
 
+        if (model.errorNomUsuari.value != null) {
+            isValid = false
+        }
+        if (model.errorCorreu.value != null) {
+            isValid = false
+        }
+        if (model.errorTelefon.value != null) {
+            isValid = false
+        }
+
+        return isValid
+    }
 }
