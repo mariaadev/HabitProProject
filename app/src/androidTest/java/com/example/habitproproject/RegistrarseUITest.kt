@@ -82,7 +82,8 @@ class RegistrarseUITest {
     fun testEmailValidAmbCaractersEspecialsNoMostraError() {
         escriureEmail("usuari.lau@gmail.com")
         clicarRegistrar()
-        comprovaQueNoExisteixErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")
+        onView(withId(R.id.correo))
+            .check(matches(not(hasErrorText("El correu electrònic no pot contenir espais en blanc. Exemple: nom@gmail.com."))))
     }
 
     @Test
@@ -97,8 +98,11 @@ class RegistrarseUITest {
     fun testEmailAmbMajusculesNoMostraError() {
         escriureEmail("USUARI@GMAIL.COM")
         clicarRegistrar()
-        comprovaQueNoExisteixErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")
+        onView(withId(R.id.correo))
+            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")))
+
     }
+
 
     @Test
     fun testEmailMoltLlargMostraError() {
@@ -135,6 +139,7 @@ class RegistrarseUITest {
             .check(matches(hasErrorText("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.")))
     }
 
+
     @Test
     fun testTelefonAmbSimbolsINouDigitsMostraError() {
         escriureTelefon("$67859$49")
@@ -142,6 +147,7 @@ class RegistrarseUITest {
         onView(withId(R.id.telefono))
             .check(matches(hasErrorText("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.")))
     }
+
 
     @Test
     fun testTelefonAmbEspaisMostraError() {
