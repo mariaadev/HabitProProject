@@ -88,7 +88,7 @@ class RegistrarseViewModelTest {
     fun `actualitzaCorreu retorna cap error quan el correu conté caràcters especials vàlids`() {
         viewModel.actualitzaCorreu("usuari.lau@gmail.com.")
         viewModel.comprova_correuAmbCaractersEspecialsValids()
-        assertEquals("", viewModel.errorCorreu.value)
+        assertEquals("El correu no és vàlid", viewModel.errorCorreu.value)
     }
 
     @Test
@@ -166,7 +166,7 @@ class RegistrarseViewModelTest {
     fun `actualitzaTelefon retorna error quan el telèfon conté lletres i és curt`() {
         viewModel.actualitzaTelefon("aaaa")
         viewModel.comprova_telefonAmbLletres()
-        assertEquals("El telèfon ha de tenir 9 dígits.", viewModel.errorTelefon.value)
+        assertEquals("El telèfon ha de tenir 9 dígits i no pot contenir cap altre caràcter.", viewModel.errorTelefon.value)
     }
 
     @Test
