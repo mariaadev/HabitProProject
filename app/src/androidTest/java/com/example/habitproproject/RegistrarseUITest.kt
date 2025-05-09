@@ -51,7 +51,7 @@ class RegistrarseUITest {
         escriureEmail("")
         clicarRegistrar()
         onView(withId(R.id.correo))
-            .check(matches(hasErrorText("El correu electrònic és obligatori")))
+            .check(matches(hasErrorText("El correu electrònic és obligatori.")))
     }
 
     @Test
@@ -59,7 +59,7 @@ class RegistrarseUITest {
         escriureEmail("@")
         clicarRegistrar()
         onView(withId(R.id.correo))
-            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com")))
+            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")))
     }
 
     @Test
@@ -67,7 +67,7 @@ class RegistrarseUITest {
         escriureEmail("usuari.com")
         clicarRegistrar()
         onView(withId(R.id.correo))
-            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com")))
+            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")))
     }
 
     @Test
@@ -75,14 +75,14 @@ class RegistrarseUITest {
         escriureEmail("usuari")
         clicarRegistrar()
         onView(withId(R.id.correo))
-            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com")))
+            .check(matches(hasErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")))
     }
 
     @Test
     fun testEmailValidAmbCaractersEspecialsNoMostraError() {
         escriureEmail("usuari.lau@gmail.com")
         clicarRegistrar()
-        comprovaQueNoExisteixErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com")
+        comprovaQueNoExisteixErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")
     }
 
     @Test
@@ -97,7 +97,7 @@ class RegistrarseUITest {
     fun testEmailAmbMajusculesNoMostraError() {
         escriureEmail("USUARI@GMAIL.COM")
         clicarRegistrar()
-        comprovaQueNoExisteixErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com")
+        comprovaQueNoExisteixErrorText("El correu electrònic no té el format correcte. Exemple: nom@gmail.com.")
     }
 
     @Test

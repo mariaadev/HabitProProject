@@ -112,62 +112,62 @@ class RegistrarseViewModel: ViewModel() {
 
     public fun comprova_correuBuit(){
         if(_correu.isEmpty()){
-            _errorCorreu.value = "El correu electrònic és obligatori"
+            _errorCorreu.value = "El correu electrònic és obligatori."
         }
     }
 
     public fun comprova_correuNomesArroba(){
         if(_correu.equals("@")){
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuSenseArrobaAmbExtensio() {
         if (_correu.contains(".") && !_correu.contains("@")) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuSenseArrobaSenseDomini() {
         if (!_correu.contains("@") && !_correu.contains(".")) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuArrobaSenseNomNiExtensio() {
         if (_correu.startsWith("@") && !_correu.contains(".")) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuNomSenseDominiIExtensio() {
         if (_correu.endsWith("@")) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuSenseUsuari() {
         if (_correu.startsWith("@") && _correu.contains(".")) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuNomesExtensio() {
         if (_correu.matches(Regex("^\\.[a-zA-Z]{2,}$"))) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuSenseNomAmbArrobaIExtensio() {
         val regex = Regex("^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
         if (_correu.matches(Regex("^(?:@|@[a-zA-Z]{2,})$")) || !_correu.matches(regex)) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
     public fun comprova_correuSenseDomini() {
         if (_correu.matches(Regex("^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 
@@ -180,7 +180,7 @@ class RegistrarseViewModel: ViewModel() {
 
     public fun comprova_correuMultiplesArrobas() {
         if (_correu.count { it == '@' } > 1) {
-            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com"
+            _errorCorreu.value = "El correu electrònic no té el format correcte. Exemple: nom@gmail.com."
         }
     }
 

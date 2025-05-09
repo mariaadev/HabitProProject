@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.widget.addTextChangedListener
 import androidx.activity.viewModels
@@ -31,8 +32,13 @@ class RegistrarseActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.toHabitos)
 
         button.setOnClickListener {
-            val intent = Intent(this, HabitosActivity::class.java)
-            startActivity(intent)
+            if (validarCamps()) {
+                val intent = Intent(this, HabitosActivity::class.java)
+                startActivity(intent)
+            } else {
+
+                Toast.makeText(this, "Por favor, corrige los errores", Toast.LENGTH_SHORT).show()
+            }
         }
 
         textView.setOnClickListener {
@@ -109,5 +115,19 @@ class RegistrarseActivity : AppCompatActivity() {
     }
 
 
+    private fun validarCamps(): Boolean {
+        var isValid = true
 
+        if (model.errorNomUsuari.value != null) {
+            isValid = false
+        }
+        if (model.errorCorreu.value != null) {
+            isValid = false
+        }
+        if (model.errorTelefon.value != null) {
+            isValid = false
+        }
+
+        return isValid
+    }
 }
