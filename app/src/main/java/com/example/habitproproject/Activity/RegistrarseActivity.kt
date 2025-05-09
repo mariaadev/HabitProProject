@@ -30,10 +30,13 @@ class RegistrarseActivity : AppCompatActivity() {
 
         val button: Button = findViewById(R.id.toHabitos)
 
-        button.setOnClickListener {
-            val intent = Intent(this, HabitosActivity::class.java)
-            startActivity(intent)
-        }
+//        button.setOnClickListener {
+////            val intent = Intent(this, HabitosActivity::class.java)
+////            startActivity(intent)
+//
+//        }
+
+        binding.toHabitos.setOnClickListener(this::registrarUsuari)
 
         textView.setOnClickListener {
 
@@ -41,7 +44,7 @@ class RegistrarseActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.nombreUsuario.editText?.addTextChangedListener {
+        binding.nombreUsuario.addTextChangedListener {
             model.actualitzaNomUsuari(it.toString())
         }
 
