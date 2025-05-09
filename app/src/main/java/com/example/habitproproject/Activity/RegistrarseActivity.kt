@@ -41,25 +41,26 @@ class RegistrarseActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.nombreUsuario.editText?.addTextChangedListener {
+        binding.nombreUsuario.addTextChangedListener {
             model.actualitzaNomUsuari(it.toString())
         }
 
-        binding.contraseA1.editText?.addTextChangedListener {
+        binding.contraseA1.addTextChangedListener {
             model.actualitzaContrasenya(it.toString())
         }
 
-        binding.contraseA2.editText?.addTextChangedListener {
+        binding.contraseA2.addTextChangedListener {
             model.actualitzaContrasenyaConfirma(it.toString())
         }
 
-        binding.correo.editText?.addTextChangedListener {
+        binding.correo.addTextChangedListener {
             model.actualitzaCorreu(it.toString())
         }
 
-        binding.telefono.editText?.addTextChangedListener {
+        binding.telefono.addTextChangedListener {
             model.actualitzaTelefon(it.toString())
         }
+
 
         model.errorNomUsuari.observe(this) { errorNomUsuari ->
             if(errorNomUsuari.isNullOrBlank()){

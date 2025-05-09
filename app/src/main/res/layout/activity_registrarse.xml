@@ -50,106 +50,52 @@
                     />
 
 
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/nombreUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:hint="Nombre de usuario"
-                    app:boxBackgroundMode="filled"
-                    app:boxCollapsedPaddingTop="8dp"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white" />
 
-
-                    app:endIconMode="clear_text">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/correo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Correo electrónico"
-                    app:endIconMode="clear_text"
-                    app:boxBackgroundMode="filled"
+                    android:inputType="textEmailAddress"
                     android:layout_marginBottom="16dp"
-                    app:boxCollapsedPaddingTop="8dp"
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white" />
 
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/contraseña1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Contraseña"
-                    app:endIconMode="password_toggle"
-                    app:boxBackgroundMode="filled"
+                    android:inputType="textPassword"
                     android:layout_marginBottom="16dp"
-                    app:boxCollapsedPaddingTop="8dp"
+                    android:background="@android:color/white" />
 
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextContraseña1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/contraseña2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Repetir contraseña"
-                    app:endIconMode="password_toggle"
-                    app:boxBackgroundMode="filled"
+                    android:inputType="textPassword"
                     android:layout_marginBottom="16dp"
-                    app:boxCollapsedPaddingTop="8dp"
+                    android:background="@android:color/white" />
 
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextContraseña2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/telefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Telefono"
-                    app:endIconMode="clear_text"
-                    app:boxBackgroundMode="filled"
+                    android:hint="Teléfono"
+                    android:inputType="phone"
                     android:layout_marginBottom="16dp"
-                    app:boxCollapsedPaddingTop="8dp"
-
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPhonetic"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@android:color/white" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/toHabitos"
@@ -187,7 +133,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0"
-                            android:textColor="@color/md_theme_scrim"/>
+                            android:textColor="@android:color/black"/>
 
                         <TextView
                             android:id="@+id/toInicio"
